@@ -1,0 +1,86 @@
+/*
+Theme Name: Treasuria
+Theme URL: http://treasuria.com/
+Author: Synergy 88 Studios, Inc
+Author URI: http://synergy88.com/ 
+Description: Custom Theme for Treasuria
+Version: 1.00
+*/
+
+/*** ==============================
+             IMPORT
+=============================== ***/
+@import url(http://fonts.googleapis.com/css?family=Milonga|Open+Sans+Condensed|Sigmar+One);
+@import "../css/bootstrap.min.css";
+@import "../css/signin.css";
+
+/*** ===================================
+             GLOBAL STYLES
+==================================== ***/
+html, body{height: 100%}
+body{background: url(../img/global-bg.jpg) repeat center top; font: normal 16px/1.5 'Open Sans Condensed', sans-serif; color: #b5956d}
+a{color: #9B8263; text-decoration: none}
+a:hover{color: #594B32}
+input:focus{outline: none}
+/*.lt{float:left}
+.rt{float: right}
+.clearfix {*zoom: 1}
+.clearfix:before,
+.clearfix:after {display: table; content: ""; line-height: 0}
+.clearfix:after {clear: both}*/
+.htext{font-size: 0; line-height: 0; color: transparent}
+.hidem{color: #9B8263; padding: 0 10px}
+.border{border: 1px solid red}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -64px;
+  /* Pad bottom by footer height */
+  padding: 0 0 30px}
+ #footer{height: 64px; background: url(../img/footer-bg.jpg) repeat-x center top}
+
+/*   ANIMATION
+================= */
+.transition, .transition a, #submit, #reset{
+  -webkit-transition: all .5s ease-in-out;
+     -moz-transition: all .5s ease-in-out;
+      -ms-transition: all .5s ease-in-out;
+       -o-transition: all .5s ease-in-out;
+          transition: all .5s ease-in-out;
+}
+
+
+/*** =========================================
+             GENERAL PAGE STYLES
+========================================== ***/
+footer{line-height: 64px; font-size: 0.875em}
+.content{margin: 15px auto}
+
+/*   BRANDING & NAVIGATION
+============================= */
+.branding-login{background: url(../img/logo-login.png) no-repeat top center; height: 59px; width: 222px; margin: 0 auto}
+.navbar{background: #443A22; border-top: 5px solid #DFC12E; border-radius: 0; font-family: 'Milonga'}
+.navbar-header .mini-menu{background: #5D4F35}
+.navbar-header .mini-menu .icon-bar{background: #FFFFFF}
+.navbar-nav li a{line-height: 35px}
+.navbar-nav li .active, .navbar-nav li a:hover{background: #5D4F35; color: #978263 /*background: url(../img/nav-active.png) no-repeat center center*/}
+
+/*   USER ACCOUNT  
+===================== */
+.user-login li{display: inline}
+.user-login li a{text-decoration: none}
+
+
+/*** =================================
+             PAGE STYLES
+================================== ***/
+/*   LOGIN PAGE 
+=================== */
+.login-btn{background: #977E5F; color: #ffffff}
+
+/*   GAME IFRAME  
+==================== */
+iframe{font: normal 16px/1.5 'Sigmar One', serif}
+.edgeLoad-EDGE-14851457 {visibility: hidden}

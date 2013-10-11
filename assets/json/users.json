@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "user_id": "1",
+            "user_name": "joker",
+            "password": "098f6bcd4621d373cade4e832627b4f6",
+            "email": "jasonjavier06@gmail.com",
+            "first_name": "jason",
+            "last_name": "javier",
+            "gender": "male",
+            "age": "25",
+            "contact_number": "411-15-06",
+        }
+    ],
+    "success": 1
+}
