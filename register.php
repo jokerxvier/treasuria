@@ -1,16 +1,12 @@
 <?php include 'header.php'; ?>
 
-<?php	
-if(!isset($_SESSION['username']))
-{
-?>
   
 <section class="container">
   <div class="account-container register">
   
   <div class="content clearfix">
     
-    <form action="process.php?register" id="reg_treasuria" class="reg_treasuria" method="post" >
+    <form action="" id="reg_treasuria" class="reg_treasuria" method="post" >
     
       <h1 class="branding-login"></h1>   
       
@@ -18,50 +14,50 @@ if(!isset($_SESSION['username']))
           <p>Please complete form to create new account</p>
         <div class="field">
           <label for="u_firstname">First Name</label>
-          <input type="text" id="u_firstname" name="u_firstname" value="" placeholder="First Name" required />
+          <input type="text" id="u_firstname" name="u_firstname" value="" placeholder="First Name" />
         </div> <!-- /firstname -->
         <div class="field">
           <label for="u_lastname">Last Name</label>
-          <input type="text" id="u_lastname" name="u_lastname" value="" placeholder="Last Name" required />
+          <input type="text" id="u_lastname" name="u_lastname" value="" placeholder="Last Name"/>
         </div> <!-- /lastname -->
         <div class="field">
           <label for="u_username">Email Address</label>
-          <input type="email" id="u_username" name="u_username" value="" placeholder="Username" required />
+          <input type="email" id="u_username" name="u_username" value="" placeholder="Username"  />
         </div> <!-- /email / username -->
         
         <div class="field">
           <label for="u_password">Password</label>
-          <input type="password" id="u_password" name="u_password" value="" placeholder="Password" required />
+          <input type="password" id="u_password" name="u_password" value="" placeholder="Password" />
         </div> <!-- /password -->
 
         <div class="field">
           <label for="u_c_password">Confirm Password</label>
-          <input type="password" id="u_c_password" name="u_c_password" value="" placeholder="Confirm Password" required />
+          <input type="password" id="u_c_password" name="u_c_password" value="" placeholder="Confirm Password" />
         </div> <!-- /confirm password -->
         
 		<div class="field">
           <label for="u_address">Address</label>
-          <input type="text" id="u_address" name="u_address" value="" placeholder="Address" required />
+          <input type="text" id="u_address" name="u_address" value="" placeholder="Address" />
         </div> <!-- /address -->
         
 		<div class="field">
           <label for="u_city">City</label>
-          <input type="text" id="u_city" name="u_city" value="" placeholder="City" required />
+          <input type="text" id="u_city" name="u_city" value="" placeholder="City"  />
         </div> <!-- /city -->
 		
         <div class="field">
           <label for="u_country">Country</label>
-          <input type="text" id="u_country" name="u_country" value="" placeholder="Country" required />
+          <input type="text" id="u_country" name="u_country" value="" placeholder="Country"  />
         </div> <!-- /country -->
 		
         <div class="field">
           <label for="u_phone">Contact Number</label>
-          <input type="text" id="u_phone" name="u_phone" value="" placeholder="Contact Number" required />
+          <input type="text" id="u_phone" name="u_phone" value="" placeholder="Contact Number"  />
         </div> <!-- /country -->
        
 		<div class="field">
 			<label for="gender_male">Male</label>
-				<input type="radio" id="gender_male" value="m" name="gender" validate="required:true" />
+				<input type="radio" id="gender_male" value="m" name="gender"/>
 				
 			<label for="gender_female">Female</label>
 				<input  type="radio" id="gender_female" value="f" name="gender"/>
@@ -89,10 +85,3 @@ if(!isset($_SESSION['username']))
 </section>
 
 <?php include 'footer.php'; ?>
-<?php
-}
-else
-{
-header('Location: index.php');
-}
-?>

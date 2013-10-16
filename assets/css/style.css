@@ -84,5 +84,7 @@ footer{line-height: 64px; font-size: 0.875em}
 /*** =================================
 VALIDATION CSS
 =================== */
-
-form.reg_treasuria label.error { display: none; }	
+.error {
+background: #fff9d7;
+border: 1px solid #e2c822;
+}
