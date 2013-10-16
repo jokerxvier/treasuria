@@ -38,7 +38,7 @@ input:focus{outline: none}
   /* Negative indent footer by its height */
   margin: 0 auto -64px;
   /* Pad bottom by footer height */
-  padding: 0 0 30px}
+  padding: 0 0 64px}
  #footer{height: 64px; background: url(../img/footer-bg.jpg) repeat-x center top}
 
 /*   ANIMATION
@@ -60,7 +60,7 @@ footer{line-height: 64px; font-size: 0.875em}
 
 /*   BRANDING & NAVIGATION
 ============================= */
-.branding-login{background: url(../img/logo-login.png) no-repeat top center; height: 59px; width: 222px; margin: 0 auto}
+.branding-login{background: url(../img/logo-login.png) no-repeat top center; height: 59px; width: 222px; margin: 10px auto}
 .navbar{background: #443A22; border-top: 5px solid #DFC12E; border-radius: 0; font-family: 'Milonga'}
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
@@ -71,7 +71,7 @@ footer{line-height: 64px; font-size: 0.875em}
 ===================== */
 .user-login li{display: inline}
 .user-login li a{text-decoration: none}
-
+.register .login-fields label {display: block}
 
 /*** =================================
              PAGE STYLES
@@ -80,7 +80,9 @@ footer{line-height: 64px; font-size: 0.875em}
 =================== */
 .login-btn{background: #977E5F; color: #ffffff}
 
-/*   GAME IFRAME  
-==================== */
-iframe{font: normal 16px/1.5 'Sigmar One', serif}
-.edgeLoad-EDGE-14851457 {visibility: hidden}
+
+/*** =================================
+VALIDATION CSS
+=================== */
+
+form.reg_treasuria label.error { display: none; }	

@@ -1,18 +1,25 @@
-<?php include("header.php") ?>
+<?php include 'header.php'; ?>
+
+<?php	
+if(!isset($_SESSION['username']))
+{
+?>
+
 <div class="container">
   <div class="account-container">
   
   <div class="content clearfix">
     
-    <form action="" method="post" id="treasuria_login" name="treasuria_login">
+    <form action="process.php?login" method="post" id="treasuria_login" name="treasuria_login">
     
       <h1 class="branding-login"></h1>   
       
       <div class="login-fields">
           <p>Please provide your details</p>
         <div class="field">
-          <label for="admin_username">Username</label>
-          <input type="text" id="admin_username" name="username" value="" placeholder="Username" class="login username-field" />
+          <label for="admin_username">Email Address</label>
+          <input type="text" id="admin_username" name="username" value="" placeholder="Email Address" class="login username-field" />
+		  
         </div> <!-- /field -->
         
         <div class="field">
@@ -29,19 +36,25 @@
           <label class="choice" for="Field">Keep me signed in</label>
         </span>
                   
-        <button type="submit" name='submit' class="button btn login-btn btn-large">Sign In</button>
+        <button type="submit" name="submit" class="button btn login-btn btn-large">Sign In</button>
         
       </div> <!-- .actions -->
     </form>
-    
   </div> <!-- /content -->
-  
 </div> <!-- /account-container -->
-
 
 <div class="login-extra">
   <a href="#">Reset Password</a>
 </div> <!-- /login-extra -->
 </div>
 
-<?php include("footer.php") ?>
+
+<?php include 'footer.php'; ?>
+<?php
+}
+else
+{
+header('Location: index.php');
+}
+?>
+
