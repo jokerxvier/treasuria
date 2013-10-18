@@ -6,15 +6,12 @@ Bootstrap Admin Template by EGrappler.com
 
 
 /** Base Body Styles **/
-body{font: 13px/1.7em 'Open Sans Condensed';}
-
-
 .account-container {
-	width: 380px; 
+	width: 480px;
 	display: block;
 	margin: 60px auto 0 auto;
 	
-	background: #4B3C26;
+	background: #3e311d;
 	
 	/*border: 1px solid #d5d5d5;*/
 	
@@ -25,40 +22,6 @@ body{font: 13px/1.7em 'Open Sans Condensed';}
 	/*box-shadow:  0px 0px 2px #dadada, inset 0px -3px 0px #e6e6e6;*/
 }
 
-.content {
-	padding: 16px 28px 23px;
-} 
-
-
-.login-fields .field {
-	margin-bottom: 1.25em;
-	
-}
-
-.login-fields label {
-	display: none;
-}
-
-.login-fields input {
-	height:40px;
-	font-family: 'Open Sans';
-	font-size: 13px;
-	color: #8e8d8d;
-	padding: 0px 20px 0px 50px;
-	background-color: #fdfdfd;
-	width: 320px;
-	display: block;
-	margin: 0;
-	/*box-shadow: inset 2px 2px 4px #f1f1f1;*/
-}
-
-.username-field { display:block; background: url(../img/user.png) no-repeat}
-
-.password-field { background: url(../img/password.png) no-repeat}
-
-
-
-
 .login-actions {
 	float: left;
 	
@@ -68,15 +31,6 @@ body{font: 13px/1.7em 'Open Sans Condensed';}
 	margin-bottom: 1.25em;
 }
 
-.login-social {
-	float: left;
-	
-	padding: 10px 0 15px;
-	
-	border: 1px dotted #CCC;
-	border-right: none;
-	border-left: none;	
-}
 
 span.login-checkbox {
 	float: left;
@@ -109,55 +63,18 @@ span.login-checkbox > input[type='checkbox']:checked + label {
 	background-position: 0 -15px;
 }
 
-/** Text Under Box**/
-.login-extra {
-	display: block; 
-	width: 300px; 
-	margin: 1.5em auto;
-	 
-	text-align: left;
-	line-height: 19px; 
-
-}
-
-
+/** Text Under Box **/
 .account-container h1 {
 	margin-bottom: .4em;
-	
-	color: #525252;
 }
 
 /** Buttons **/
 
 .button {-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; display: inline-block; float: right; margin-top: 18px;}
 
-
-
-
-
-
-.register .login-social {
-	margin-bottom: 1em;
-}
-
-.register .login-actions {
-	margin-bottom: 0;
-}
-
-.register .login-fields input {
-	width: 299px;
-	padding-left: 6px;
-}
-
-.register h1 {
-	color: #444;
-}
-
 .register span.login-checkbox {
 	position: relative;
 	top: -6px;
-	
-	width: 200px;
 }
 
 .register span.login-checkbox > input[type="checkbox"] + label {
@@ -168,30 +85,9 @@ span.login-checkbox > input[type='checkbox']:checked + label {
 }
 
 
-
 @media (max-width: 480px) {
-	
-	.account-container {
+  .account-container {
 		width: 280px;	
 		margin-top: 35px;
 	}
-	
-	.login-fields input {
-		width: 160px;
-	}
-	
-	.login-social {
-		width: 100%;
-	}
-	
-	.twitter {
-		display: block;
-		margin-bottom: 1em;
-	}
-	
-	.register .login-fields input {
-		width: 204px;
-		padding-left: 6px;
-	}
-	
 }

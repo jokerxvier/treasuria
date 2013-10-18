@@ -9,6 +9,7 @@ if(isset($_SESSION['username']))
 	<div class="container">
 		<div class="pull-right">
 			<ul class="list-inline user-login">
+			<li><?php echo "Hi ".$_SESSION['firstname']."!"; ?></li><span class="hidem">|</span>
 			<li><a href="process.php?logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
 			
 			<!-- <span class="hidem">|</span></li>
@@ -54,7 +55,7 @@ if(isset($_SESSION['username']))
 	  <!--end of iframe-->
 	</section><!--end of CONTAINER-->
 
-	<footer id="footer">
+	<footer id="footer navbar-fixed-bottom">
 	  <div class="container">
 		<p class="text-center">&copy; 2013 Treasuria</p>
 	  </div>

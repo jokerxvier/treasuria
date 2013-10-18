@@ -10,7 +10,7 @@ Version: 1.00
 /*** ==============================
              IMPORT
 =============================== ***/
-@import url(http://fonts.googleapis.com/css?family=Milonga|Open+Sans+Condensed|Sigmar+One);
+@import url(http://fonts.googleapis.com/css?family=Milonga|Asul|Sigmar+One);
 @import "../css/bootstrap.min.css";
 @import "../css/signin.css";
 
@@ -18,9 +18,9 @@ Version: 1.00
              GLOBAL STYLES
 ==================================== ***/
 html, body{height: 100%}
-body{background: url(../img/global-bg.jpg) repeat center top; font: normal 16px/1.5 'Open Sans Condensed', sans-serif; color: #b5956d}
+body{background: url(../img/global-bg.jpg) repeat center top; font: normal 16px/1.5 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
-a:hover{color: #594B32}
+a:hover{color: #F0E436; text-decoration: none}
 input:focus{outline: none}
 /*.lt{float:left}
 .rt{float: right}
@@ -30,16 +30,8 @@ input:focus{outline: none}
 .clearfix:after {clear: both}*/
 .htext{font-size: 0; line-height: 0; color: transparent}
 .hidem{color: #9B8263; padding: 0 10px}
+.gold{color: #F0E436}
 .border{border: 1px solid red}
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by its height */
-  margin: 0 auto -64px;
-  /* Pad bottom by footer height */
-  padding: 0 0 64px}
- #footer{height: 64px; background: url(../img/footer-bg.jpg) repeat-x center top}
 
 /*   ANIMATION
 ================= */
@@ -55,8 +47,8 @@ input:focus{outline: none}
 /*** =========================================
              GENERAL PAGE STYLES
 ========================================== ***/
-footer{line-height: 64px; font-size: 0.875em}
-.content{margin: 15px auto}
+footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px;}
+.content{margin: 30px;}
 
 /*   BRANDING & NAVIGATION
 ============================= */
@@ -65,26 +57,35 @@ footer{line-height: 64px; font-size: 0.875em}
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
 .navbar-nav li a{line-height: 35px}
-.navbar-nav li .active, .navbar-nav li a:hover{background: #5D4F35; color: #978263 /*background: url(../img/nav-active.png) no-repeat center center*/}
+.navbar-nav li .active, .navbar-nav li a:hover{background: #5D4F35; color: #978263}
 
 /*   USER ACCOUNT  
 ===================== */
 .user-login li{display: inline}
 .user-login li a{text-decoration: none}
-.register .login-fields label {display: block}
 
 /*** =================================
              PAGE STYLES
 ================================== ***/
+.error {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #DE0000; margin: 5px auto; padding: 5px 10px}
+.success {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #F0E436; margin: 5px auto; padding: 5px 10px}
+
 /*   LOGIN PAGE 
 =================== */
 .login-btn{background: #977E5F; color: #ffffff}
 
-
-/*** =================================
-VALIDATION CSS
-=================== */
-.error {
-background: #fff9d7;
-border: 1px solid #e2c822;
+/*   REGISTER PAGE 
+====================== */
+.register-container {background: #3e311d; width: 680px; margin: 60px auto 0 auto;display: block;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
+
+@media (max-width: 600px) {
+  .register-container {width: 480px; margin-top: 35px}
+	}
+
+@media (max-width: 480px) {
+	.register-container {width: 280px; margin-top: 35px}
+	}

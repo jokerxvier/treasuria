@@ -14,14 +14,31 @@
 				rules: {
 					u_firstname: "required",
 					u_lastname: "required",
+					gender: "required",
 					u_password: {
 						required: true,
 						minlength: 5
 					},
+					u_city: {
+						required: true,
+						minlength: 3
+					},
+					u_address: {
+						required: true,
+						minlength: 3
+					},
+					u_country: {
+						required: true
+					},
+					u_phone: {
+						required: true,
+						minlength: 7,
+						digits: true
+					},
 					u_c_password: {
 						required: true,
 						minlength: 5,
-						equalTo: "#password"
+						equalTo: "#u_password"
 					},
 					u_username: {
 						required: true,
@@ -30,22 +47,63 @@
 					agree: "required"
 				},
 				messages: {
-					u_firstname: "Please enter your firstname",
-					u_lastname: "Please enter your lastname",
+					u_firstname: "Please enter your First Name",
+					u_lastname: "Please enter your Last Name",
+					gender: "Please select your gender",
 					u_password: {
-						required: "Please provide a password",
+						required: "Please provide a Password",
 						minlength: "Your password must be at least 5 characters long"
+					},
+					u_city: {
+						required: "Please provide your city",
+						minlength: "Your City is incomplete!"
+					},
+					u_address: {
+						required: "Please provide your address",
+						minlength: "Your address is incomplete!"
+					},
+					u_country: {
+						required: "Select your country"
+					},
+					u_phone: {
+						required: "Please provide your contact number",
+						minlength: "Your contact number is incomplete!",
+						digits: "Please input numbers only."
 					},
 					u_c_password: {
 						required: "Please provide a password",
 						minlength: "Your password must be at least 5 characters long",
 						equalTo: "Please enter the same password as above"
 					},
-					u_username: "Please enter a valid email address",
-					agree: "Please accept our policy"
+					u_username: {
+						required: "Please provide your Email Address",
+						email: "Please enter a valid email address",
+					},
+					agree: "You must accept our policy to proceed."
 				},
 				submitHandler: function(form) {
 				  console.log('success');
+				  form.submit();
+				}
+		});
+		$('#treasuria_login').validate({
+			rules: {
+				username: {
+						required: true,
+						email: true
+					},
+				password: "required"
+				},
+			messages: {
+				username: {
+						required: "Please provide your Email Address",
+						email: "Please enter a valid email address",
+					},
+					password: "Please provide your Password"
+			},
+				submitHandler: function(form) {
+				  console.log('success');
+				  form.submit();
 				}
 		});
 	});
