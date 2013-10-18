@@ -3,10 +3,10 @@
 <?php	
 if(!isset($_SESSION['username']))
 {
-$key_error = "Email Address not registered";
-$verified = "Email Address successfully verified. You may now login.";
-$not_verified = "Email Address not verified.";
-$error_activation = "Oops! Your account could not be activated. Please recheck the link or contact the system administrator.";
+$key_error = "ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect";
+$verified = "SUCCESS: Email Address successfully verified. You may now login.";
+$not_verified = "ERROR: Email Address not verified.";
+$error_activation = "ERROR: Oops! Your account could not be activated. Please recheck the link or contact the system administrator.";
 ?>
 
 <section class="container">

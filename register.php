@@ -1,7 +1,10 @@
 <?php include 'header.php'; ?>
-<?php
-$email_error = "Email Address has already been registered.";
-$sentverification = "A verification Code was sent to your Email Address, please confirm to continue your login.";
+<?php	
+if(!isset($_SESSION['username']))
+{
+
+$sentverification = "SUCCESS: A verification Code was sent to your Email Address, please confirm to continue your login.";
+$email_error = "ERROR: That Email Address has already been registered.";
 ?>
   
 <section class="container">
@@ -21,21 +24,21 @@ $sentverification = "A verification Code was sent to your Email Address, please 
         <div class="form-group">
           <label for="u_firstname" class="col-lg-4 control-label">First Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_firstname" name="u_firstname" value="" placeholder="First Name" />
+            <input type="text" class="form-control" id="u_firstname" name="u_firstname" value="<?php if(isset($_SESSION['u_firstname'])) { echo $_SESSION['u_firstname']; } else { } ?>" placeholder="First Name" />
           </div>
         </div><!--end of FIRST NAME-->
 
         <div class="form-group">
           <label for="u_lastname" class="col-lg-4 control-label">Last Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_lastname" name="u_lastname" value="" placeholder="Last Name"/>
+            <input type="text" class="form-control" id="u_lastname" name="u_lastname" value="<?php if(isset($_SESSION['u_lastname'])) { echo $_SESSION['u_lastname']; } ?>" placeholder="Last Name"/>
           </div>
         </div><!--end of LAST NAME-->
 
         <div class="form-group">
           <label for="u_username" class="col-lg-4 control-label">Email Address</label>
           <div class="col-lg-8">
-            <input type="email" class="form-control" id="u_username" name="u_username" value="" placeholder="Username"  />
+            <input type="email" class="form-control" id="u_username" name="u_username" value="<?php if(isset($_SESSION['u_username'])) { echo $_SESSION['u_username']; } ?>" placeholder="Username"  />
           </div>
         </div><!--end of USERNAME / EMAIL-->
         
@@ -56,28 +59,28 @@ $sentverification = "A verification Code was sent to your Email Address, please 
 		    <div class="form-group">
           <label for="u_address" class="col-lg-4 control-label">Address</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_address" name="u_address" value="" placeholder="Address" />
+            <input type="text" class="form-control" id="u_address" name="u_address" value="<?php if(isset($_SESSION['u_address'])) { echo $_SESSION['u_address']; } ?>" placeholder="Address" />
           </div>
         </div><!--end of ADDRESS-->
         
 		    <div class="form-group">
           <label for="u_city" class="col-lg-4 control-label">City</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_city" name="u_city" value="" placeholder="City" />
+            <input type="text" class="form-control" id="u_city" name="u_city" value="<?php if(isset($_SESSION['u_city'])) { echo $_SESSION['u_city']; } ?>" placeholder="City" />
           </div>  
         </div><!--end of CITY-->
 		
         <div class="form-group">
           <label for="u_country" class="col-lg-4 control-label">Country</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_country" name="u_country" value="" placeholder="Country" />
+            <input type="text" class="form-control" id="u_country" name="u_country" value="<?php if(isset($_SESSION['u_country'])) { echo $_SESSION['u_country']; } ?>" placeholder="Country" />
           </div>
         </div><!--end of COUNTRY-->
 		
         <div class="form-group">
           <label for="u_phone" class="col-lg-4 control-label">Contact Number</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_phone" name="u_phone" value="" placeholder="Contact Number" />
+            <input type="text" class="form-control" id="u_phone" name="u_phone" value="<?php if(isset($_SESSION['u_phone'])) { echo $_SESSION['u_phone']; } ?>" placeholder="Contact Number" />
           </div>
         </div><!--end of CONTACT NUMBER-->
        
@@ -94,9 +97,9 @@ $sentverification = "A verification Code was sent to your Email Address, please 
 		    </div><!--end of GENDER-->
 
         <div class="checkbox col-md-offset-4">
-		    	<label for="agree">
-            <input type="checkbox" class="checkbox" id="agree" name="agree" />I agree to the Privacy Policy
-          </label>
+			<label for="agree">
+				<input type="checkbox" class="checkbox" id="agree" name="agree" />I agree to the Privacy Policy
+			</label>
 	    	</div><!--end of PRIVACY POLICY-->
 
       </div><!--end of FORM-HORIZONTAL-->
@@ -115,3 +118,11 @@ $sentverification = "A verification Code was sent to your Email Address, please 
 </section>
 
 <?php include 'footer.php'; ?>
+
+<?php
+}
+else
+{
+header('Location: index.php');
+}
+?>

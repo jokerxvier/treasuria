@@ -22,7 +22,7 @@ if (isset($_GET['key']) and (strlen($_GET['key']) == 32))  //The Activation key 
 		
 		if($email==$db_email and $key==$db_key)
 		{
-			$query_verified = mysql_query("UPDATE users SET key_email=NULL WHERE email='$db_email'");
+			$query_verified = mysql_query("UPDATE users SET key_email=NULL WHERE email='$db_email' and key_email='$db_key'");
 			
 			if($query_verified)
 			{

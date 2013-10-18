@@ -55,7 +55,7 @@ if(isset($_SESSION['username']))
 	  <!--end of iframe-->
 	</section><!--end of CONTAINER-->
 
-	<footer id="footer navbar-fixed-bottom">
+	<footer class="navbar-fixed-bottom">
 	  <div class="container">
 		<p class="text-center">&copy; 2013 Treasuria</p>
 	  </div>

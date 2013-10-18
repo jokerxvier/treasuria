@@ -19,7 +19,7 @@ switch($_SERVER['QUERY_STRING'])
 			$username = $_POST["username"];
 			$password = md5($_POST["password"]);
 			
-			$result = mysql_query("SELECT * FROM users");
+			$result = mysql_query("SELECT * FROM users WHERE email='$username' LIMIT 1");
 			$num_rows = mysql_num_rows($result);
 			if($num_rows>0)
 			{
@@ -63,7 +63,8 @@ switch($_SERVER['QUERY_STRING'])
 			}
 			else
 			{
-				header('Location: login.php');
+				$access = FALSE;
+				header('Location: login.php?error=failed_login');
 			}
 		}
 		
@@ -87,90 +88,97 @@ switch($_SERVER['QUERY_STRING'])
 	case 'register':
 		if(isset($_POST["submit"]))
 		{
-			echo $reg_firstname = $_POST["u_firstname"];
-			echo $reg_lastname = $_POST["u_lastname"];
-			echo $reg_username = $_POST["u_username"]; //username is equal to EMAIL
-			echo $reg_password = md5($_POST["u_password"]);
-			echo $reg_address = $_POST["u_address"];
-			echo $reg_city = $_POST["u_city"];
-			echo $reg_country = $_POST["u_country"];
-			echo $reg_phone = $_POST["u_phone"];
-			echo $reg_gender = $_POST["gender"];
-			echo $reg_key = md5(uniqid(rand()));
+			$reg_firstname = mysql_escape_string($_POST["u_firstname"]);
+			$reg_lastname = mysql_escape_string($_POST["u_lastname"]);
+			$reg_username = mysql_escape_string($_POST["u_username"]); //username is equal to EMAIL
+			$reg_password = md5($_POST["u_password"]);
+			$reg_address = mysql_escape_string($_POST["u_address"]);
+			$reg_city = mysql_escape_string($_POST["u_city"]);
+			$reg_country = mysql_escape_string($_POST["u_country"]);
+			$reg_phone = mysql_escape_string($_POST["u_phone"]);
+			$reg_gender = mysql_escape_string($_POST["gender"]);
+			$reg_key = md5(uniqid(rand()));
 			
-			$result = mysql_query("SELECT * from users");
-				while ($row = mysql_fetch_array($result))
-				{
-					$email = $row["email"]; // email is equal to username
-				}
+			$_SESSION["u_firstname"] = $_POST["u_firstname"];
+			$_SESSION["u_lastname"] = $_POST["u_lastname"];
+			$_SESSION["u_username"] = $_POST["u_username"]; //username is equal to EMAIL
+			$_SESSION["u_password"] = md5($_POST["u_password"]);
+			$_SESSION["u_address"] = $_POST["u_address"];
+			$_SESSION["u_city"] = $_POST["u_city"];
+			$_SESSION["u_country"] = $_POST["u_country"];
+			$_SESSION["u_phone"] = $_POST["u_phone"];
 			
-				if($email == $reg_username)
+			$result = mysql_query("SELECT * from users WHERE email='$reg_username'");
+			$num_rows = mysql_num_rows($result);
+			
+			if($num_rows)
+			{
+				// already registered
+				header('Location: register.php?error=email_error');
+			}
+			else
+			{
+				//user_type for subscribers is equal to 0
+				$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$reg_firstname','$reg_lastname','$reg_username','$reg_password','$reg_address','$reg_city','$reg_country','$reg_phone','$reg_gender','$datetime','$datetime','0','$reg_key')");
+				
+				$verification_link = "http://192.168.1.75/repository/treasuria/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
+				if($query_insert_new_user)
 				{
-					header('Location: register.php?error=email_error');
-				}
-				else
-				{
-					//user_type for subscribers is equal to 0
-					$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$reg_firstname','$reg_lastname','$reg_username','$reg_password','$reg_address','$reg_city','$reg_country','$reg_phone','$reg_gender','$datetime','$datetime','0','$reg_key')");
+					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					//error_reporting(E_ALL);
+					error_reporting(E_STRICT);
+
+					date_default_timezone_set('America/Toronto');
+
+					require_once('assets/phpmailer/class.phpmailer.php');
+					//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
+
+					$mail             = new PHPMailer();
+
+					//$body             = file_get_contents('contents.html');
+					$body = "Hi ".$reg_firstname."<br><br>";
+					$body = "Verification Code: ".$verification_link;
 					
-					$verification_link = "http://192.168.1.75/repository/treasuria/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
-					if($query_insert_new_user)
-					{
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						//error_reporting(E_ALL);
-						error_reporting(E_STRICT);
+					$body = eregi_replace("[\]",'',$body);
+					
+					$mail->IsSMTP(); // telling the class to use SMTP
+					$mail->Host       = "mail.yourdomain.com"; // SMTP server
+					$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+															   // 1 = errors and messages
+															   // 2 = messages only
+					$mail->SMTPAuth   = true;                  // enable SMTP authentication
+					$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+					$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+					$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+					$mail->Username   = "desiree.alviento@gmail.com";  // GMAIL username
+					$mail->Password   = "326598des";            // GMAIL password
 
-						date_default_timezone_set('America/Toronto');
+					$mail->SetFrom('desiree.alviento@gmail.com', 'Desiree Alviento');
 
-						require_once('assets/phpmailer/class.phpmailer.php');
-						//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
+					$mail->AddReplyTo("desiree.alviento@gmail.com","Desiree Alviento");
 
-						$mail             = new PHPMailer();
+					$mail->Subject    = "Treasuria, Confirm your Email";
 
-						//$body             = file_get_contents('contents.html');
-						$body = "Hi ".$reg_firstname."<br><br>";
-						$body = "Verification Code: ".$verification_link;
-						
-						$body = eregi_replace("[\]",'',$body);
-						
-						$mail->IsSMTP(); // telling the class to use SMTP
-						$mail->Host       = "mail.yourdomain.com"; // SMTP server
-						$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-																   // 1 = errors and messages
-																   // 2 = messages only
-						$mail->SMTPAuth   = true;                  // enable SMTP authentication
-						$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-						$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-						$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-						$mail->Username   = "desiree.alviento@gmail.com";  // GMAIL username
-						$mail->Password   = "326598des";            // GMAIL password
+					$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
 
-						$mail->SetFrom('desiree.alviento@gmail.com', 'Desiree Alviento');
+					$mail->MsgHTML($body);
 
-						$mail->AddReplyTo("desiree.alviento@gmail.com","Desiree Alviento");
+					//$address = "desireealviento@synergy88studios.com";
+					$address = $reg_username;
+					$mail->AddAddress($address, $reg_firstname);
 
-						$mail->Subject    = "Treasuria, Confirm your Email";
+					//$mail->AddAttachment("images/phpmailer.gif");      // attachment
+					//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
 
-						$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
-
-						$mail->MsgHTML($body);
-
-						$address = "desireealviento@synergy88studios.com";
-						//$address = $reg_username;
-						$mail->AddAddress($address, "Desiree Alviento");
-
-						//$mail->AddAttachment("images/phpmailer.gif");      // attachment
-						//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
-
-						if(!$mail->Send()) {
-						  echo "Mailer Error: " . $mail->ErrorInfo;
-						} else {
-						  //echo "Message sent!";
-						}
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						header('Location: register.php?verify=sentemail');
+					if(!$mail->Send()) {
+					  echo "Mailer Error: " . $mail->ErrorInfo;
+					} else {
+					  //echo "Message sent!";
 					}
+					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					header('Location: register.php?verify=sentemail');
 				}
+			}
 		}
 		else
 		{

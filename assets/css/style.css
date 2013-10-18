@@ -47,13 +47,13 @@ input:focus{outline: none}
 /*** =========================================
              GENERAL PAGE STYLES
 ========================================== ***/
-footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px;}
-.content{margin: 30px;}
+footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px; line-height: 64px}
+.content{margin: 30px; padding-bottom: 30px}
 
 /*   BRANDING & NAVIGATION
 ============================= */
 .branding-login{background: url(../img/logo-login.png) no-repeat top center; height: 59px; width: 222px; margin: 10px auto}
-.navbar{background: #443A22; border-top: 5px solid #DFC12E; border-radius: 0; font-family: 'Milonga'}
+.navbar{background: #443A22; margin-bottom: 0; border-top: 5px solid #DFC12E; border-radius: 0; font-family: 'Milonga'}
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
 .navbar-nav li a{line-height: 35px}
@@ -69,6 +69,7 @@ footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px;}
 ================================== ***/
 .error {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #DE0000; margin: 5px auto; padding: 5px 10px}
 .success {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #F0E436; margin: 5px auto; padding: 5px 10px}
+.form-control { color:#555; font-style: normal; font-size:14px;}
 
 /*   LOGIN PAGE 
 =================== */
