@@ -34,11 +34,24 @@ if(isset($_SESSION['username']))
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
 				<a href="process.php?action=add&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Add Item to Cart</a>
 				<a href="process.php?action=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Remove Item to Cart</a>
-				<a href="?a=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button"><?php if(isset( $_SESSION['cart'][$key_id])) { echo  $_SESSION['cart'][$key_id]; } ?></a>
+				<?php  if(isset( $_SESSION['cart'][$key_id])) { ?><a href="?a=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button"><?php echo  $_SESSION['cart'][$key_id]; } ?></a>
 			</article>
 			
 			<?php
 		}
+		if(isset($_SESSION['cart']) and is_array($_SESSION['cart']))
+		{
+			$totalquantity = 0;
+			foreach($_SESSION['cart'] AS $keyid => $itemQuantity)
+			{
+				$totalquantity = $totalquantity + $itemQuantity;
+			}
+		}
+		else
+		{
+			$totalquantity = 0;
+		}
+		echo "TOTAL: ".$totalquantity;
 	}
 	else
 	{
