@@ -39,6 +39,9 @@ if(isset($_SESSION['username']))
 			
 			<?php
 		}
+		?>
+		<a href="process.php?action=empty" name="key_id" class="btn" type="button">Empty Cart</a>
+		<?php
 		if(isset($_SESSION['cart']) and is_array($_SESSION['cart']))
 		{
 			$totalquantity = 0;
@@ -57,12 +60,7 @@ if(isset($_SESSION['username']))
 	{
 		//echo "empty";
 	}
-	
-
 ?>
-	
-	
-		
 	</section><!--end of CONTAINER-->
 
 	<footer>

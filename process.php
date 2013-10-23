@@ -35,6 +35,10 @@ switch($action)
 		}
 		
 	break;
+	case 'empty':
+		unset($_SESSION['cart']);
+		header('Location: merchant.php');
+	break;
 }	
 	
 switch($_SERVER['QUERY_STRING'])

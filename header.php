@@ -43,7 +43,7 @@ if(isset($_SESSION['username']))
 		<div class="collapse navbar-collapse">
 		  <ul class="nav navbar-nav">
 			<!--<li class="active"><a href="#" title="The Story">The Story</a></li>-->
-			<li><a href="play" class="active" title="Play">Play</a></li>
+			<li><a href="index.php" class="active" title="Play">Play</a></li>
 			<li><a href="challenge" title="Daily Challenge">Daily Challenge</a></li>
 			<li><a href="gallery" title="Treasure Gallery">Treasure Gallery</a></li>
 			<li><a href="merchant.php" title="Merchant Shop">Merchant Shop</a></li>
