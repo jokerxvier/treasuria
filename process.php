@@ -69,6 +69,7 @@ switch($_SERVER['QUERY_STRING'])
 		}
 		
 	break;
+	
 	case 'logout':
 		if($_SESSION["username"])
 		{	
@@ -85,6 +86,7 @@ switch($_SERVER['QUERY_STRING'])
 			header('Location: login.php');
 		}
 	break;
+	
 	case 'register':
 		if(isset($_POST["submit"]))
 		{
@@ -186,4 +188,5 @@ switch($_SERVER['QUERY_STRING'])
 		}
 	break;
 }
+
 ?>
