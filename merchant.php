@@ -32,8 +32,9 @@ if(isset($_SESSION['username']))
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				<h3><?php echo $key_name;?></h3>
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
-				<a href="?a=add&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Add Item to Cart</a>
-				<a href="?a=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button"><?php if(isset($_SESSION['key_id'][$key_id])) { echo $_SESSION['key_id'][$key_id]; } ?></a>
+				<a href="process.php?action=add&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Add Item to Cart</a>
+				<a href="process.php?action=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Remove Item to Cart</a>
+				<a href="?a=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button"><?php if(isset( $_SESSION['cart'][$key_id])) { echo  $_SESSION['cart'][$key_id]; } ?></a>
 			</article>
 			
 			<?php
@@ -44,30 +45,7 @@ if(isset($_SESSION['username']))
 		//echo "empty";
 	}
 	
-	if(isset($_GET['a']))
-	{
-		echo $setkeyid = $_GET['keyid'];
-		$setkey_action = $_GET['a'];
-		
-		/* switch($setkey_action)
-		{ 
-			case "add": */
-				$_SESSION['key_id'][$setkeyid]++;
-			/* break;
 
-			case "remove":
-				if($_SESSION['key_id'][$setkeyid] == 0)
-				{
-				unset($_SESSION['key_id'][$setkeyid]);
-				}
-				else
-				{
-				echo $_SESSION['key_id'][$setkeyid]--;
-				}
-			break;
-		} */
-
-	}
 ?>
 	
 	
