@@ -24,12 +24,6 @@ h2, h3{font-family: 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
 a:hover{color: #5D4F35; text-decoration: none}
 input:focus{outline: none}
-/*.lt{float:left}
-.rt{float: right}
-.clearfix {*zoom: 1}
-.clearfix:before,
-.clearfix:after {display: table; content: ""; line-height: 0}
-.clearfix:after {clear: both}*/
 .htext{font-size: 0; line-height: 0; color: transparent}
 .hidem{color: #9B8263; padding: 0 10px}
 .gold{color: #F0E436}
@@ -82,8 +76,8 @@ footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px; 
 ====================== */
 .register-container {background: #3e311d; width: 680px; margin: 60px auto 0 auto;display: block;
 	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	   -moz-border-radius: 5px;
+	        border-radius: 5px;
 }
 
 @media (max-width: 600px) {
@@ -94,30 +88,51 @@ footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px; 
 	.register-container {width: 280px; margin-top: 35px}
 	}
 
+  /*   PLAY PAGE 
+==================== */
+.game img{
+  -webkit-box-shadow: 0 8px 6px -7px #3E311D;
+     -moz-box-shadow: 0 8px 6px -7px #3E311D;
+          box-shadow: 0 8px 6px -7px #3E311D
+}
+
   /*   MERCHANT SHOP PAGE 
 ============================= */
+.modal-header, .modal-footer{border: none}
+.modal-content{background: #867257}
 .credit-key article{margin: 30px auto}
-.credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top}  
-.credit-key img:hover{
+.credit-key h3{font-size: 1.125em}
+.credit-key h4{font-size: 1.000em}
+.credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top; 
   -webkit-box-shadow: inset 0 0 5px #3E311D;
-  -moz-box-shadow:    inset 0 0 5px #3E311D;
-  box-shadow:         inset 0 0 5px #3E311D
+     -moz-box-shadow: inset 0 0 5px #3E311D;
+          box-shadow: inset 0 0 5px #3E311D
  }
 .credit-key .btn,
-.cart .btn{background: #3E311D; color: #977E5F; border-radius: none}
+.cart .btn,
+.payment .btn{background: #3E311D; color: #977E5F; margin-bottom: 10px}
 .credit-key .btn:hover,
-.cart .btn:hover{background: #977E5F; color: #3E311D}
+.cart .btn:hover,
+.payment .btn:hover{background: #977E5F; color: #3E311D}
 .cart img{margin: 0 auto}
 
 
 table{background: #A58A67; color: #635337; text-align: center}
 table th{background: #3D3521; color: #A58A67; padding: 30px auto; font-family: 'Milonga'; text-align: center}
-
 table.table thead{padding: 10px 0}
-
 .table.table-borderless td,
 .table.table-borderless th {border: none}
 
-.checkout a{margin: 10px 0 30px 20px}
+.checkout a{margin: 0 0 30px 20px}
 
-.payment{margin: 30px auto}
+/*.payment{width: 680px; margin: 30px auto}
+.payment input,
+.payment select{border: 1px solid #CAB395}
+
+@media (max-width: 600px) {
+  .payment {width: 480px}
+  }
+
+@media (max-width: 480px) {
+  .payment {width: 280px; margin-top: 35px}
+  }*/

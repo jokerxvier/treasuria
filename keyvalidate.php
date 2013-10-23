@@ -17,17 +17,16 @@ if (isset($_GET['key']) and (strlen($_GET['key']) == 32))  //The Activation key 
 	$result = mysql_query("SELECT * FROM users");
 	while ($row = mysql_fetch_array($result))
 	{
+		$db_userid = $row['user_id'];
 		$db_email = $row['email'];
 		$db_key = $row['key_email'];
 		
 		if($email==$db_email and $key==$db_key)
 		{
 			$query_verified = mysql_query("UPDATE users SET key_email=NULL WHERE email='$db_email' and key_email='$db_key'");
+			$query_free_credits = mysql_query("INSERT INTO user_points (user_id,points,created_at,updated_at) VALUES ('$db_userid','50','$datetime','$datetime')");
 			
-			if($query_verified)
-			{
-				header('Location: login.php?verify=success');
-			}
+			header('Location: login.php?verify=success');
 		}
 		else
 		{

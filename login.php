@@ -4,7 +4,7 @@
 if(!isset($_SESSION['username']))
 {
 $key_error = "ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect";
-$verified = "SUCCESS: Email Address successfully verified. You may now login.";
+$verified = "SUCCESS: Email Address successfully verified, you gain free credits. You may now login.";
 $not_verified = "ERROR: Email Address not verified.";
 $error_activation = "ERROR: Oops! Your account could not be activated. Please recheck the link or contact the system administrator.";
 ?>
