@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+include "qrcode/BarcodeQR.php";  
+?>
 
 <!DOCTYPE html>
 <html lang="en">

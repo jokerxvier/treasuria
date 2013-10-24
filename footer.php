@@ -106,6 +106,17 @@
 				  form.submit();
 				}
 		});
+		
+		
+		$('.modal-btn').on('click', function (){
+			$('#myModal').modal('show');
+			var item_img  = $(this).parent().find('.txt-qrcde').val();	
+			var item_title  = $(this).parent().find('.item-title').text();
+			$('#myModal .modal-body').html('<img src="'+item_img+'" />');
+			$('.modal-title').text(item_title);
+		});
+		
+		$('#myModal').data('modal', null);
 	});
 	</script> 
 
