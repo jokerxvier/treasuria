@@ -4,7 +4,6 @@
 if(isset($_SESSION['username']))
 {
 ?>
-
 	<section class="container cart">
 	  <h2>Merchant Shop</h2>
     <div class="pull-right checkout">

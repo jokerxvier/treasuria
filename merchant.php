@@ -36,6 +36,7 @@ if(isset($_SESSION['username']))
 	{
 		while ($row_key = mysql_fetch_array($result_key))
 		{
+			$key_uniq = $row_key['key_uniq'];
 			$key_id = $row_key['key_id'];
 			$key_img = $row_key['key_img'];
 			$key_credits = $row_key['key_credits'];
@@ -48,17 +49,17 @@ if(isset($_SESSION['username']))
 
                   <?php 
            			 	$qr = new BarcodeQR(); 
-						$images = $qr->paypal($key_name, $key_price, '1', $key_id);
+						$images = $qr->paypal($key_name, $key_price, '1', $key_uniq);
 					?>
                  <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				<h3 class="item-title"><?php echo $key_name;?></h3>
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
-				<a href="process.php?action=add&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button">Add Item</a>
-				<a href="process.php?action=remove&keyid=<?php echo $key_id;?>" name="key_id" class="btn" type="button"><span class="glyphicon glyphicon-minus"></span></a>
-			    <?php  if(isset( $_SESSION['cart'][$key_id])) { ?><a href="?a=remove&keyid=<?php echo $key_id;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_id]; } ?></a>
+				<a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id" class="btn" type="button">Add Item</a>
+				<a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id" class="btn" type="button"><span class="glyphicon glyphicon-minus"></span></a>
+			    <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?></a>
 			   
-			    <a class="btn modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_id;?>"> </a>
+			    <a class="btn modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_uniq;?>"> </a>
 
 
 			   

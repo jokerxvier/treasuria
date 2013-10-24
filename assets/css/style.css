@@ -27,6 +27,8 @@ input:focus{outline: none}
 .htext{font-size: 0; line-height: 0; color: transparent}
 .hidem{color: #9B8263; padding: 0 10px}
 .gold{color: #F0E436}
+.brown{color: #564732}
+.rt{margin-right: 15px}
 .border{border: 1px solid red}
 
 /*   ANIMATION
@@ -98,8 +100,8 @@ footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px; 
 
   /*   MERCHANT SHOP PAGE 
 ============================= */
-.modal-header, .modal-footer{border: none}
-.modal-content{background: #867257}
+
+/*** PRODUCT GALLERY ***/
 .credit-key article{margin: 30px auto}
 .credit-key h3{font-size: 1.125em}
 .credit-key h4{font-size: 1.000em}
@@ -109,14 +111,18 @@ footer{background: url(../img/footer-bg.jpg) repeat-x center top; height: 64px; 
           box-shadow: inset 0 0 5px #3E311D
  }
 .credit-key .btn,
-.cart .btn,
-.payment .btn{background: #3E311D; color: #977E5F; margin-bottom: 10px}
+.cart .btn{background: #3E311D; color: #977E5F; margin-bottom: 10px}
 .credit-key .btn:hover,
-.cart .btn:hover,
-.payment .btn:hover{background: #977E5F; color: #3E311D}
+.cart .btn:hover{background: #977E5F; color: #3E311D}
 .cart img{margin: 0 auto}
+.empty{padding-left: 15px}
+.shopping{font-size: .875em; padding: 0 0 10px 0}
+.total{font-size: 1.25em; padding-bottom: 30px}
 
+.modal-header, .modal-footer{border: none}
+.modal-content{background: #544832; border: none}
 
+/*** CART ***/
 table{background: #A58A67; color: #635337; text-align: center}
 table th{background: #3D3521; color: #A58A67; padding: 30px auto; font-family: 'Milonga'; text-align: center}
 table.table thead{padding: 10px 0}
@@ -124,15 +130,3 @@ table.table thead{padding: 10px 0}
 .table.table-borderless th {border: none}
 
 .checkout a{margin: 0 0 30px 20px}
-
-/*.payment{width: 680px; margin: 30px auto}
-.payment input,
-.payment select{border: 1px solid #CAB395}
-
-@media (max-width: 600px) {
-  .payment {width: 480px}
-  }
-
-@media (max-width: 480px) {
-  .payment {width: 280px; margin-top: 35px}
-  }*/

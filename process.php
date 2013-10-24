@@ -16,7 +16,7 @@ switch($action)
 		
 		  $item_id =  isset($_GET['keyid']) ? $_GET['keyid'] : '';
 		  
-		  if (is_numeric($item_id)){
+		  if ($item_id){
 			$_SESSION['cart'][$item_id]++;
 			header('Location: merchant.php');
 		  }
@@ -27,7 +27,7 @@ switch($action)
 		
 		$item_id =  isset($_GET['keyid']) ? $_GET['keyid'] : '';
 
-		if (is_numeric($item_id))
+		if ($item_id)
 		{
 			$_SESSION['cart'][$item_id]--;
 			if($_SESSION['cart'][$item_id] == 0) unset($_SESSION['cart'][$item_id]);
