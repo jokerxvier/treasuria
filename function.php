@@ -1,7 +1,5 @@
 <?php
-include("db_connect.php"); 
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
+
 function getUserId($username, $pass){
 
 	$username = $username;
@@ -37,4 +35,27 @@ function displayCartList($id){
 	
 	return $arr;
 }
+
+
+function getTableData($tableName, $conditon){
+	
+	$display = 'Select * FROM '. $tableName . ' WHERE ' .  $conditon;
+	$query = mysql_query($display);
+	$num_rows = mysql_num_rows($query);
+	if($num_rows>0)
+	{
+		$row = mysql_fetch_array($query);
+		
+		return $row;
+	}else {
+		$err = array();
+		$err['error'] = true;
+			
+		return 	$err;
+	}
+
+}
+
+
+
 ?>

@@ -21,6 +21,7 @@ if(isset($_SESSION['username']))
 {
 
 include("db_connect.php");
+include "function.php"; 
 
 $datetime = date('Y-m-d H:i:s');
 $databaseconnect = NEW databaseconnect();
@@ -28,38 +29,14 @@ $databaseconnect->dbconnect();
 $session_username = $_SESSION['username'];
 $session_user_id = $_SESSION['user_id'];
 
-//$result = mysql_query("SELECT a.user_id, a.email, b.points, b.user_id FROM users a, user_points b WHERE a.email='$session_username' and a.user_id = b.user_id");
-$result = mysql_query("SELECT * FROM user_credits WHERE user_id='$session_user_id'");
-$num_rows = mysql_num_rows($result);
-if($num_rows>0)
-{
-	while ($row = mysql_fetch_array($result))
-	{
-		$user_id = $row['user_id'];
-		$credits = $row['credits'];
-	}
-}
-else
-{
-$credits = 0;
-}	
 
-$result = mysql_query("SELECT * FROM user_points WHERE user_id='$session_user_id'");
-$num_rows = mysql_num_rows($result);
+$tableName = 'user_credits';
+$condition = 'user_id = '. $session_user_id;
+$user_credit = getTableData($tableName, $condition);
 
-if($num_rows>0)
-{
-	while ($row = mysql_fetch_array($result))
-	{
-		$user_id = $row['user_id'];
-		$points = $row['points'];
-	}
-}
-else
-{
-$points = 0;
-}
 
+$pointsTable = 'user_points';
+$user_points = getTableData($pointsTable, $condition);
 ?>
 
 <header>
@@ -74,8 +51,8 @@ $points = 0;
 			<li><a href="#" title="Registration">Register</a></li> -->
 			</ul>
 			<ul class="list-inline user-login">
-			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo $credits; ?> </li> <span class="hidem">|</span>
-			<li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo $points; ?> </li>
+			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </li> <span class="hidem">|</span>
+			<li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
 			</ul>
 		</div>
 	</div>
