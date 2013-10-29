@@ -1,12 +1,5 @@
 <?php include 'header.php'; ?>
 
-<?php
-include("db_connect.php");
-
-$datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
-?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -19,6 +19,47 @@ include "qrcode/BarcodeQR.php";
 <?php
 if(isset($_SESSION['username']))
 {
+
+include("db_connect.php");
+
+$datetime = date('Y-m-d H:i:s');
+$databaseconnect = NEW databaseconnect();
+$databaseconnect->dbconnect();
+$session_username = $_SESSION['username'];
+$session_user_id = $_SESSION['user_id'];
+
+//$result = mysql_query("SELECT a.user_id, a.email, b.points, b.user_id FROM users a, user_points b WHERE a.email='$session_username' and a.user_id = b.user_id");
+$result = mysql_query("SELECT * FROM user_credits WHERE user_id='$session_user_id'");
+$num_rows = mysql_num_rows($result);
+if($num_rows>0)
+{
+	while ($row = mysql_fetch_array($result))
+	{
+		$user_id = $row['user_id'];
+		$credits = $row['credits'];
+	}
+}
+else
+{
+$credits = 0;
+}	
+
+$result = mysql_query("SELECT * FROM user_points WHERE user_id='$session_user_id'");
+$num_rows = mysql_num_rows($result);
+
+if($num_rows>0)
+{
+	while ($row = mysql_fetch_array($result))
+	{
+		$user_id = $row['user_id'];
+		$points = $row['points'];
+	}
+}
+else
+{
+$points = 0;
+}
+
 ?>
 
 <header>
@@ -31,6 +72,10 @@ if(isset($_SESSION['username']))
 			
 			<!-- <span class="hidem">|</span></li>
 			<li><a href="#" title="Registration">Register</a></li> -->
+			</ul>
+			<ul class="list-inline user-login">
+			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo $credits; ?> </li> <span class="hidem">|</span>
+			<li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo $points; ?> </li>
 			</ul>
 		</div>
 	</div>

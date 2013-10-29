@@ -1,12 +1,5 @@
 <?php include 'header.php'; ?>
 
-<?php
-include("db_connect.php");
-
-$datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
-?>
 
 <section class="container credit-key">
 	<h2>Treasure Gallery</h2>

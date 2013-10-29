@@ -60,6 +60,7 @@ switch($_SERVER['QUERY_STRING'])
 					$email = $row['email'];
 					$pass = $row['password'];
 					$_SESSION["firstname"] = $row['firstname'];
+					$_SESSION['user_id'] = $row['user_id'];
 					$key = $row['key_email'];
 					
 					if($username==$email and $password==$pass)
