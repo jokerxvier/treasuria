@@ -26,7 +26,7 @@ $databaseconnect->dbconnect();
 <section class="container credit-key">
 	<h2>Merchant Shop</h2>
 
-
+<div class="clearfix">
 <?php
 if(isset($_SESSION['username']))
 {
@@ -47,31 +47,28 @@ if(isset($_SESSION['username']))
 			
 			<article class="col-xs-6 col-md-2 text-center">
 
-                  <?php 
+                <?php 
            			 	$qr = new BarcodeQR(); 
 						$images = $qr->paypal($key_name, $key_price, '1', $key_uniq);
 					?>
-                 <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
+                <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				<h3 class="item-title"><?php echo $key_name;?></h3>
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
-				<a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id" class="btn" type="button">Add Item</a>
-				<a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id" class="btn" type="button"><span class="glyphicon glyphicon-minus"></span></a>
-			    <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?></a>
-			   
+                <div class="shopping">
+				  <a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-plus"></span> Add</a><span class="hidem">|</span>
+				  <a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>
+			      <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?></a>
+			    </div>
 			    <a class="btn modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_uniq;?>"> </a>
-
-
-			   
-         
-			</article>
-		
-			<?php
+			          
+	</article>		
+    <?php
 		}
-		?>
-     
-		<a href="process.php?action=empty" name="key_id" class="btn" type="button"><span class="glyphicon glyphicon-trash"></span></a>
+	?>
+</div> 
 
+<div class="total">
 		<?php
 		if(isset($_SESSION['cart']) and is_array($_SESSION['cart']))
 		{
@@ -93,7 +90,10 @@ if(isset($_SESSION['username']))
 	}
 
 ?>
-	</section><!--end of CONTAINER-->
+
+<a href="cart.php" name="key_id" class="empty">View Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
+</div>	
+</section><!--end of CONTAINER-->
 
 	<footer>
 	  <div class="container">

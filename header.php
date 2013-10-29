@@ -1,6 +1,8 @@
 <?php 
 session_start();
-include "qrcode/BarcodeQR.php";  
+include "qrcode/BarcodeQR.php"; 
+
+
 ?>
 
 <!DOCTYPE html>
