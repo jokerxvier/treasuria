@@ -116,8 +116,8 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .credit-key .btn:hover,
 .cart .btn:hover{background: #977E5F; color: #3E311D}
 .cart img{margin: 0 auto}
+
 .empty{padding-left: 15px}
-.prod-total span{position: relative; top: 0; z-index: 5}
 .shopping{font-size: .875em; padding: 0 0 10px 0}
 .total{font-size: 1.25em; padding-bottom: 30px}
 
