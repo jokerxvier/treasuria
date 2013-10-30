@@ -39,7 +39,7 @@ function displayCartList($id){
 
 function getTableData($tableName, $conditon){
 	
-	$display = 'Select * FROM '. $tableName . ' WHERE ' .  $conditon;
+	$display = 'Select *  FROM '. $tableName . ' WHERE ' .  $conditon;
 	$query = mysql_query($display);
 	$num_rows = mysql_num_rows($query);
 	if($num_rows>0)
@@ -56,17 +56,38 @@ function getTableData($tableName, $conditon){
 
 }
 
+function getCredits($id){
+	
+	$display = "Select SUM(credits) AS total From user_credits WHERE user_id = '$id'";
+	$query = mysql_query($display);
+	$num_rows = mysql_num_rows($query);
+	if($num_rows>0)
+	{
+		$row = mysql_fetch_array($query);
+		
+		return $row['total'];
+	}else {
+		$err = array();
+		$err['error'] = true;
+			
+		return 	$err;
+	}
+
+}
+
 function getPaypalItem(){
 	$arr = array();
 	$ctr = 0;
+	$total = 0;
 	if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 		 foreach ($_SESSION['cart'] as $item_id => $qty){
 			 $data = displayCartList($item_id);
 			 foreach($data as $key=>$item){
 				 $price = $item['price'] * $qty;
-				 $arr = array(
+				 $total += $price; 
+				 $arr += array(
 				 	 "L_PAYMENTREQUEST_0_DESC$ctr" => $item['key_name'], //description of the forst product
-                 	 "L_PAYMENTREQUEST_0_AMT0$ctr" => $price, //amount first product
+                 	 "L_PAYMENTREQUEST_0_AMT0$ctr" => $item['price'], //amount first product
                   	 "L_PAYMENTREQUEST_0_QTY0$ctr" => $qty, //qty first product
 				 );
 				 
@@ -76,6 +97,37 @@ function getPaypalItem(){
 		 
 		 return $arr;
 		
+	}
+	
+}
+
+function getPaypalItemTotal(){
+	$arr = array();
+	$ctr = 0;
+	$total = 0;
+	$quantity = 0;
+	if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+		 foreach ($_SESSION['cart'] as $item_id => $qty){
+			 $data = displayCartList($item_id);
+			 foreach($data as $key=>$item){
+				$price = $item['price'] * $qty ;
+				$total += $price;			
+			 }
+		 }
+		 
+		 return number_format($total, 2);
+		
+	}
+	
+}
+
+
+function getKeyValue($id){
+	$result = mysql_query("SELECT key_credits FROM treasuria_key WHERE key_uniq = '$id' LIMIT 1");
+	if (mysql_num_rows($result) > 0){
+		$row = mysql_fetch_array($result);
+		
+		return $row['key_credits'];
 	}
 	
 }

@@ -19,7 +19,8 @@ if(isset($_SESSION['username']))
     <div class="pull-right checkout">
       <a class="btn" title="Back to previous page">Back</a>
     </div>
-
+    	
+		<p><?php echo (isset($_REQUEST['success']) && $_REQUEST['success'] == 1 ) ? 'You Have Successfully Purchased an Item' : ''  ?> </p>
         <table class="table table-borderless">
           <thead>
           <tr>
@@ -71,13 +72,17 @@ if(isset($_SESSION['username']))
          
         </tbody>
         </table>
+        <?php 
+			if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) :
+		?>
         <div class="checkout">
           <a href="process.php?action=empty" class="btn" title="Empty Cart">Empty Cart</a>
           <div class="pull-right">
-            <a class="btn pull" title="Checkout with Credit Card">Continue Checkout</a>
+           <!-- <a class="btn pull" title="Checkout with Credit Card">Continue Checkout</a>-->
             <a href="process.php?action=checkout" class="btn" title="Checkout with Paypal">Checkout with Paypal</a>
           </div>
         </div>
+        <?php endif; ?>
 	</section><!--end of CONTAINER-->
 
 	<footer>

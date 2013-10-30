@@ -37,6 +37,8 @@ $user_credit = getTableData($tableName, $condition);
 
 $pointsTable = 'user_points';
 $user_points = getTableData($pointsTable, $condition);
+
+
 ?>
 
 <header>
@@ -51,7 +53,7 @@ $user_points = getTableData($pointsTable, $condition);
 			<li><a href="#" title="Registration">Register</a></li> -->
 			</ul>
 			<ul class="list-inline user-login">
-			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </li> <span class="hidem">|</span>
+			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : getCredits($session_user_id); ?> </li> <span class="hidem">|</span>
 			<li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
 			</ul>
 		</div>

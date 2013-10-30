@@ -2,7 +2,7 @@
 session_start();
 include("db_connect.php");
 include("paypal.php");
-
+include("function.php");
 $datetime = date('Y-m-d H:i:s');
 $databaseconnect = NEW databaseconnect();
 $databaseconnect->dbconnect();
@@ -39,27 +39,23 @@ switch($action)
 	
 	case 'checkout' :
 	
+	
+	
 		$requestParams = array(
 		   'RETURNURL' => 'http://localhost/repository/treasuria/process.php?action=success',
-		   'CANCELURL' => ''
+		   'CANCELURL' => 'http://localhost/repository/treasuria/process.php?action=cancel'
 		);
+		
+		$item = getPaypalItem();
+		$total = getPaypalItemTotal();
 
-		$item = array('L_PAYMENTREQUEST_0_NAME0' => 'Test product ', //title of the first product
-                  'L_PAYMENTREQUEST_0_DESC0' => 'Description of my item', //description of the forst product
-                  'L_PAYMENTREQUEST_0_AMT0' => '0.01', //amount first product
-                  'L_PAYMENTREQUEST_0_QTY0' => '1', //qty first product
-
-                  'L_PAYMENTREQUEST_0_NAME1' => 'Test ', // title of the second product
-                  'L_PAYMENTREQUEST_0_DESC1' => 'Description item',//description of the second product
-                  'L_PAYMENTREQUEST_0_AMT1' => '0.01',//amount second product
-                  'L_PAYMENTREQUEST_0_QTY1' => '1'//qty second product
-                 );
+		
 
 		  $orderParams = array(
 			 'PAYMENTREQUEST_0_PAYMENTACTION'=>'Sale', //becouse we want to sale something
-			 'PAYMENTREQUEST_0_AMT' => '0.02', //total amount (items amount+shipping..etc)
+			 'PAYMENTREQUEST_0_AMT' => $total, //total amount (items amount+shipping..etc)
 			 'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD', //curency code
-			 'PAYMENTREQUEST_0_ITEMAMT' => '0.02', //total amount items, without shipping and other taxes
+			 'PAYMENTREQUEST_0_ITEMAMT' =>  $total, //total amount items, without shipping and other taxes
 			 'PAYMENTREQUEST_0_SHIPPINGAMT' => '0' //the shipping amount, will be 0 coz we sell digital products
 		  );
 		
@@ -67,6 +63,7 @@ switch($action)
 		
 		$paypal = new Paypal();
 		$response = $paypal -> request('SetExpressCheckout',$requestParams + $orderParams + $item);
+		print_r($response);
 		if(is_array($response) && $response['ACK'] == 'Success') { //Request successful
      		 $token = $response['TOKEN'];
       		header( 'Location: https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token) );
@@ -82,13 +79,13 @@ switch($action)
 			   // We can save it for future reference or cross-check with the data we have
 			   $paypal = new Paypal();
 			   $checkoutDetails = $paypal -> request('GetExpressCheckoutDetails', array('TOKEN' => $_GET['token']));
-			
+			   $total = getPaypalItemTotal();
 			   // Complete the checkout transaction
 			   $requestParams = array(
 				   'TOKEN' => $_GET['token'],
 				   'PAYMENTACTION' => 'Sale',
 				   'PAYERID' => $_GET['PayerID'],
-				   'PAYMENTREQUEST_0_AMT' => '500', // Same amount as in the original request
+				   'PAYMENTREQUEST_0_AMT' => $total, // Same amount as in the original request
 				   'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD' // Same currency as the original request
 			   );
 			
@@ -98,8 +95,32 @@ switch($action)
 			   if( is_array($response) && $response['PAYMENTINFO_0_ACK'] == 'Success') { // Payment successful
 				   // We'll fetch the transaction ID for internal bookkeeping
 				   $transactionId = $response['PAYMENTINFO_0_TRANSACTIONID'];
+				   /*$user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
+				   $query_insert_login = mysql_query("UPDATE users SET login_date='$datetime' WHERE email='$username' and password='$password'");*/
+				   //unset($_SESSION['cart']);
+				   //header('Location: cart.php?success=1');
+				   $purchasedtotal = getPaypalItemTotal();
+				   $total = 0;
+				   foreach ($_SESSION['cart'] as $item_id => $qty){
+					   	$credits = getKeyValue($item_id);
+						$credTotal =$credits * $qty;
+						$total += $credTotal;
+					   
+				   }
+				  
+				   $user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
+				   if ($response['PAYMENTINFO_0_AMT'] == $purchasedtotal){
+						 $query = mysql_query("INSERT INTO user_credits (user_id, credits) VALUES ($user_id, $total)");
+						 if($query){
+								unset($_SESSION['cart']);	
+								header('Location: cart.php?success=1');
+						 }
+				   }else {
+					   
+						echo "not equal";   
+				   }
 				   
-				   echo  $transactionId; 
+				  
 			   }
 			   
 			 
@@ -107,6 +128,11 @@ switch($action)
 			
 			
 	
+	break;
+	
+	case 'cancel' :
+		echo "cancel";
+
 	break;
 	
 
@@ -136,6 +162,7 @@ switch($_SERVER['QUERY_STRING'])
 				{
 					$email = $row['email'];
 					$pass = $row['password'];
+					
 					$_SESSION["firstname"] = $row['firstname'];
 					$_SESSION['user_id'] = $row['user_id'];
 					$key = $row['key_email'];
