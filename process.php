@@ -2,10 +2,11 @@
 session_start();
 include("db_connect.php");
 include("paypal.php");
+
 $datetime = date('Y-m-d H:i:s');
 $databaseconnect = NEW databaseconnect();
 $databaseconnect->dbconnect();
-include("function.php");
+
 ?>
 
 <?php
@@ -37,9 +38,7 @@ switch($action)
 	break;
 	
 	case 'checkout' :
-		
-		
-		
+	
 		$requestParams = array(
 		   'RETURNURL' => 'http://localhost/repository/treasuria/process.php?action=success',
 		   'CANCELURL' => ''
