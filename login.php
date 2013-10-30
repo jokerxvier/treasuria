@@ -10,9 +10,22 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
 ?>
 
 <section class="container">
-  <div class="account-container">
+
+  <div class="story img-responsive clearfix">
+	<!--GAME STORY-->
+		<!--Adobe Edge Runtime-->
+		<script type="text/javascript" charset="utf-8" src="story_v2_edgePreload.js"></script>
+		<style>
+			.edgeLoad-EDGE-30404443 { visibility:hidden; }
+		</style>
+		<!--Adobe Edge Runtime End-->
+		<div id="Stage" class="EDGE-1904043">
+		</div>
+	<!--end of GAME STORY-->
+  </div>
   
-  <div class="content clearfix">
+  <div class="account-container"> 
+    <div class="content clearfix">
     
     <form action="process.php?login" method="post" id="treasuria_login" name="treasuria_login">
     
@@ -28,15 +41,15 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
         <p>Please provide your details</p>
 
         <div class="form-group">
-          <label for="admin_username" class="col-lg-4 control-label">Email Address</label>
-          <div class="col-lg-8">
+          <label for="admin_username" class="col-md-4 control-label">Email Address</label>
+          <div class="col-md-8">
             <input type="text" class="form-control" id="admin_username" name="username" value="" placeholder="Email Address" class="login username-field" />
           </div>		  
         </div> <!--end of USERNAME-->
         
         <div class="form-group">
-          <label for="admin_password" class="col-lg-4 control-label">Password</label>
-          <div class="col-lg-8">
+          <label for="admin_password" class="col-md-4 control-label">Password</label>
+          <div class="col-md-8">
             <input type="password" class="form-control" id="admin_password" name="password" value="" placeholder="Password" class="login password-field"/>
           </div>
         </div> <!--end of PASSWORD-->
@@ -56,6 +69,7 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
 
   </div> <!--end of CONTENT -->
 </div> <!--end of ACCOUNT-CONTAINER-->
+
 
 </section>
 
