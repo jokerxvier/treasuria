@@ -1,11 +1,11 @@
 <?php
 session_start();
 include("db_connect.php");
-
+include("paypal.php");
 $datetime = date('Y-m-d H:i:s');
 $databaseconnect = NEW databaseconnect();
 $databaseconnect->dbconnect();
-
+include("function.php");
 ?>
 
 <?php
@@ -35,6 +35,84 @@ switch($action)
 		}
 		
 	break;
+	
+	case 'checkout' :
+		
+		
+		
+		$requestParams = array(
+		   'RETURNURL' => 'http://localhost/repository/treasuria/process.php?action=success',
+		   'CANCELURL' => ''
+		);
+
+		$item = array('L_PAYMENTREQUEST_0_NAME0' => 'Test product ', //title of the first product
+                  'L_PAYMENTREQUEST_0_DESC0' => 'Description of my item', //description of the forst product
+                  'L_PAYMENTREQUEST_0_AMT0' => '0.01', //amount first product
+                  'L_PAYMENTREQUEST_0_QTY0' => '1', //qty first product
+
+                  'L_PAYMENTREQUEST_0_NAME1' => 'Test ', // title of the second product
+                  'L_PAYMENTREQUEST_0_DESC1' => 'Description item',//description of the second product
+                  'L_PAYMENTREQUEST_0_AMT1' => '0.01',//amount second product
+                  'L_PAYMENTREQUEST_0_QTY1' => '1'//qty second product
+                 );
+
+		  $orderParams = array(
+			 'PAYMENTREQUEST_0_PAYMENTACTION'=>'Sale', //becouse we want to sale something
+			 'PAYMENTREQUEST_0_AMT' => '0.02', //total amount (items amount+shipping..etc)
+			 'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD', //curency code
+			 'PAYMENTREQUEST_0_ITEMAMT' => '0.02', //total amount items, without shipping and other taxes
+			 'PAYMENTREQUEST_0_SHIPPINGAMT' => '0' //the shipping amount, will be 0 coz we sell digital products
+		  );
+		
+		
+		
+		$paypal = new Paypal();
+		$response = $paypal -> request('SetExpressCheckout',$requestParams + $orderParams + $item);
+		if(is_array($response) && $response['ACK'] == 'Success') { //Request successful
+     		 $token = $response['TOKEN'];
+      		header( 'Location: https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token) );
+		}
+		
+	
+			
+	break;
+	
+	case 'success' :
+		if( isset($_GET['token']) && !empty($_GET['token']) ) { // Token parameter exists
+			   // Get checkout details, including buyer information.
+			   // We can save it for future reference or cross-check with the data we have
+			   $paypal = new Paypal();
+			   $checkoutDetails = $paypal -> request('GetExpressCheckoutDetails', array('TOKEN' => $_GET['token']));
+			
+			   // Complete the checkout transaction
+			   $requestParams = array(
+				   'TOKEN' => $_GET['token'],
+				   'PAYMENTACTION' => 'Sale',
+				   'PAYERID' => $_GET['PayerID'],
+				   'PAYMENTREQUEST_0_AMT' => '500', // Same amount as in the original request
+				   'PAYMENTREQUEST_0_CURRENCYCODE' => 'USD' // Same currency as the original request
+			   );
+			
+			   $response = $paypal -> request('DoExpressCheckoutPayment',$requestParams);
+			   
+		
+			   if( is_array($response) && $response['PAYMENTINFO_0_ACK'] == 'Success') { // Payment successful
+				   // We'll fetch the transaction ID for internal bookkeeping
+				   $transactionId = $response['PAYMENTINFO_0_TRANSACTIONID'];
+				   
+				   echo  $transactionId; 
+			   }
+			   
+			 
+			}
+			
+			
+	
+	break;
+	
+
+
+	
 	case 'empty':
 		unset($_SESSION['cart']);
 		header('Location: merchant.php');

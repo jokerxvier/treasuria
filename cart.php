@@ -19,6 +19,7 @@ if(isset($_SESSION['username']))
     <div class="pull-right checkout">
       <a class="btn" title="Back to previous page">Back</a>
     </div>
+
         <table class="table table-borderless">
           <thead>
           <tr>
@@ -74,7 +75,7 @@ if(isset($_SESSION['username']))
           <a href="process.php?action=empty" class="btn" title="Empty Cart">Empty Cart</a>
           <div class="pull-right">
             <a class="btn pull" title="Checkout with Credit Card">Continue Checkout</a>
-            <a class="btn" title="Checkout with Paypal">Checkout with Paypal</a>
+            <a href="process.php?action=checkout" class="btn" title="Checkout with Paypal">Checkout with Paypal</a>
           </div>
         </div>
 	</section><!--end of CONTAINER-->

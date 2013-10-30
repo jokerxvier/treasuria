@@ -56,6 +56,30 @@ function getTableData($tableName, $conditon){
 
 }
 
+function getPaypalItem(){
+	$arr = array();
+	$ctr = 0;
+	if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+		 foreach ($_SESSION['cart'] as $item_id => $qty){
+			 $data = displayCartList($item_id);
+			 foreach($data as $key=>$item){
+				 $price = $item['price'] * $qty;
+				 $arr = array(
+				 	 "L_PAYMENTREQUEST_0_DESC$ctr" => $item['key_name'], //description of the forst product
+                 	 "L_PAYMENTREQUEST_0_AMT0$ctr" => $price, //amount first product
+                  	 "L_PAYMENTREQUEST_0_QTY0$ctr" => $qty, //qty first product
+				 );
+				 
+				 $ctr++;
+			 }
+		 }
+		 
+		 return $arr;
+		
+	}
+	
+}
+
 
 
 ?>
