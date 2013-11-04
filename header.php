@@ -77,6 +77,7 @@ $user_points = getTableData($pointsTable, $condition);
 			<!--<li><a href="challenge.php" title="Daily Challenge">Daily Challenge</a></li>-->
 			<li><a href="gallery.php" title="Treasure Gallery">Treasure Gallery</a></li>
 			<li><a href="merchant.php" title="Merchant Shop">Merchant Shop</a></li>
+			<li><a href="tutorial.php" title="Tuttorial">Tutorial</a></li>
 		  </ul>
 		</div><!--/.nav-collapse -->
 
