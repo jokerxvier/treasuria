@@ -37,24 +37,25 @@ $user_credit = getTableData($tableName, $condition);
 
 $pointsTable = 'user_points';
 $user_points = getTableData($pointsTable, $condition);
-
-
 ?>
 
 <header>
 	<div id="wrap">
 	<div class="container">
-		<div class="pull-right">
-			<ul class="list-inline user-login">
-			<li><?php echo "Hi ".$_SESSION['firstname']."!"; ?></li><span class="hidem">|</span>
-			<li><a href="process.php?logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
-			
-			<!-- <span class="hidem">|</span></li>
-			<li><a href="#" title="Registration">Register</a></li> -->
+		<div class="clearfix">
+			<ul class="list-inline user-login pull-right">
+			  <li><?php echo "Hi ".$_SESSION['firstname']."!"; ?></li><span class="hidem">|</span>
+			  <li><a href="process.php?logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
 			</ul>
-			<ul class="list-inline user-login">
-			<li> <span class="glyphicon glyphicon-record"></span> Credits: <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : getCredits($session_user_id); ?> </li> <span class="hidem">|</span>
-			<li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
+		</div>
+		<div>
+			<ul class="list-inline user-login pull-right key-tally">
+			  <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
+			  <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
+		      <li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
+		  	  <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
+			  <li> <a href="#" class="sapphire" alt="Sapphire Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li> <span class="hidem">|</span>
+			  <li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
 			</ul>
 		</div>
 	</div>
@@ -69,7 +70,7 @@ $user_points = getTableData($pointsTable, $condition);
 		  </button>
 		  <a class="navbar-brand" href="#"><img src="assets/img/logo.png" class="img-responsive" alt="Treasuria Logo" /></a>
 		</div><!--NAVBAR-HEADER-->
-		<div class="collapse navbar-collapse">
+		<div class="collapse navbar-collapse col-xs-12 col-md-4 clearfix">
 		  <ul class="nav navbar-nav">
 			<!--<li class="active"><a href="#" title="The Story">The Story</a></li>-->
 			<li><a href="index.php" class="active" title="Play">Play</a></li>
@@ -78,8 +79,10 @@ $user_points = getTableData($pointsTable, $condition);
 			<li><a href="merchant.php" title="Merchant Shop">Merchant Shop</a></li>
 		  </ul>
 		</div><!--/.nav-collapse -->
+
 	  </div>
 	</nav>
+
 </header>
 	
 <?php

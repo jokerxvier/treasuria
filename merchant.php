@@ -46,14 +46,17 @@ if(isset($_SESSION['username']))
 					?>
                 <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
+                <div class="key-count">
+				  <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?> Key / s</a>
+				</div>
 				<h3 class="item-title"><?php echo $key_name;?></h3>
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
                 <div class="shopping">
 				  <a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-plus"></span> Add</a><span class="hidem">|</span>
 				  <a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>
-			      <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?></a>
+
 			    </div>
-			    <a class="btn modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_uniq;?>"> </a>
+			    <a class="btn btn-sm modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_uniq;?>"> </a>
 			          
 	</article>		
     <?php
