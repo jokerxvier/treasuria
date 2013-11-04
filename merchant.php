@@ -47,7 +47,7 @@ if(isset($_SESSION['username']))
                 <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
                 <div class="key-count">
-				  <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><a href="?a=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><?php echo  $_SESSION['cart'][$key_uniq]; } ?> Key / s</a>
+				  <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><?php echo  $_SESSION['cart'][$key_uniq]; } ?> Key / s
 				</div>
 				<h3 class="item-title"><?php echo $key_name;?></h3>
 				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
