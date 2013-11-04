@@ -95,32 +95,33 @@ switch($action)
 			   if( is_array($response) && $response['PAYMENTINFO_0_ACK'] == 'Success') { // Payment successful
 				   // We'll fetch the transaction ID for internal bookkeeping
 				   $transactionId = $response['PAYMENTINFO_0_TRANSACTIONID'];
-				   /*$user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
-				   $query_insert_login = mysql_query("UPDATE users SET login_date='$datetime' WHERE email='$username' and password='$password'");*/
+				   $user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
+				   /*$query_insert_login = mysql_query("UPDATE users SET login_date='$datetime' WHERE email='$username' and password='$password'");*/
 				   //unset($_SESSION['cart']);
 				   //header('Location: cart.php?success=1');
 				   $purchasedtotal = getPaypalItemTotal();
 				   $total = 0;
-				   foreach ($_SESSION['cart'] as $item_id => $qty){
-					   	$credits = getKeyValue($item_id);
-						$credTotal =$credits * $qty;
-						$total += $credTotal;
-					   
-				   }
-				  
-				   $user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
-				   if ($response['PAYMENTINFO_0_AMT'] == $purchasedtotal){
-						 $query = mysql_query("INSERT INTO user_credits (user_id, credits) VALUES ($user_id, $total)");
-						 if($query){
-								unset($_SESSION['cart']);	
-								header('Location: cart.php?success=1');
-						 }
-				   }else {
-					   
-						echo "not equal";   
-				   }
 				   
-				  
+
+				   
+				     if ($response['PAYMENTINFO_0_AMT'] == $purchasedtotal){
+						 foreach ($_SESSION['cart'] as $item_id => $qty){
+							$itemID =  getItemID($item_id);
+							$credits = getKeyValue($item_id);
+							$credTotal =$credits * $qty;
+							$total += $credTotal;
+							$query = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty) VALUES ($user_id, $credits, $itemID, $qty)");
+							if($query){
+									unset($_SESSION['cart']);	
+									header('Location: cart.php?success=1');
+							 }else {
+								echo mysql_error();
+							 }
+					   
+				 		  }
+						 
+					 }
+
 			   }
 			   
 			 

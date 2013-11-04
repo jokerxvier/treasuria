@@ -31,7 +31,7 @@ $session_user_id = $_SESSION['user_id'];
 
 
 $tableName = 'user_credits';
-$condition = 'user_id = '. $session_user_id;
+$condition = 'user_id = '. $session_user_id. '';
 $user_credit = getTableData($tableName, $condition);
 
 
@@ -50,11 +50,11 @@ $user_points = getTableData($pointsTable, $condition);
 		</div>
 		<div>
 			<ul class="list-inline user-login pull-right key-tally">
-			  <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
-			  <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
-		      <li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
-		  	  <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li>
-			  <li> <a href="#" class="sapphire" alt="Sapphire Gem Key"> <?php echo (isset($user_credit['error']) AND $user_credit['error'] == true) ? 0 : $user_credit['credits']; ?> </a></li> <span class="hidem">|</span>
+			  <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo getCreditsTotal(1, $session_user_id);  ?> </a></li>
+			  <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo getCreditsTotal(2, $session_user_id);  ?></a></li>
+		      <li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo getCreditsTotal(3, $session_user_id);  ?> </a></li>
+		  	  <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo getCreditsTotal(4, $session_user_id);  ?> </a></li>
+			  <li> <a href="#" class="sapphire" alt="Sapphire Gem Key">  <?php echo getCreditsTotal(5, $session_user_id);  ?> </a></li> <span class="hidem">|</span>
 			  <li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
 			</ul>
 		</div>

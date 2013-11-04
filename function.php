@@ -36,6 +36,19 @@ function displayCartList($id){
 	return $arr;
 }
 
+function getCreditsTotal($item_id, $user_id){
+	$arr = array();
+	$result = mysql_query("SELECT SUM(item_qty) AS itemTotal FROM user_credits WHERE item_id = '$item_id' AND user_id = '$user_id' GROUP BY item_id, user_id");
+	$num_rows = mysql_num_rows($result);
+	if($num_rows>0)
+	{
+		$row = mysql_fetch_array($result);
+		
+		return $row['itemTotal'];
+	}
+	
+}
+
 
 function getTableData($tableName, $conditon){
 	
@@ -73,6 +86,17 @@ function getCredits($id){
 		return 	$err;
 	}
 
+}
+
+
+function getItemID($id){
+	$result = mysql_query("SELECT key_id FROM treasuria_key WHERE key_uniq = '$id' LIMIT 1");
+	if (mysql_num_rows($result) > 0){
+		$row = mysql_fetch_array($result);
+		
+		return $row['key_id'];
+	}
+	
 }
 
 function getPaypalItem(){
