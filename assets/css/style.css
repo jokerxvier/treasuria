@@ -55,8 +55,7 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
 .navbar-nav li a{line-height: 35px}
-.navbar-nav li .active, .navbar-nav li a:hover{background: #5D4F35; color: #978263}
-
+.navbar-nav li .active, .navbar-nav li a:hover{background: none; color: #956D40; text-shadow: 1px 1px 1px #342B1B}
 /*   USER ACCOUNT  
 ===================== */
 .user-login li{display: inline}
