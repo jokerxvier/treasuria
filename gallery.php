@@ -1,6 +1,5 @@
 <?php include 'header.php'; ?>
 
-
 <section class="container credit-key">
 	<h2>Treasure Gallery</h2>
 
@@ -24,7 +23,12 @@ if(isset($_SESSION['username']))
 				<img src="assets/img/gallery/<?php echo $prize_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				<h3><?php echo $prize_name;?></h3>
 				<h4>Credits for <br><?php echo $prize_credits;?> Tickets</h4>
-				<a href="" class="btn" type="button">Claim this Item</a>
+                <?php 
+				$points = getPoints($_SESSION['user_id']);
+				$link = ($points >= $prize_credits) ? 'href="process.php?action=claim&prize='.$prize_id.'"' : '';
+				?>
+				<a <?php echo $link ?> class="btn" type="button">Claim this Item</a>
+                
 			</article>
 			
 			<?php

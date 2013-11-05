@@ -1,5 +1,24 @@
 <?php
+function get_base_url()
+    {
+  
+        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https' ? 'https://' : 'http://';
 
+ 
+        $path = $_SERVER['PHP_SELF'];
+
+       
+        $path_parts = pathinfo($path);
+        $directory = $path_parts['dirname'];
+
+        $directory = ($directory == "/") ? "" : $directory;
+
+        $host = $_SERVER['HTTP_HOST'];
+
+        return $protocol . $host . $directory;
+}
+	
+	
 function getUserId($username, $pass){
 
 	$username = $username;
@@ -88,6 +107,46 @@ function getCredits($id){
 
 }
 
+function getPoints($id){
+	
+	$display = "Select * From user_points WHERE user_id = '$id'";
+	$query = mysql_query($display);
+	$num_rows = mysql_num_rows($query);
+	if($num_rows>0)
+	{
+		$row = mysql_fetch_array($query);
+		
+		return $row['points'];
+	}else {
+		$err = array();
+		$err['error'] = true;
+			
+		return 	$err;
+	}
+
+}
+
+function getGalleryPoints($id){
+	
+	$display = "Select prize_credits From treasuria_gallery where prize_id = '$id'";
+	$query = mysql_query($display);
+	$num_rows = mysql_num_rows($query);
+	if($num_rows>0)
+	{
+		$row = mysql_fetch_array($query);
+		
+		return $row['prize_credits'];
+	}else {
+		$err = array();
+		$err['error'] = true;
+			
+		return 	$err;
+	}
+
+}
+
+
+
 
 function getItemID($id){
 	$result = mysql_query("SELECT key_id FROM treasuria_key WHERE key_uniq = '$id' LIMIT 1");
@@ -153,6 +212,57 @@ function getKeyValue($id){
 		
 		return $row['key_credits'];
 	}
+	
+}
+
+function sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body){
+
+	error_reporting(E_STRICT);
+
+	date_default_timezone_set('America/Toronto');
+
+	require_once('assets/phpmailer/class.phpmailer.php');
+	//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
+
+	$mail  = new PHPMailer();
+
+	//$body             = file_get_contents('contents.html');
+	
+	
+	$mail->IsSMTP(); // telling the class to use SMTP
+	$mail->Host       = "mail.yourdomain.com"; // SMTP server
+	$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+											   // 1 = errors and messages
+											   // 2 = messages only
+	$mail->SMTPAuth   = true;                  // enable SMTP authentication
+	$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+	$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+	$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+	$mail->Username   = "desiree.alviento@gmail.com";  // GMAIL username
+	$mail->Password   = "326598des";            // GMAIL password
+
+	$mail->SetFrom($from, 'Treasuria');
+
+	$mail->AddReplyTo($replyTo,"Treasuria");
+
+	$mail->Subject    = $subject;
+
+	$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+
+	$mail->MsgHTML($body);
+
+	//$address = "desireealviento@synergy88studios.com";
+
+	$mail->AddAddress($userEmail, $userFirstName);
+
+	//$mail->AddAttachment("images/phpmailer.gif");      // attachment
+	//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+
+	if(!$mail->Send()) {
+	  echo "Mailer Error: " . $mail->ErrorInfo;
+	} else {
+	  return true;
+	}	
 	
 }
 

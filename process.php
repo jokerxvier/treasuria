@@ -42,8 +42,8 @@ switch($action)
 	
 	
 		$requestParams = array(
-		   'RETURNURL' => 'http://localhost/repository/treasuria/process.php?action=success',
-		   'CANCELURL' => 'http://localhost/repository/treasuria/process.php?action=cancel'
+		   'RETURNURL' => 'http://192.168.1.82/repository/treasuria/process.php?action=success',
+		   'CANCELURL' => 'http://192.168.1.82/repository/treasuria/process.php?action=cancel'
 		);
 		
 		$item = getPaypalItem();
@@ -134,6 +134,41 @@ switch($action)
 	case 'cancel' :
 		echo "cancel";
 
+	break;
+	
+	
+	case 'claim':
+		$user_id = $_SESSION['user_id'];
+		$prize = $_GET['prize'];
+		$points = getPoints($user_id);
+		
+		$galleryPoints = getGalleryPoints($prize);
+		if ($points >= $galleryPoints){
+				$query = mysql_query("Update user_points SET points = (points - '$galleryPoints') WHERE user_id = '$user_id' ");
+				$insert_query =  mysql_query("INSERT INTO claim_history (user_id, prize_id,  created_at,  status) VALUES ('$user_id', '$prize', '$datetime', 1)");
+				if($query AND $insert_query){
+					
+					$from = "jasonjavier06@gmail.com";
+					$replyTo = $from;
+					$subject = "Treasuria Product Claim";
+					$userFirstName = 'Jason';
+					$userEmail = $_SESSION["u_username"];
+					
+					$body = "Hi ".$userFirstName."<br><br>";
+					$body = "You Have Successfully Claim your Item. ";
+					$body = eregi_replace("[\]",'',$body);
+				
+					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
+							header('Location: gallery.php?message=1');
+					}
+					
+					
+				}
+				
+		}else {
+			header('Location: gallery.php?message=0');
+		}
+		
 	break;
 	
 
@@ -261,62 +296,24 @@ switch($_SERVER['QUERY_STRING'])
 				//user_type for subscribers is equal to 0
 				$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$reg_firstname','$reg_lastname','$reg_username','$reg_password','$reg_address','$reg_city','$reg_country','$reg_phone','$reg_gender','$datetime','$datetime','0','$reg_key')");
 				
-				$verification_link = "http://192.168.1.75/repository/treasuria/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
+				$verification_link = get_base_url() ."/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
 				if($query_insert_new_user)
 				{
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					//error_reporting(E_ALL);
-					error_reporting(E_STRICT);
-
-					date_default_timezone_set('America/Toronto');
-
-					require_once('assets/phpmailer/class.phpmailer.php');
-					//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
-
-					$mail             = new PHPMailer();
-
-					//$body             = file_get_contents('contents.html');
-					$body = "Hi ".$reg_firstname."<br><br>";
-					$body = "Verification Code: ".$verification_link;
+					$from = "jasonjavier06@gmail.com";
+					$replyTo= "jasonjavier06@gmail.com";
+					$subject = "Treasuria Verification Email";
+					$userFirstName = $reg_username;
+					$userEmail = $_SESSION["u_username"];
 					
+					$body = "Hi ".$userFirstName."<br><br>";
+					$body = "Verification Code: ".$verification_link;
 					$body = eregi_replace("[\]",'',$body);
 					
-					$mail->IsSMTP(); // telling the class to use SMTP
-					$mail->Host       = "mail.yourdomain.com"; // SMTP server
-					$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-															   // 1 = errors and messages
-															   // 2 = messages only
-					$mail->SMTPAuth   = true;                  // enable SMTP authentication
-					$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-					$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-					$mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-					$mail->Username   = "desiree.alviento@gmail.com";  // GMAIL username
-					$mail->Password   = "326598des";            // GMAIL password
-
-					$mail->SetFrom('desiree.alviento@gmail.com', 'Desiree Alviento');
-
-					$mail->AddReplyTo("desiree.alviento@gmail.com","Desiree Alviento");
-
-					$mail->Subject    = "Treasuria, Confirm your Email";
-
-					$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
-
-					$mail->MsgHTML($body);
-
-					//$address = "desireealviento@synergy88studios.com";
-					$address = $reg_username;
-					$mail->AddAddress($address, $reg_firstname);
-
-					//$mail->AddAttachment("images/phpmailer.gif");      // attachment
-					//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
-
-					if(!$mail->Send()) {
-					  echo "Mailer Error: " . $mail->ErrorInfo;
-					} else {
-					  //echo "Message sent!";
+					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
+							header('Location: register.php?verify=sentemail');
 					}
-					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					header('Location: register.php?verify=sentemail');
+		
+				
 				}
 			}
 		}
