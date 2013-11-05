@@ -42,8 +42,8 @@ switch($action)
 	
 	
 		$requestParams = array(
-		   'RETURNURL' => 'http://192.168.1.82/repository/treasuria/process.php?action=success',
-		   'CANCELURL' => 'http://192.168.1.82/repository/treasuria/process.php?action=cancel'
+		   'RETURNURL' => get_base_url().'/process.php?action=success',
+		   'CANCELURL' => get_base_url().'/process.php?action=cancel'
 		);
 		
 		$item = getPaypalItem();
