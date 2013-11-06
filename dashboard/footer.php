@@ -22,8 +22,8 @@
 		</div>
 
 		<footer>
-			<p class="pull-left">&copy; <a href="http://usman.it" target="_blank">Muhammad Usman</a> <?php echo date('Y') ?></p>
-			<p class="pull-right">Powered by: <a href="http://usman.it/free-responsive-admin-template">Charisma</a></p>
+			<p class="pull-left">&copy;<?php echo date('Y') ?></p>
+			<!--<p class="pull-right">Powered by: </p>-->
 		</footer>
 		<?php } ?>
 

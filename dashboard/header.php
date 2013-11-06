@@ -101,7 +101,9 @@
 					<ul class="nav nav-tabs nav-stacked main-menu">
 						<li class="nav-header hidden-tablet">Main</li>
 						<li><a class="ajax-link" href="index.php"><i class="icon-home"></i><span class="hidden-tablet"> Dashboard</span></a></li>
-						<li><a class="ajax-link" href="table.php"><i class="icon-align-justify"></i><span class="hidden-tablet"> Tables</span></a></li>
+						<li><a class="ajax-link" href="tbl_users_data.php"><i class="icon-align-justify"></i><span class="hidden-tablet"> User Data</span></a></li>
+						<li><a class="ajax-link" href="tbl_gallery_item.php"><i class="icon-list-alt"></i><span class="hidden-tablet"> Item Data</span></a></li>
+						<li><a class="ajax-link" href="tbl_keys.php"><i class="icon-star"></i><span class="hidden-tablet"> Key Data</span></a></li>
 					</ul>
 				</div><!--/.well -->
 			</div><!--/span-->

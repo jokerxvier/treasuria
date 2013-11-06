@@ -21,69 +21,48 @@ include('admin_function.php');
 	<div class="sortable row-fluid">
 		<a data-rel="tooltip" title="" class="well span3 top-block" href="#">
 			<span class="icon32 icon-red icon-user"></span>
-			<div>Total Members</div>
+			<div>Total Active Member(s)</div>
 			<div><?php echo UserCount(); ?></div>
+			<!--<span class="notification"> </span>-->
+		</a>
+		
+		<a data-rel="tooltip" title="" class="well span3 top-block" href="#">
+			<span class="icon32 icon-red icon-user"></span>
+			<div>Total Pending Member(s)</div>
+			<div><?php echo UserPendingCount(); ?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 
 		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="#">
 			<span class="icon32 icon-color icon-star-on"></span>
-			<div>Pro Members</div>
-			<div>228</div>
+			<div>Total Gallery Item(s) </div>
+			<div><?php echo GalleryItemCount(); ?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 
-		<a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
+		<!--<a data-rel="tooltip" title="$34 new sales." class="well span3 top-block" href="#">
 			<span class="icon32 icon-color icon-cart"></span>
-			<div>Sales</div>
-			<div>$13320</div>
+			<div>Total Key(s)</div>
+			<div><?php //echo CounterKeys(); ?></div>
+			<span class="notification"> </span>
+		</a>-->
+		
+		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="#">
+			<span class="icon32 icon-color icon-star-on"></span>
+			<div>Total Key(s)</div>
+			<div><?php echo CounterKeys(); ?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 		
-		<a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
+		<!--<a data-rel="tooltip" title="12 new messages." class="well span3 top-block" href="#">
 			<span class="icon32 icon-color icon-envelope-closed"></span>
 			<div>Messages</div>
 			<div>25</div>
-			<!--<span class="notification"> </span>-->
-		</a>
+			<span class="notification"> </span>
+		</a>-->
 	</div>
 
-	<div class="row-fluid sortable">
-		<div class="box span4">
-			<div class="box-header well">
-				<h2><i class="icon-th"></i> Tabs</h2>
-				<div class="box-icon">
-					<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-				</div>
-			</div>
-			<div class="box-content">
-				<ul class="nav nav-tabs" id="myTab">
-					<li class="active"><a href="#info">Info</a></li>
-					<li><a href="#custom">Custom</a></li>
-					<li><a href="#messages">Messages</a></li>
-				</ul>
-				 
-				<div id="myTabContent" class="tab-content">
-					<div class="tab-pane active" id="info">
-						<h3>Charisma <small>a fully featued template</small></h3>
-						<p>Its a fully featured, responsive template for your admin panel. Its optimized for tablet and mobile phones. Scan the QR code below to view it in your mobile device.</p> <img alt="QR Code" class="charisma_qr center" src="img/qrcode136.png" />
-					</div>
-					<div class="tab-pane" id="custom">
-						<h3>Custom <small>small text</small></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Donec consectetur, velit a pharetra ultricies, diam lorem lacinia risus, ac commodo orci erat eu massa. Sed sit amet nulla ipsum. Donec felis mauris, vulputate sed tempor at, aliquam a ligula. Pellentesque non pulvinar nisi.</p>
-					</div>
-					<div class="tab-pane" id="messages">
-						<h3>Messages <small>small text</small></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales at. Nulla tellus elit, varius non commodo eget, mattis vel eros. In sed ornare nulla. Donec consectetur, velit a pharetra ultricies, diam lorem lacinia risus, ac commodo orci erat eu massa. Sed sit amet nulla ipsum. Donec felis mauris, vulputate sed tempor at, aliquam a ligula. Pellentesque non pulvinar nisi.</p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor.</p>
-					</div>
-				</div>
-			</div>
-		</div><!--/span-->
-				
+	<div class="row-fluid sortable">		
 		<div class="box span4">
 			<div class="box-header well" data-original-title>
 				<h2><i class="icon-user"></i> Member Activity</h2>
@@ -95,43 +74,239 @@ include('admin_function.php');
 			<div class="box-content">
 				<div class="box-content">
 					<ul class="dashboard-list">
-						<li>
-							<a href="#">
-								<img class="dashboard-avatar" alt="Usman" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( "usman@halalit.net" ) ) ); ?>.png?s=50"></a>
-								<strong>Name:</strong> <a href="#">Usman
-							</a><br>
-							<strong>Since:</strong> 17/05/2012<br>
-							<strong>Status:</strong> <span class="label label-success">Approved</span>                                  
-						</li>
-						<li>
-							<a href="#">
-								<img class="dashboard-avatar" alt="Sheikh Heera" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( "heerasheikh@ymail.com" ) ) ); ?>.png?s=50"></a>
-								<strong>Name:</strong> <a href="#">Sheikh Heera
-							</a><br>
-							<strong>Since:</strong> 17/05/2012<br>
-							<strong>Status:</strong> <span class="label label-warning">Pending</span>                                 
-						</li>
-						<li>
-							<a href="#">
-								<img class="dashboard-avatar" alt="Abdullah" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( "abdullah123456@abc.com" ) ) ); ?>.png?s=50"></a>
-								<strong>Name:</strong> <a href="#">Abdullah
-							</a><br>
-							<strong>Since:</strong> 25/05/2012<br>
-							<strong>Status:</strong> <span class="label label-important">Banned</span>                                  
-						</li>
-						<li>
-							<a href="#">
-								<img class="dashboard-avatar" alt="Saruar Ahmed" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( "saruarall@gmail.com" ) ) ); ?>.png?s=50"></a>
-								<strong>Name:</strong> <a href="#">Saruar Ahmed
-							</a><br>
-							<strong>Since:</strong> 17/05/2012<br>
-							<strong>Status:</strong> <span class="label label-info">Updates</span>                                  
-						</li>
+						<?php
+							$subscribers_query = mysql_query("SELECT * FROM users WHERE user_type='0' and deleted='0' ORDER BY RAND() LIMIT 5");
+							$count_subscribers_query = mysql_num_rows($subscribers_query);
+							$ctr_member = 0;
+								if($count_subscribers_query>0)
+								{
+									while($row_members = mysql_fetch_array($subscribers_query))
+									{
+										$ctr_member += 1;
+										$user_id = $row_members["user_id"];
+										$firstname = $row_members["firstname"];
+										$lastname = $row_members["lastname"];
+										$email = $row_members["email"];
+										$address = $row_members["address"];
+										$city = $row_members["city"];
+										$country = $row_members["country"];
+										$created_at = $row_members["created_at"];
+										$phone = $row_members["phone"];
+										$gender = $row_members["gender"];
+										$user_type = $row_members["user_type"];
+										$deleted = $row_members["deleted"];
+										$key_email = $row_members["key_email"];
+										
+											$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
+											while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
+											{
+												$avatar_id = $row_avatarq["avatar_id"];
+												
+												$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
+												while($row_avatar = mysql_fetch_array($avatarquery))
+												{
+													$avatar_img = $row_avatar["image"];
+												}
+											}
+											
+											$login_date = "000-00-00 00:00:00";
+											$subscribers_loginquery = mysql_query("SELECT * FROM login_logout WHERE user_id='$user_id'");
+											if($subscribers_loginquery>0)
+											{
+												while($row_login = mysql_fetch_array($subscribers_loginquery))
+												{
+													$login_date = $row_login["login_date"];
+												}
+											}
+											
+
+										if($key_email==NULL)
+										{
+											$class= "label label-success";
+											$status = "verified";
+										}
+										else
+										{
+											$class= "label label-warning";
+											$status = "pending";
+										}
+										
+											if($deleted=='1')
+											{
+											$class= "label label-important";
+											$status = "disabled";
+											}
+										
+										?>
+										<li>
+											<a href="#">
+												<img class="dashboard-avatar" alt="<?php echo $email; ?>" src="../assets/img/avatar/<?php echo $avatar_img; ?>">
+											</a>
+												<strong>Name: </strong> <a href="#"><?php echo $firstname ." ". $lastname; ?></a><br>
+												<strong>Last Login: </strong><?php echo $login_date; ?><br>
+												<strong>Status: </strong> <span class="<?php echo $class; ?>"><?php echo $status; ?></span>                                  
+										</li>
+									<?php
+									}
+								}
+							?>
 					</ul>
 				</div>
 			</div>
 		</div><!--/span-->
 				
+		<div class="box span4">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-star"></i> Highest Points</h2>
+				<div class="box-icon">
+					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+				</div>
+			</div>
+			<div class="box-content">
+				<div class="box-content">
+					<ul class="dashboard-list">
+						<?php
+							$points_query = mysql_query("SELECT * FROM user_points ORDER BY points DESC");
+							$count_points_query = mysql_num_rows($points_query);
+							if($count_points_query>0)
+							{
+								while($row_points = mysql_fetch_array($points_query))
+								{
+									$points = $row_points['points'];
+									$user_id_points = $row_points['user_id'];
+								
+									$p_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_points' AND user_type='0' AND deleted='0' LIMIT 5");
+									$count_p_query = mysql_num_rows($p_query);
+									if($count_p_query>0)
+									{
+										while($row_p = mysql_fetch_array($p_query))
+										{
+											$user_id = $row_p["user_id"];
+											$firstname = $row_p["firstname"];
+											$lastname = $row_p["lastname"];
+											$email = $row_p["email"];
+											$address = $row_p["address"];
+											$city = $row_p["city"];
+											$country = $row_p["country"];
+											$created_at = $row_p["created_at"];
+											$phone = $row_p["phone"];
+											$gender = $row_p["gender"];
+											$user_type = $row_p["user_type"];
+											$deleted = $row_p["deleted"];
+											$key_email = $row_p["key_email"];
+											
+												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
+												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
+												{
+													$avatar_id = $row_avatarq["avatar_id"];
+													
+													$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
+													while($row_avatar = mysql_fetch_array($avatarquery))
+													{
+														$avatar_img = $row_avatar["image"];
+													}
+												}
+												
+												
+														
+												?>
+													<li>
+														<a href="#">
+															<img class="dashboard-avatar" alt="<?php echo $email; ?>" src="../assets/img/avatar/<?php echo $avatar_img; ?>">
+														</a>
+															<strong>Name: </strong> <a href="#"><?php echo $firstname ." ". $lastname; ?></a><br>
+															<strong>Points: </strong><?php echo $points; ?><br><br>
+													</li>
+												<?php
+										}
+									}
+										
+								}
+							}	
+							?>
+					</ul>
+				</div>
+			</div>
+		</div><!--/span-->
+		
+		<div class="box span4">
+			<div class="box-header well" data-original-title>
+				<h2><i class="icon-star"></i> Highest Credits</h2>
+				<div class="box-icon">
+					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
+					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
+				</div>
+			</div>
+			<div class="box-content">
+				<div class="box-content">
+					<ul class="dashboard-list">
+						<?php
+							$credits_query = mysql_query("SELECT SUM(credits) AS creditsTotal, user_id FROM user_credits GROUP BY user_id ORDER BY credits DESC LIMIT 5");
+							$count_credits_query = mysql_num_rows($credits_query);
+							if($count_credits_query>0)
+							{
+								while($row_credits = mysql_fetch_array($credits_query))
+								{
+									$credits = $row_credits['creditsTotal'];
+									$user_id_credits = $row_credits['user_id'];
+								
+									$c_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_credits' AND user_type='0' AND deleted='0'");
+									$count_c_query = mysql_num_rows($c_query);
+									if($count_c_query>0)
+									{
+										while($row_c = mysql_fetch_array($c_query))
+										{	
+											$user_id = $row_c["user_id"];
+											$firstname = $row_c["firstname"];
+											$lastname = $row_c["lastname"];
+											$email = $row_c["email"];
+											$address = $row_c["address"];
+											$city = $row_c["city"];
+											$country = $row_c["country"];
+											$created_at = $row_c["created_at"];
+											$phone = $row_c["phone"];
+											$gender = $row_c["gender"];
+											$user_type = $row_c["user_type"];
+											$deleted = $row_c["deleted"];
+											$key_email = $row_c["key_email"];
+											
+												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
+												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
+												{
+													$avatar_id = $row_avatarq["avatar_id"];
+													
+													$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
+													while($row_avatar = mysql_fetch_array($avatarquery))
+													{
+														$avatar_img = $row_avatar["image"];
+													}
+												}
+												
+												
+														
+												?>
+													<li>
+														<a href="#">
+															<img class="dashboard-avatar" alt="<?php echo $email; ?>" src="../assets/img/avatar/<?php echo $avatar_img; ?>">
+														</a>
+															<strong>Name: </strong> <a href="#"><?php echo $firstname ." ". $lastname; ?></a><br>
+															<strong>Credits: </strong><?php echo $credits; ?><br><br>
+													</li>
+												<?php
+										}
+									}
+										
+								}
+							}	
+							?>
+					</ul>
+				</div>
+			</div>
+		</div><!--/span-->
+	</div><!--/row-->
+	
+	<div class="row-fluid sortable">
 		<div class="box span4">
 			<div class="box-header well" data-original-title>
 				<h2><i class="icon-list-alt"></i> Realtime Traffic</h2>
@@ -147,164 +322,7 @@ include('admin_function.php');
 			</div>
 		</div><!--/span-->
 	</div><!--/row-->
-
-	<div class="row-fluid sortable">
-		<div class="box span4">
-			<div class="box-header well" data-original-title>
-				<h2><i class="icon-list"></i> Buttons</h2>
-				<div class="box-icon">
-					<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-				</div>
-			</div>
-			<div class="box-content buttons">
-				<p class="btn-group">
-					  <button class="btn">Left</button>
-					  <button class="btn">Middle</button>
-					  <button class="btn">Right</button>
-				</p>
-				<p>
-					<button class="btn btn-small"><i class="icon-star"></i> Icon button</button>
-					<button class="btn btn-small btn-primary">Small button</button>
-					<button class="btn btn-small btn-danger">Small button</button>
-				</p>
-				<p>
-					<button class="btn btn-small btn-warning">Small button</button>
-					<button class="btn btn-small btn-success">Small button</button>
-					<button class="btn btn-small btn-info">Small button</button>
-				</p>
-				<p>
-					<button class="btn btn-small btn-inverse">Small button</button>
-					<button class="btn btn-large btn-primary btn-round">Round button</button>
-					<button class="btn btn-large btn-round"><i class="icon-ok"></i></button>
-					<button class="btn btn-primary"><i class="icon-edit icon-white"></i></button>
-				</p>
-				<p>
-					<button class="btn btn-mini">Mini button</button>
-					<button class="btn btn-mini btn-primary">Mini button</button>
-					<button class="btn btn-mini btn-danger">Mini button</button>
-					<button class="btn btn-mini btn-warning">Mini button</button>
-				</p>
-				<p>
-					<button class="btn btn-mini btn-info">Mini button</button>
-					<button class="btn btn-mini btn-success">Mini button</button>
-					<button class="btn btn-mini btn-inverse">Mini button</button>
-				</p>
-			</div>
-		</div><!--/span-->
-			
-		<div class="box span4">
-			<div class="box-header well" data-original-title>
-				<h2><i class="icon-list"></i> Buttons</h2>
-				<div class="box-icon">
-					<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-				</div>
-			</div>
-			<div class="box-content  buttons">
-				<p>
-					<button class="btn btn-large">Large button</button>
-					<button class="btn btn-large btn-primary">Large button</button>
-				</p>
-				<p>
-					<button class="btn btn-large btn-danger">Large button</button>
-					<button class="btn btn-large btn-warning">Large button</button>
-				</p>
-				<p>
-					<button class="btn btn-large btn-success">Large button</button>
-					<button class="btn btn-large btn-info">Large button</button>
-				</p>
-				<p>
-					<button class="btn btn-large btn-inverse">Large button</button>
-				</p>
-				<div class="btn-group">
-					<button class="btn btn-large">Large Dropdown</button>
-					<button class="btn btn-large dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-					<ul class="dropdown-menu">
-						<li><a href="#"><i class="icon-star"></i> Action</a></li>
-						<li><a href="#"><i class="icon-tag"></i> Another action</a></li>
-						<li><a href="#"><i class="icon-download-alt"></i> Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#"><i class="icon-tint"></i> Separated link</a></li>
-					</ul>
-				</div>
-				
-			</div>
-		</div><!--/span-->
-			
-		<div class="box span4">
-			<div class="box-header well" data-original-title>
-				<h2><i class="icon-list"></i> Weekly Stat</h2>
-				<div class="box-icon">
-					<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
-					<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
-					<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-				</div>
-			</div>
-			<div class="box-content">
-				<ul class="dashboard-list">
-					<li>
-						<a href="#">
-							<i class="icon-arrow-up"></i>                               
-							<span class="green">92</span>
-							New Comments                                    
-						</a>
-					</li>
-				  <li>
-					<a href="#">
-					  <i class="icon-arrow-down"></i>
-					  <span class="red">15</span>
-					  New Registrations
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-minus"></i>
-					  <span class="blue">36</span>
-					  New Articles                                    
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-comment"></i>
-					  <span class="yellow">45</span>
-					  User reviews                                    
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-arrow-up"></i>                               
-					  <span class="green">112</span>
-					  New Comments                                    
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-arrow-down"></i>
-					  <span class="red">31</span>
-					  New Registrations
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-minus"></i>
-					  <span class="blue">93</span>
-					  New Articles                                    
-					</a>
-				  </li>
-				  <li>
-					<a href="#">
-					  <i class="icon-comment"></i>
-					  <span class="yellow">254</span>
-					  User reviews                                    
-					</a>
-				  </li>
-				</ul>
-			</div>
-		</div><!--/span-->
-	</div><!--/row-->
+	
 	
 <?php
 
