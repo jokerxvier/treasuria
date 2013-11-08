@@ -6,6 +6,10 @@ if(isset($ses_username))
 {
 include('header.php');
 include('admin_function.php');
+
+$update_success = "Item Data Successfully Updated!";
+$delete_success = "Item Successfully Deleted!";
+$enabled_success = "Item Successfully Enabled!";
 ?>
 			<div>
 				<ul class="breadcrumb">
@@ -13,10 +17,13 @@ include('admin_function.php');
 						<a href="index.php">Home</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="#">Item's Data</a>
+						<a href="tbl_gallery_item.php">Item's Data</a>
 					</li>
 				</ul>
 			</div>
+			<?php if(isset($_GET["c"]) and $_GET["c"]=="success") { ?> <div class="alert alert-success"> <?php echo $update_success; ?> </div> <?php } ?>
+			<?php if(isset($_GET["d"]) and $_GET["d"]=="deleted") { ?> <div class="alert alert-success"> <?php echo $delete_success; ?> </div> <?php } ?>
+			<?php if(isset($_GET["r"]) and $_GET["r"]=="enabled") { ?> <div class="alert alert-success"> <?php echo $enabled_success; ?> </div> <?php } ?>
 			
 			<div class="row-fluid sortable">		
 				<div class="box span12">
@@ -26,7 +33,8 @@ include('admin_function.php');
 							<a href="#" class="btn btn-setting btn-round"><i class="icon-cog"></i></a>
 							<a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
 							<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
-						</div>
+						</div> &nbsp;&nbsp;
+						<a class="btn btn-success" href="edit_items.php?action=add&<?php echo MD5($datetime);?>"><i class="icon icon-white icon-plus"></i> ADD</a>
 					</div>
 					<div class="box-content">
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
@@ -37,13 +45,13 @@ include('admin_function.php');
 								  <th>Prize Name</th>
 								  <th>Credits</th>
 								  <th>Created</th>
-								  <th>Updated</th>
+								  <th>Status</th>
 								  <th>Actions</th>
 							  </tr>
 						  </thead>   
 						  <tbody>
 							<?php
-							$item_query = mysql_query("SELECT * FROM treasuria_gallery WHERE deleted='0'");
+							$item_query = mysql_query("SELECT * FROM treasuria_gallery");
 							$count_item_query = mysql_num_rows($item_query);
 								$ctr = 0;
 								
@@ -53,32 +61,46 @@ include('admin_function.php');
 									{
 										$ctr += 1;
 										$prize_name = $row_item['prize_name'];
+										$prize_id = $row_item['prize_id'];
 										$prize_img = $row_item['prize_img'];
 										$prize_credits = $row_item['prize_credits'];
+										$deleted = $row_item['deleted'];
 										
 										
 										$prize_created_at = date('M d, Y', strtotime($row_item['created_at']) );
 										$prize_updated_at = date('M d, Y', strtotime($row_item['updated_at']) );
 										
-										
+										if($deleted=='1')
+										{
+										$class= "label label-important";
+										$status = "disabled";
+										}
+										else
+										{
+										$class= "label label-success";
+										$status = "enabled";
+										}
 									?>
 										
 										<tr>
 											<td><?php echo $ctr; ?></td>
-											<td><img src="../assets/img/gallery/<?php echo $prize_img; ?>" width="50px"></td>
+											
+											<?php if($prize_img==''){ ?> <td><img src="../assets/img/no_image.png" width="50px"></td> <?php }
+											else { ?> <td><img src="../assets/img/gallery/<?php echo $prize_img; ?>" width="50px"></td> <?php } ?>
+											
 											<td class="center"><?php echo $prize_name; ?></td>
-											<td class="center"><?php echo $prize_credits; ?></td>
+											<td class="center"><?php echo number_format($prize_credits); ?></td>
 											<td class="center"><?php echo $prize_created_at; ?></td>
-											<td class="center"><?php echo $prize_updated_at; ?></td>
+											<td class="center"><span class="<?php echo $class; ?>"><?php echo $status; ?></span></td>
 											<td class="center">
 												<!--<a class="btn btn-success" href="#">
 													<i class="icon-zoom-in icon-white"></i>  
 													View                                            
 												</a>-->
-												<a class="btn btn-info" href="#">
-													<i class="icon-edit icon-white"></i>          
+												<a class="btn btn-info" href="edit_items.php?action=edit&prize_id=<?php echo $prize_id."&".MD5($prize_created_at);?>">
+													<i class="icon-edit icon-white"></i>     
 												</a>
-												<a class="btn btn-danger" href="#">
+												<a class="btn btn-danger" href="edit_items.php?action=delete&prize_id=<?php echo $prize_id."&".MD5($prize_created_at);?>">
 													<i class="icon-trash icon-white"></i> 
 												</a>
 											</td>

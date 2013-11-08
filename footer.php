@@ -3,10 +3,11 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="assets/js/script.js"></script>
 	<script src="assets/js/jquery.md5.js"></script>
-	<script src="assets/js/validation.js" type="text/javascript"></script>
+	
 
 	<!-- VALIDATION -->
-  
+	<script src="assets/js/validation.js" type="text/javascript"></script>
+	
 	<script>
 	$().ready(function() {
 		

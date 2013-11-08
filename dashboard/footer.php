@@ -1,4 +1,4 @@
-		<?php if(!isset($no_visible_elements) || !$no_visible_elements)	{ ?>
+	<?php if(!isset($no_visible_elements) || !$no_visible_elements)	{ ?>
 			<!-- content ends -->
 			</div><!--/#content.span10-->
 		<?php } ?>
@@ -7,7 +7,7 @@
 		
 		<hr>
 
-		<div class="modal hide fade" id="myModal">
+		<!--<div class="modal hide fade" id="myModal">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
 				<h3>Settings</h3>
@@ -19,7 +19,7 @@
 				<a href="#" class="btn" data-dismiss="modal">Close</a>
 				<a href="#" class="btn btn-primary">Save changes</a>
 			</div>
-		</div>
+		</div> -->
 
 		<footer>
 			<p class="pull-left">&copy;<?php echo date('Y') ?></p>
@@ -103,19 +103,6 @@
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
 	
-	<?php //Google Analytics code for tracking my demo site, you can remove this.
-		if($_SERVER['HTTP_HOST']=='usman.it') { ?>
-		<script>
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-26532312-1']);
-			_gaq.push(['_trackPageview']);
-			(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-			})();
-		</script>
-	<?php } ?>
 	
 </body>
 </html>

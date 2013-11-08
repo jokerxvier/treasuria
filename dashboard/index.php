@@ -109,12 +109,14 @@ include('admin_function.php');
 												}
 											}
 											
-											$login_date = "000-00-00 00:00:00";
+											$login_date = "0000-00-00 00:00:00";
 											$subscribers_loginquery = mysql_query("SELECT * FROM login_logout WHERE user_id='$user_id'");
 											if($subscribers_loginquery>0)
 											{
 												while($row_login = mysql_fetch_array($subscribers_loginquery))
 												{
+													//$login_date = date('M d, Y h:i:s', strtotime($row_login['login_date']) );
+													
 													$login_date = $row_login["login_date"];
 												}
 											}
@@ -137,13 +139,33 @@ include('admin_function.php');
 											$status = "disabled";
 											}
 										
+										$todaydate = date("Y-m-d H:i:s");
+										if($login_date == "0000-00-00 00:00:00")
+										{
+											$diff = "none";
+										}
+										else
+										{
+											$ago = strtotime($todaydate) - strtotime($login_date); 
+											if ($ago >= 86400) {  
+											$diff = floor($ago/86400).' days ago';  
+											} elseif ($ago >= 3600) {  
+											$diff = floor($ago/3600).' hours ago';  
+											} elseif ($ago >= 60) {  
+											$diff = floor($ago/60).' minutes ago';  
+											} else {  
+											$diff = $ago.' seconds ago';  
+											}
+										}
+										
+										  
 										?>
 										<li>
 											<a href="#">
 												<img class="dashboard-avatar" alt="<?php echo $email; ?>" src="../assets/img/avatar/<?php echo $avatar_img; ?>">
 											</a>
 												<strong>Name: </strong> <a href="#"><?php echo $firstname ." ". $lastname; ?></a><br>
-												<strong>Last Login: </strong><?php echo $login_date; ?><br>
+												<strong>Last Login: </strong><?php echo $diff; ?><br>
 												<strong>Status: </strong> <span class="<?php echo $class; ?>"><?php echo $status; ?></span>                                  
 										</li>
 									<?php
@@ -221,11 +243,12 @@ include('admin_function.php');
 												<?php
 										}
 									}
-										
 								}
 							}	
 							?>
+						
 					</ul>
+					<a href="tbl_users_data.php?#highestPoints"> SEE MORE </a>
 				</div>
 			</div>
 		</div><!--/span-->
@@ -301,6 +324,7 @@ include('admin_function.php');
 							}	
 							?>
 					</ul>
+					<a href="tbl_users_data.php?#highestCredits"> SEE MORE </a>
 				</div>
 			</div>
 		</div><!--/span-->
