@@ -6,6 +6,10 @@ if(isset($ses_username))
 {
 include('header.php');
 include('admin_function.php');
+
+$update_success = "Item Data Successfully Updated!";
+$delete_success = "Item Successfully Deleted!";
+$enabled_success = "Item Successfully Enabled!";
 ?>
 			<div>
 				<ul class="breadcrumb">
@@ -13,10 +17,14 @@ include('admin_function.php');
 						<a href="index.php">Home</a> <span class="divider">/</span>
 					</li>
 					<li>
-						<a href="#">Key Data</a>
+						<a href="tbl_keys.php">Key Data</a>
 					</li>
 				</ul>
 			</div>
+			
+			<?php if(isset($_GET["c"]) and $_GET["c"]=="success") { ?> <div class="alert alert-success"> <?php echo $update_success; ?> </div> <?php } ?>
+			<?php if(isset($_GET["d"]) and $_GET["d"]=="deleted") { ?> <div class="alert alert-success"> <?php echo $delete_success; ?> </div> <?php } ?>
+			<?php if(isset($_GET["r"]) and $_GET["r"]=="enabled") { ?> <div class="alert alert-success"> <?php echo $enabled_success; ?> </div> <?php } ?>
 			
 			<div class="row-fluid sortable">		
 				<div class="box span12">
@@ -37,7 +45,7 @@ include('admin_function.php');
 								  <th>Name</th>
 								  <th>Credits</th>
 								  <th>Price ($)</th>
-								  <th>Created</th>
+								  <!--<th>Created</th>-->
 								  <th>Updated</th>
 								  <th>Actions</th>
 							  </tr>
@@ -69,17 +77,17 @@ include('admin_function.php');
 											<td class="center"><?php echo $key_name; ?></td>
 											<td class="center"><?php echo $key_credits; ?></td>
 											<td class="center"><?php echo $key_price; ?></td>
-											<td class="center"><?php echo $created_at; ?></td>
+											<!--<td class="center"><?php //echo $created_at; ?></td>-->
 											<td class="center"><?php echo $updated_at; ?></td>
 											<td class="center">
 												<!--<a class="btn btn-success" href="#">
 													<i class="icon-zoom-in icon-white"></i>  
 													View                                            
 												</a>-->
-												<a class="btn btn-info" href="#">
-													<i class="icon-edit icon-white"></i>          
+												<a class="btn btn-info" href="edit_keys.php?action=edit&key_uniq=<?php echo $key_uniq."&".MD5($created_at);?>">
+													<i class="icon-edit icon-white"></i>     
 												</a>
-												<a class="btn btn-danger" href="#">
+												<a class="btn btn-danger" href="edit_keys.php?action=delete&key_uniq=<?php echo $key_uniq."&".MD5($created_at);?>">
 													<i class="icon-trash icon-white"></i> 
 												</a>
 											</td>

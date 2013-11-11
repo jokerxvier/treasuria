@@ -14,7 +14,7 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
 	
 			<div class="row-fluid">
 				<div class="span12 center login-header">
-					<h2><img src="assets/img/logo-login.png"></h2>
+					<h2><img src="img/logo-login.png"></h2>
 					<h3>Administrator</h3>
 				</div><!--/span-->
 			</div><!--/row-->

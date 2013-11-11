@@ -76,6 +76,9 @@ $enabled_success = "User Successfully Enabled!";
 										$deleted = $row_members["deleted"];
 										$key_email = $row_members["key_email"];
 										
+										/*
+										for future -- if madami ng AVATAR . . . .
+										
 										$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 										while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 										{
@@ -86,8 +89,21 @@ $enabled_success = "User Successfully Enabled!";
 											{
 												$avatar_img = $row_avatar["image"];
 											}
+										} */
+										if($gender=='M')
+										{
+											$avatar_img = "male.png";
 										}
-
+										else if($gender=='F')
+										{
+											$avatar_img = "female.png";
+										}
+										else
+										{
+											$avatar_img = "no_image.png";
+										}
+										
+										
 										if($key_email==NULL)
 										{
 											$class= "label label-success";
@@ -197,6 +213,9 @@ $enabled_success = "User Successfully Enabled!";
 										$deleted = $row_members["deleted"];
 										$key_email = $row_members["key_email"];
 										
+										/*
+										for future -- if madami ng AVATAR . . . .
+										
 										$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 										while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 										{
@@ -207,8 +226,21 @@ $enabled_success = "User Successfully Enabled!";
 											{
 												$avatar_img = $row_avatar["image"];
 											}
+										} */
+										if($gender=='M')
+										{
+											$avatar_img = "male.png";
 										}
-
+										else if($gender=='F')
+										{
+											$avatar_img = "female.png";
+										}
+										else
+										{
+											$avatar_img = "no_image.png";
+										}
+										
+										
 										if($key_email==NULL)
 										{
 											$class= "label label-success";
@@ -320,6 +352,9 @@ $enabled_success = "User Successfully Enabled!";
 											$deleted = $row_p["deleted"];
 											$key_email = $row_p["key_email"];
 											
+												/*
+												for future -- if madami ng AVATAR . . . .
+												
 												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 												{
@@ -330,6 +365,18 @@ $enabled_success = "User Successfully Enabled!";
 													{
 														$avatar_img = $row_avatar["image"];
 													}
+												} */
+												if($gender=='M')
+												{
+													$avatar_img = "male.png";
+												}
+												else if($gender=='F')
+												{
+													$avatar_img = "female.png";
+												}
+												else
+												{
+													$avatar_img = "no_image.png";
 												}
 												
 												?>
@@ -413,6 +460,9 @@ $enabled_success = "User Successfully Enabled!";
 											$deleted = $row_c["deleted"];
 											$key_email = $row_c["key_email"];
 											
+												/*
+												for future -- if madami ng AVATAR . . . .
+												
 												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 												{
@@ -423,10 +473,20 @@ $enabled_success = "User Successfully Enabled!";
 													{
 														$avatar_img = $row_avatar["image"];
 													}
+												} */
+												if($gender=='M')
+												{
+													$avatar_img = "male.png";
 												}
-												
-												
-														
+												else if($gender=='F')
+												{
+													$avatar_img = "female.png";
+												}
+												else
+												{
+													$avatar_img = "no_image.png";
+												}
+													
 												?>
 													<tr>
 														<td><?php echo $ctr_admin; ?></td>

@@ -97,17 +97,32 @@ include('admin_function.php');
 										$deleted = $row_members["deleted"];
 										$key_email = $row_members["key_email"];
 										
-											$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
-											while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
-											{
-												$avatar_id = $row_avatarq["avatar_id"];
+											/*
+												for future -- if madami ng AVATAR . . . .
 												
-												$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
-												while($row_avatar = mysql_fetch_array($avatarquery))
+												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
+												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 												{
-													$avatar_img = $row_avatar["image"];
+													$avatar_id = $row_avatarq["avatar_id"];
+													
+													$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
+													while($row_avatar = mysql_fetch_array($avatarquery))
+													{
+														$avatar_img = $row_avatar["image"];
+													}
+												} */
+												if($gender=='M')
+												{
+													$avatar_img = "male.png";
 												}
-											}
+												else if($gender=='F')
+												{
+													$avatar_img = "female.png";
+												}
+												else
+												{
+													$avatar_img = "no_image.png";
+												}
 											
 											$login_date = "0000-00-00 00:00:00";
 											$subscribers_loginquery = mysql_query("SELECT * FROM login_logout WHERE user_id='$user_id'");
@@ -218,6 +233,9 @@ include('admin_function.php');
 											$deleted = $row_p["deleted"];
 											$key_email = $row_p["key_email"];
 											
+												/*
+												for future -- if madami ng AVATAR . . . .
+												
 												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 												{
@@ -228,10 +246,19 @@ include('admin_function.php');
 													{
 														$avatar_img = $row_avatar["image"];
 													}
+												} */
+												if($gender=='M')
+												{
+													$avatar_img = "male.png";
 												}
-												
-												
-														
+												else if($gender=='F')
+												{
+													$avatar_img = "female.png";
+												}
+												else
+												{
+													$avatar_img = "no_image.png";
+												}
 												?>
 													<li>
 														<a href="#">
@@ -294,6 +321,9 @@ include('admin_function.php');
 											$deleted = $row_c["deleted"];
 											$key_email = $row_c["key_email"];
 											
+												/*
+												for future -- if madami ng AVATAR . . . .
+												
 												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 												{
@@ -304,10 +334,20 @@ include('admin_function.php');
 													{
 														$avatar_img = $row_avatar["image"];
 													}
+												} */
+												if($gender=='M')
+												{
+													$avatar_img = "male.png";
 												}
-												
-												
-														
+												else if($gender=='F')
+												{
+													$avatar_img = "female.png";
+												}
+												else
+												{
+													$avatar_img = "no_image.png";
+												}
+													
 												?>
 													<li>
 														<a href="#">

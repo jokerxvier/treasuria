@@ -225,6 +225,9 @@ switch($action)
 				$deleted = $row_members["deleted"];
 				$key_email = $row_members["key_email"];
 				
+				/*
+				for future -- if madami ng AVATAR . . . .
+				
 				$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
 				while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
 				{
@@ -235,6 +238,18 @@ switch($action)
 					{
 						$avatar_img = $row_avatar["image"];
 					}
+				} */
+				if($gender=='M')
+				{
+					$avatar_img = "male.png";
+				}
+				else if($gender=='F')
+				{
+					$avatar_img = "female.png";
+				}
+				else
+				{
+					$avatar_img = "no_image.png";
 				}
 
 				if($key_email==NULL)
@@ -284,15 +299,14 @@ switch($action)
 									$post_country = mysql_escape_string($_POST["country"]);
 									$post_phone = mysql_escape_string($_POST["phone"]);
 									$post_gender = mysql_escape_string($_POST["gender"]);
-									$post_user_type = mysql_escape_string($_POST["user_type"]);
 									
-									if($post_firstname=='' OR $post_lastname=='' OR $post_address=='' OR $post_city=='' OR $post_country=='' OR $post_phone=='' OR $post_gender=='' OR $post_user_type=='')
+									if($post_firstname=='' OR $post_lastname=='' OR $post_address=='' OR $post_city=='' OR $post_country=='' OR $post_phone=='' OR $post_gender=='')
 									{
 										?> <div class="alert alert-error"><p>ERROR: Don't leave blank space.</p></div> <?php
 									}
 									else
 									{
-										$update_edit = mysql_query("UPDATE users SET firstname='$post_firstname', lastname='$post_lastname', address='$post_address', city='$post_city', country='$post_country', phone='$post_phone', gender='$post_gender', user_type='$post_user_type', updated_at='$datetime' WHERE user_id='$_GET[user_id]'");
+										$update_edit = mysql_query("UPDATE users SET firstname='$post_firstname', lastname='$post_lastname', address='$post_address', city='$post_city', country='$post_country', phone='$post_phone', gender='$post_gender', updated_at='$datetime' WHERE user_id='$_GET[user_id]'");
 										if($update_edit)
 										{
 											?> <meta http-equiv="refresh" content="0" > <?php
@@ -312,8 +326,8 @@ switch($action)
 									<label class="control-label" for="user_type"> User Type </label>
 									<div class="controls">
 										<select name="user_type" id="user_type" disabled="">
-											<option value="1" <?php if($user_type=='1'){ echo "selected";}?>>Administrator</option>
-											<option value="0" <?php if($user_type=='0'){ echo "selected";}?>>Subscriber</option>
+											<option value="1" <?php if($user_type=='1'){ echo "selected='selected'";}?>>Administrator</option>
+											<option value="0" <?php if($user_type=='0'){ echo "selected='selected'";}?>>Subscriber</option>
 										</select>
 									</div>
 								</div>
@@ -371,10 +385,10 @@ switch($action)
 										</label>
 									</div>
 								</div>
-								<div class="control-group">
+								<!--<div class="control-group">
 								  <label class="control-label" for="image">Image/Avatar</label>
 								  <div class="controls">
-									<img src="../assets/img/avatar/<?php echo $avatar_img; ?>">
+									<img src="../assets/img/avatar/<?php //echo $avatar_img; ?>">
 								  </div>
 								</div>          
 								<div class="control-group">
@@ -382,7 +396,7 @@ switch($action)
 								  <div class="controls">
 									<input class="input-file uniform_on" id="fileInput" type="file">
 								  </div>
-								</div>  
+								</div>  -->
 								<div class="form-actions">
 								  <button type="submit" name="submit" class="btn btn-primary">Save changes</button>
 								  <button type="reset" class="btn">Reset</button>
