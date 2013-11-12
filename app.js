@@ -22,28 +22,67 @@ app.get('/', function (reg, res){
 	res.sendfile(__dirname + '/index.php');
 });
 
+function currTimer(){
+	var e = new Date();
+	var curr_date = e.getDate();
+	var curr_month = e.getMonth();
+	var curr_year = e.getFullYear();
+	var hour = checkTime(e.getHours());
+	var minute = checkTime(e.getMinutes());
+	var seconds = checkTime(e.getSeconds());
+	
+  
+     var formatDate = curr_year + '-' + curr_month + '-' +curr_date  + " " +  hour + ":" +  minute  + ":" + seconds;
+	 
+	 return formatDate;
+}
+
+
+function checkTime(t) {
+    return 10 > t && (t = "0" + t), t
+}
 
 
 
 
-var countdown = 60;
-setInterval(function() {
-	countdown--;
-	if(countdown == 0){
-		 countdown = 60;
-	}
+var countdown = 10;
+var startTime = currTimer();
+var onInterval = function() {
+    countdown--;
+    if(countdown == 0){
+        var endTime = currTimer();
+        clearInterval(myInterval);
+        countdown = 10;
+
+
+            setTimeout(function(){
+                myInterval = setInterval(onInterval, 2000);
+            }, 5000); 
+        
+
+    }
+
+    io.sockets.emit('timer', { countdown: countdown });
+};
+var myInterval = setInterval(onInterval, 2000);
+
+
+
+/*socket.on('reset', function (data) {
+	 countdown = 1000;
 	io.sockets.emit('timer', { countdown: countdown });
-}, 1000);
+});*/
+		
+
 
 io.sockets.on('connection', function (socket){
 	
-
+		socket.on('reset', function (data) {
+			 countdown = 10;
+			io.sockets.emit('timer', { countdown: countdown });
+		});
     	
 		
-		socket.on('reset', function (data) {
-   			 countdown = 1000;
-    		io.sockets.emit('timer', { countdown: countdown });
- 	   });
 		
 		
 		
@@ -95,48 +134,9 @@ io.sockets.on('connection', function (socket){
 		 });	
 		 
 		 
-		 socket.on('inserttime', function (data){ 
-			 //io.sockets.emit('bid time', data);
-			 if (data == 'check'){
-				  var sql = "SELECT MAX(id) as maxID FROM round_tb LIMIT 1";
-				   var query =  connection.query(sql, function(err, rows) {
-					    //var sql2 = "SELECT * FROM rount_tb WHERE id = " + connection.escape(rows);
-						
- 						var sql2 = "SELECT * FROM rount_tb WHERE id = " + connection.escape(rows[0].maxID);
-						var query2 = connection.query(sql2, function(err2, rows2) {
-							var data = {
-								current_round : rows[0].maxID,
-								current_ctr : rows2[0].time_ctr,
-								create_date: rows2[0].created_at
-							}
-					  		 io.sockets.emit('bid time',  data);
-						});
-					 
-					
-				   });
-				   
-				   
-			
-			 }
-			 
-			 
-			 
-		});
-		
-		 socket.on('timeUpdate', function (data){ 
-			 /*var post  = {time_ctr : data.counter, id : data.round_id};
-		 	 var query = connection.query('UPDATE rount_tb SET ? WHERE ?', post, function(err, result) {
-			 	 if (result.affectedRows == 1){
-					 io.sockets.emit('time insert',  'success');
-				 }
-			 });(*/
-			 var post  = {time_ctr : data.counter};
-			 var query = connection.query('UPDATE round_tb SET ? WHERE id = ' + data.round_id, post, function(err, result) {
-				 io.sockets.emit('time insert',  data.counter);
-			 });
-		 	 
 		 
-		 });
+		
+		 
 		
 		
 				
