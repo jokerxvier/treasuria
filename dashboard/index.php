@@ -19,21 +19,21 @@ include('admin_function.php');
 		</ul>
 	</div>
 	<div class="sortable row-fluid">
-		<a data-rel="tooltip" title="" class="well span3 top-block" href="#">
+		<a data-rel="tooltip" title="" class="well span3 top-block" href="tbl_users_data.php">
 			<span class="icon32 icon-red icon-user"></span>
 			<div>Total Active Member(s)</div>
 			<div><?php echo UserCount(); ?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 		
-		<a data-rel="tooltip" title="" class="well span3 top-block" href="#">
+		<a data-rel="tooltip" title="" class="well span3 top-block" href="tbl_users_data.php">
 			<span class="icon32 icon-red icon-user"></span>
 			<div>Total Pending Member(s)</div>
 			<div><?php echo UserPendingCount(); ?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 
-		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="#">
+		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="tbl_gallery_item.php">
 			<span class="icon32 icon-color icon-star-on"></span>
 			<div>Total Gallery Item(s) </div>
 			<div><?php echo GalleryItemCount(); ?></div>
@@ -47,7 +47,7 @@ include('admin_function.php');
 			<span class="notification"> </span>
 		</a>-->
 		
-		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="#">
+		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="tbl_keys.php">
 			<span class="icon32 icon-color icon-star-on"></span>
 			<div>Total Key(s)</div>
 			<div><?php echo CounterKeys(); ?></div>

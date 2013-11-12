@@ -294,19 +294,20 @@ switch($action)
 									//$update_query = mysql_query("UPDATE users SET");
 									$post_firstname = mysql_escape_string($_POST["firstname"]);
 									$post_lastname = mysql_escape_string($_POST["lastname"]);
+									$post_user_type = mysql_escape_string($_POST["user_type"]);
 									$post_address = mysql_escape_string($_POST["address"]);
 									$post_city = mysql_escape_string($_POST["city"]);
 									$post_country = mysql_escape_string($_POST["country"]);
 									$post_phone = mysql_escape_string($_POST["phone"]);
 									$post_gender = mysql_escape_string($_POST["gender"]);
 									
-									if($post_firstname=='' OR $post_lastname=='' OR $post_address=='' OR $post_city=='' OR $post_country=='' OR $post_phone=='' OR $post_gender=='')
+									if($post_firstname=='' OR $post_lastname=='' OR $post_address=='' OR $post_user_type=='' OR $post_city=='' OR $post_country=='' OR $post_phone=='' OR $post_gender=='')
 									{
 										?> <div class="alert alert-error"><p>ERROR: Don't leave blank space.</p></div> <?php
 									}
 									else
 									{
-										$update_edit = mysql_query("UPDATE users SET firstname='$post_firstname', lastname='$post_lastname', address='$post_address', city='$post_city', country='$post_country', phone='$post_phone', gender='$post_gender', updated_at='$datetime' WHERE user_id='$_GET[user_id]'");
+										$update_edit = mysql_query("UPDATE users SET firstname='$post_firstname', lastname='$post_lastname', address='$post_address', city='$post_city', country='$post_country', phone='$post_phone', gender='$post_gender', updated_at='$datetime', user_type='$post_user_type' WHERE user_id='$_GET[user_id]'");
 										if($update_edit)
 										{
 											?> <meta http-equiv="refresh" content="0" > <?php
@@ -325,7 +326,7 @@ switch($action)
 								<div class="control-group">
 									<label class="control-label" for="user_type"> User Type </label>
 									<div class="controls">
-										<select name="user_type" id="user_type" disabled="">
+										<select name="user_type" id="user_type">
 											<option value="1" <?php if($user_type=='1'){ echo "selected='selected'";}?>>Administrator</option>
 											<option value="0" <?php if($user_type=='0'){ echo "selected='selected'";}?>>Subscriber</option>
 										</select>

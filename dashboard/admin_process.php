@@ -77,8 +77,8 @@ switch($_SERVER['QUERY_STRING'])
 			
 			if($query_insert_logout)
 			{
-				session_destroy();
-				//unset($_SESSION['a_username']);
+				//session_destroy();
+				unset($_SESSION['a_username']);
 				header('Location: login.php');
 			}
 		}

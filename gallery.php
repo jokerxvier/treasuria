@@ -3,8 +3,11 @@
 <section class="container credit-key">
 	<h2>Treasure Gallery</h2>
 
-
+<?php if(isset($_GET["message"]) and $_GET["message"]=="1") { ?> <div class="alert alert-success"> SUCCESS! </div> <?php } ?>
+<?php if(isset($_GET["message"]) and $_GET["message"]=="0") { ?> <div class="alert alert-error"> FAILED! </div> <?php } ?>
 <?php
+
+
 if(isset($_SESSION['username']))
 {
 	$result_key = mysql_query("SELECT * FROM treasuria_gallery");
@@ -22,7 +25,7 @@ if(isset($_SESSION['username']))
 			<article class="col-xs-6 col-md-2 text-center">
 				<img src="assets/img/gallery/<?php echo $prize_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				<h3><?php echo $prize_name;?></h3>
-				<h4>Credits for <br><?php echo $prize_credits;?> Tickets</h4>
+				<h4><?php echo number_format($prize_credits);?> Gold Coins</h4>
                 <?php 
 				$points = getPoints($_SESSION['user_id']);
 				$link = ($points >= $prize_credits) ? 'href="process.php?action=claim&prize='.$prize_id.'"' : '';

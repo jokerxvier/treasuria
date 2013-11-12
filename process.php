@@ -110,7 +110,7 @@ switch($action)
 							$credits = getKeyValue($item_id);
 							$credTotal =$credits * $qty;
 							$total += $credTotal;
-							$query = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty) VALUES ($user_id, $credits, $itemID, $qty)");
+							$query = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty, created_at) VALUES ('$user_id', '$credits', '$itemID', '$qty', '$datetime')");
 							if($query){
 									unset($_SESSION['cart']);	
 									header('Location: cart.php?success=1');
@@ -152,14 +152,14 @@ switch($action)
 					$replyTo = $from;
 					$subject = "Treasuria Product Claim";
 					$userFirstName = 'Jason';
-					$userEmail = $_SESSION["u_username"];
+					$userEmail = $_SESSION["username"];
 					
 					$body = "Hi ".$userFirstName."<br><br>";
 					$body = "You Have Successfully Claim your Item. ";
 					$body = eregi_replace("[\]",'',$body);
 				
 					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
-							header('Location: gallery.php?message=1');
+						header('Location: gallery.php?message=1');
 					}
 					
 					
@@ -253,8 +253,8 @@ switch($_SERVER['QUERY_STRING'])
 			
 			if($query_insert_logout)
 			{
-				session_destroy();
-				//unset($_SESSION['username']);
+				//session_destroy();
+				unset($_SESSION['username']);
 				header('Location: login.php');
 			}
 		}
@@ -267,6 +267,7 @@ switch($_SERVER['QUERY_STRING'])
 	case 'register':
 		if(isset($_POST["submit"]))
 		{
+			//validation at footer.php
 			$reg_firstname = mysql_escape_string($_POST["u_firstname"]);
 			$reg_lastname = mysql_escape_string($_POST["u_lastname"]);
 			$reg_username = mysql_escape_string($_POST["u_username"]); //username is equal to EMAIL
@@ -299,9 +300,32 @@ switch($_SERVER['QUERY_STRING'])
 			{
 				//user_type for subscribers is equal to 0
 				$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$reg_firstname','$reg_lastname','$reg_username','$reg_password','$reg_address','$reg_city','$reg_country','$reg_phone','$reg_gender','$datetime','$datetime','0','$reg_key')");
+				$last_inserted_id = mysql_insert_id();
+				
+				$select_key = mysql_query("SELECT * FROM treasuria_key");
+				while ($row = mysql_fetch_array($select_key))
+				{
+					$key_credits = $row['key_credits'];
+					$key_id = $row['key_id'];
+					
+					if($key_id=='1')
+					{
+						$item_qty = 5;
+					}
+					else if($key_id=='2')
+					{
+						$item_qty = 1;
+					}
+					else
+					{
+						$item_qty = 0;
+					}
+					$query_free_key = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty, created_at) VALUES ('$last_inserted_id', '$key_credits', '$key_id', '$item_qty', '$datetime')");
+					
+				}
 				
 				$verification_link = get_base_url() ."/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
-				if($query_insert_new_user)
+				if($query_insert_new_user AND $query_free_key)
 				{
 					$from = "jasonjavier06@gmail.com";
 					$replyTo= "jasonjavier06@gmail.com";
@@ -316,8 +340,7 @@ switch($_SERVER['QUERY_STRING'])
 					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
 							header('Location: register.php?verify=sentemail');
 					}
-		
-				
+					
 				}
 			}
 		}

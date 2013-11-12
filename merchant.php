@@ -38,19 +38,22 @@ if(isset($_SESSION['username']))
 			
 			?>
 			
-			<article class="col-xs-6 col-md-2 text-center">
-
+			<article class="col-xs-6 col-md-2 text-center"> 
+				
+				<?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?>
+				
+					<span class="popcount yellow1"> <?php echo  $_SESSION['cart'][$key_uniq]; ?></span>
+				<?php } ?>
+				
                 <?php 
            			 	$qr = new BarcodeQR(); 
 						$images = $qr->paypal($key_name, $key_price, '1', $key_uniq);
 					?>
                 <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
 				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
-                <div class="key-count">
-				  <?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?><?php echo  $_SESSION['cart'][$key_uniq]; } ?> Key / s
-				</div>
+				
 				<h3 class="item-title"><?php echo $key_name;?></h3>
-				<h4><?php echo $key_credits;?> Credits for <br>$ <?php echo $key_price;?></h4>
+				<h4><!--<?php //echo $key_credits;?> Credits for <br>--> $ <?php echo $key_price;?></h4>
                 <div class="shopping">
 				  <a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-plus"></span> Add</a><span class="hidem">|</span>
 				  <a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>

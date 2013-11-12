@@ -13,6 +13,7 @@ Version: 1.00
 @import url(http://fonts.googleapis.com/css?family=Milonga|Asul|Sigmar+One);
 @import "../css/bootstrap.min.css";
 @import "../css/signin.css";
+@import "../css/joyride-2.1.css";
 
 /*** ===================================
              GLOBAL STYLES
@@ -30,6 +31,18 @@ input:focus{outline: none}
 .brown{color: #564732}
 .rt{margin-right: 15px}
 .border{border: 1px solid red}
+/* #wrap {
+  max-height: 100%;
+  height: auto;
+
+  margin: 0 auto -75px;
+
+  padding: 0 0 75px;
+}
+#footer {
+  background: url(../img/footer-bg.png) repeat-x center top; height: 75px; line-height: 75px
+}*/
+
 
 /*   ANIMATION
 ================= */
@@ -41,6 +54,42 @@ input:focus{outline: none}
           transition: all .5s ease-in-out;
 }
 
+/*   ALERT
+================= */
+.alert {
+padding: 8px 35px 8px 14px;
+margin-bottom: 18px;
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+background-color: #8bc5e8;
+border: 1px solid #7ed0e5;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+color: #1c628b;
+}
+
+.alert-danger, .alert-error {
+background-color: #eddbe3;
+border-color: #e8d1df;
+color: #bd4247;
+}
+
+.alert-success {
+background-color: #ccddbb;
+border-color: #c6d4aa;
+color: #669533;
+}
+
+.alert-info {
+background-color: #edebe1;
+border-color: #e0d9cb;
+color: #817b58;
+}
+
+.alert-block {
+padding-top: 14px;
+padding-bottom: 14px;
+}
 
 /*** ==============================
              LAYOUT
@@ -55,7 +104,7 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
 .navbar-nav li a{line-height: 35px}
-.navbar-nav li .active, .navbar-nav li a:hover{background: none; color: #956D40; text-shadow: 1px 1px 1px #342B1B}
+.navbar-nav li .active, .navbar-nav li a:hover, .navbar-nav li a.current{background: none; color: #D59938; text-shadow: 1px 1px 1px #342B1B}
 /*   USER ACCOUNT  
 ===================== */
 .user-login li{display: inline}
@@ -70,6 +119,7 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .key-tally a.emerald{background-position: 0 -40px}
 .key-tally a.citrine{background-position: 0 -60px}
 .key-tally a.sapphire{background-position: 0 -80px}
+.key-tally a.coin{background-position: 0 -100px}
 
 /*** =================================
              PAGE STYLES
@@ -98,7 +148,7 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 
 @media (max-width: 480px) {
 	.register-container {width: 280px; margin-top: 35px}
-	}
+}
 
 .avatar{background: url(../img/bg-keys.jpg) repeat center top; margin: 20px auto 30px auto}
 .avatar:hover{ 
@@ -110,18 +160,48 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .choose{padding-top: 30px; font-size: 1.500em}
   /*   PLAY PAGE 
 ==================== */
-.account-container, .register-container, .story, .game{
+.account-container, .register-container, .story, .game-time{
   -webkit-box-shadow: 0 8px 6px -7px #3E311D;
      -moz-box-shadow: 0 8px 6px -7px #3E311D;
           box-shadow: 0 8px 6px -7px #3E311D
 }
+
+.game-time{background: #85C7D9 url(../img/game-daytime.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 30px auto; border: 1px solid #CBBDA1}
+.timer{background: url(../../images/timer.png) no-repeat center top; height: 150px; width: 150px; margin: 40px auto 0 auto; position: relative}
+.timer p{position: absolute; top: 40px; left: 40px}
+.countdown{padding: 10px 0 0 3px; font-size: 3.5em}
+.ticker{background: url(../../images/ticker.png) no-repeat center top; height: 150px; width: 150px; margin: 40px auto 0 auto;
+    -webkit-animation: spin 1.5s linear infinite;
+       -moz-animation: spin 1.5s linear infinite;
+            animation: spin 1.5s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+/*.night{background: #796F8D url(../../images/night-game.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 0 auto}*/
+.chest{background: url(../../images/chest_spritesheet_02.png) no-repeat center top; height: 234px; width: 248px; margin: 0 auto}
+.chest:hover{background-position: 0 -234px}
+.game{margin: 0 auto}
+.game-keys{margin: 0 0 0 30px}
+.game-keys span p{padding-top: 60px; font-size: .875em}
+.game-keys span{background: url(../../images/game-keys.png) no-repeat center top; height: 70px; width: 30px; display: inline-block}
+.game-keys span.gold-key{background-position: 0 0}
+.game-keys span.gold-key:hover{background-position: 0 -70px}
+.game-keys span.amethyst-key{background-position: 0 -140px}
+.game-keys span.amethyst-key:hover{background-position: 0 -210px}
+.game-keys span.emerald-key{background-position: 0 -280px}
+.game-keys span.emerald-key:hover{background-position: 0 -350px}
+.game-keys span.citrine-key{background-position: 0 -420px}
+.game-keys span.citrine-key:hover{background-position: 0 -490px}
+.game-keys span.sapphire-key{background-position: 0 -560px}
+.game-keys span.sapphire-key:hover{background-position: 0 -630px}
 
 /*   MERCHANT SHOP PAGE 
 ============================= */
 
 /*** PRODUCT GALLERY ***/
 .credit-key article{margin: 30px auto}
-.credit-key h3, .key-count{font-size: 1.125em}
+.credit-key h3 {font-size: 1.125em}
 .credit-key h4{font-size: 1.000em}
 .credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top;
   -webkit-box-shadow: inset 0 0 5px #3E311D;
@@ -134,8 +214,40 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .cart .btn:hover{background: #977E5F; color: #3E311D}
 .cart img{margin: 0 auto}
 
-.key-count{font-size: 1.375em}
+.key-count{font-size: 1em; position:absolute;}
 
+.popcount.yellow1 {
+border-color: #F4A506;
+background-color: #dfc12e;
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, hsl(40, 95%, 76%)), color-stop(100%, hsl(40, 95%, 61%)));
+background-image: -webkit-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+background-image: -moz-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+background-image: -ms-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+background-image: -o-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+background-image: linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+}
+
+.popcount {
+display: block;
+position: absolute;
+top: -10px;
+right: 15px;
+line-height: 16px;
+/*height: 24px;*/
+padding: 10px;
+font-family: Arial, sans-serif;
+color: #534836 !important;
+text-shadow: 0 1px hsla(0, 0%, 0%, 0.25);
+border-width: 1px;
+border-style: solid;
+border-radius: 15px;
+-webkit-border-radius: 15px;
+-moz-border-radius: 10px;
+-webkit-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
+-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
+box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
+}
+	
 .empty{padding-left: 15px}
 .shopping{font-size: .875em; padding: 0 0 10px 0}
 .total{font-size: 1.25em; padding-bottom: 30px}
