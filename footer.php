@@ -1,5 +1,6 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+     <script src="http://192.168.1.82:8080/socket.io/socket.io.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="assets/js/script.js"></script>
 	<script src="assets/js/jquery.md5.js"></script>
@@ -118,6 +119,15 @@
 		});
 		
 		$('#myModal').data('modal', null);
+		
+		
+		var socket = io.connect('http://192.168.1.82:8080');
+		var user_id = '<?php echo $_SESSION['user_id'] ?>';
+		var username = '<?php echo $_SESSION['username'] ?>';
+		socket.on('timer', function (data) {
+			$('.countdown').html(data.countdown);
+
+		});
 	});
 	</script> 
 
