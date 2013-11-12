@@ -17,6 +17,23 @@ function get_base_url()
 
         return $protocol . $host . $directory;
 }
+
+
+/* built in function */
+
+function getTable($tbName, $id, $limit){
+	$query = "SELECT * FROM " . $tbName  ." WHERE id = '$id'";
+	$result = mysql_query($query);
+	if (mysql_num_rows($result) > 0){
+		$row = mysql_fetch_array($result);
+		
+		return $row;
+	}
+}
+
+
+
+/* end built in function */
 	
 	
 function getUserId($username, $pass){
@@ -214,6 +231,25 @@ function getKeyValue($id){
 	}
 	
 }
+
+
+
+function getMaxTimer(){
+	$result = mysql_query("SELECT MAX(id)  FROM round_tb");
+	if (mysql_num_rows($result) > 0){
+		$row = mysql_fetch_array($result);
+		$res = getTable('round_tb', $row[0], 1);
+		$roundid = $row[0];
+		$result2 = mysql_query("UPDATE round_tb SET time_ctr = time_ctr + 1  WHERE id = '$roundid'");
+		if ($result2){
+				return mysql_affected_rows();
+		}
+	
+	}
+}
+
+
+
 
 function sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body){
 
