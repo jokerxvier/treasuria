@@ -16,11 +16,11 @@ if(isset($_SESSION['username']))
 
 	<section class="container cart">
 	  <h2>Merchant Shop</h2>
-    <div class="pull-right checkout">
-      <a class="btn" title="Back to previous page">Back</a>
+    <div class="pull-right checkout" >
+      <a href="merchant.php" class="btn" title="Back to previous page">Back</a>
     </div>
     	
-		<p><?php echo (isset($_REQUEST['success']) && $_REQUEST['success'] == 1 ) ? 'You Have Successfully Purchased an Item' : ''  ?> </p>
+		<?php if(isset($_GET["success"]) and $_GET["success"]=="1") { ?> <div class="alert alert-success" > SUCCESS: You Have Successfully Purchased an Item! </div> <?php } ?>
         <table class="table table-borderless">
           <thead>
           <tr>

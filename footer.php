@@ -121,7 +121,7 @@
 		$('#myModal').data('modal', null);
 		
 		
-		var socket = io.connect('http://192.168.1.82:8080');
+		var socket = io.connect('http://192.168.1.75:8080');
 		var user_id = '<?php echo $_SESSION['user_id'] ?>';
 		var username = '<?php echo $_SESSION['username'] ?>';
 		socket.on('timer', function (data) {

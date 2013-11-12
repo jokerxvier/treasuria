@@ -37,6 +37,8 @@ $user_credit = getTableData($tableName, $condition);
 
 $pointsTable = 'user_points';
 $user_points = getTableData($pointsTable, $condition);
+
+//getting base name of PHP $url=basename($_SERVER['PHP_SELF'], ".php");
 ?>
 
 <header>
@@ -50,13 +52,13 @@ $user_points = getTableData($pointsTable, $condition);
 		</div>
 		<div>
 			<ul class="list-inline user-login pull-right key-tally">
-			  <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo getCreditsTotal(1, $session_user_id);  ?> </a></li>
-			  <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo getCreditsTotal(2, $session_user_id);  ?></a></li>
-		      <li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo getCreditsTotal(3, $session_user_id);  ?> </a></li>
-		  	  <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo getCreditsTotal(4, $session_user_id);  ?> </a></li>
-			  <li> <a href="#" class="sapphire" alt="Sapphire Gem Key">  <?php echo getCreditsTotal(5, $session_user_id);  ?> </a></li> <span class="hidem">|</span>
-			  <li> <span class="glyphicon glyphicon-tag"></span> Points: <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </li>
-			</ul>
+			 <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo getCreditsTotal(1, $session_user_id);  ?> </a></li>
+			 <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo getCreditsTotal(2, $session_user_id);  ?></a></li>
+				<li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo getCreditsTotal(3, $session_user_id);  ?> </a></li>
+			   <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo getCreditsTotal(4, $session_user_id);  ?> </a></li>
+			 <li> <a href="#" class="sapphire" alt="Sapphire Gem Key">  <?php echo getCreditsTotal(5, $session_user_id);  ?> </a></li> <span class="hidem">|</span>
+			 <li> <a href="#" class="coin" alt="Gold Coins"> <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </a></li>
+		   </ul>
 		</div>
 	</div>
 
@@ -72,12 +74,13 @@ $user_points = getTableData($pointsTable, $condition);
 		</div><!--NAVBAR-HEADER-->
 		<div class="collapse navbar-collapse col-xs-12 col-md-4 clearfix">
 		  <ul class="nav navbar-nav">
+			<?php $url=basename($_SERVER['PHP_SELF'], ".php"); ?>
 			<!--<li class="active"><a href="#" title="The Story">The Story</a></li>-->
-			<li><a href="index.php" class="active" title="Play">Play</a></li>
+			<li><a href="index.php" <?php if($url=='index') { echo 'class="active"';} ?> title="Play">Play</a></li>
 			<!--<li><a href="challenge.php" title="Daily Challenge">Daily Challenge</a></li>-->
-			<li><a href="gallery.php" title="Treasure Gallery">Treasure Gallery</a></li>
-			<li><a href="merchant.php" title="Merchant Shop">Merchant Shop</a></li>
-			<li><a href="tutorial.php" title="Tuttorial">Tutorial</a></li>
+			<li><a href="gallery.php" <?php if($url=='gallery') { echo 'class="active"';} ?> title="Treasure Gallery">Treasure Gallery</a></li>
+			<li><a href="merchant.php" <?php if($url=='merchant') { echo 'class="active"';} ?> title="Merchant Shop">Merchant Shop</a></li>
+			<li><a href="tutorial.php" <?php if($url=='tutorial') { echo 'class="active"';} ?> title="Tuttorial">Tutorial</a></li>
 		  </ul>
 		</div><!--/.nav-collapse -->
 

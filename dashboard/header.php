@@ -79,8 +79,8 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
-						<li class="divider"></li>
+						<!--<li><a href="#">Profile</a></li>
+						<li class="divider"></li>-->
 						<li><a href="admin_process.php?adminlogout">Logout</a></li>
 					</ul>
 				</div>

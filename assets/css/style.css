@@ -21,7 +21,7 @@ Version: 1.00
 html, body{height: 100%}
 body{background: url(../img/global-bg.jpg) repeat center top; padding-bottom: 50px; font: normal 16px/1.5 'Asul', sans-serif; color: #b5956d}
 h2, nav, footer, .choose{text-shadow: 1px 1px 1px #3E311D}
-h2, h3{font-family: 'Asul', sans-serif; color: #b5956d}
+h2, h3, h4{font-family: 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
 a:hover{color: #5D4F35; text-decoration: none}
 input:focus{outline: none}
@@ -54,42 +54,6 @@ input:focus{outline: none}
           transition: all .5s ease-in-out;
 }
 
-/*   ALERT
-================= */
-.alert {
-padding: 8px 35px 8px 14px;
-margin-bottom: 18px;
-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-background-color: #8bc5e8;
-border: 1px solid #7ed0e5;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
-color: #1c628b;
-}
-
-.alert-danger, .alert-error {
-background-color: #eddbe3;
-border-color: #e8d1df;
-color: #bd4247;
-}
-
-.alert-success {
-background-color: #ccddbb;
-border-color: #c6d4aa;
-color: #669533;
-}
-
-.alert-info {
-background-color: #edebe1;
-border-color: #e0d9cb;
-color: #817b58;
-}
-
-.alert-block {
-padding-top: 14px;
-padding-bottom: 14px;
-}
 
 /*** ==============================
              LAYOUT
@@ -128,6 +92,43 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .success {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #F0E436; margin: 5px auto; padding: 5px 10px}
 .form-control{color: #555}
 
+/*   ALERT
+================= */
+.alert {
+padding: 8px 35px 8px 14px;
+margin-bottom: 18px;
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+background-color: #8bc5e8;
+border: 1px solid #7ed0e5;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+color: #1c628b;
+}
+
+.alert-danger, .alert-error {
+background-color: #eddbe3;
+border-color: #e8d1df;
+color: #bd4247;
+}
+
+.alert-success {
+background-color: #ccddbb;
+border-color: #c6d4aa;
+color: #669533;
+}
+
+.alert-info {
+background-color: #edebe1;
+border-color: #e0d9cb;
+color: #817b58;
+}
+
+.alert-block {
+padding-top: 14px;
+padding-bottom: 14px;
+}
+
 /*   LOGIN PAGE 
 =================== */
 .login-btn{background: #977E5F; color: #ffffff}
@@ -157,16 +158,18 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
           box-shadow: inset 0 0 10px #3E311D
 }
 .avatar img{margin: 20px auto 0 auto}
+
 .choose{padding-top: 30px; font-size: 1.500em}
   /*   PLAY PAGE 
 ==================== */
-.account-container, .register-container, .story, .game-time{
+.account-container, .register-container, .story, .game-time, .legend{
   -webkit-box-shadow: 0 8px 6px -7px #3E311D;
      -moz-box-shadow: 0 8px 6px -7px #3E311D;
           box-shadow: 0 8px 6px -7px #3E311D
 }
 
 .game-time{background: #85C7D9 url(../img/game-daytime.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 30px auto; border: 1px solid #CBBDA1}
+/*.night{background: #796F8D url(../../images/night-game.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 0 auto}*/
 .timer{background: url(../../images/timer.png) no-repeat center top; height: 150px; width: 150px; margin: 40px auto 0 auto; position: relative}
 .timer p{position: absolute; top: 40px; left: 40px}
 .countdown{padding: 10px 0 0 3px; font-size: 3.5em}
@@ -178,10 +181,17 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-/*.night{background: #796F8D url(../../images/night-game.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 0 auto}*/
+
+.legend{background: url(../img/form-bg.jpg) repeat center top; width: 360px; margin: 40px auto 0 auto}
+.legend .game-keys li{margin: 0 10px 0 0}
+.legend .coin{background: url(../img/mini-keys.png) no-repeat center top; height: 20px; width: 20px; background-position: 0 -100px; padding: 0 0 0 25px}
+.legend h4{padding: 10px 0 0 0}
+
 .chest{background: url(../../images/chest_spritesheet_02.png) no-repeat center top; height: 234px; width: 248px; margin: 0 auto}
 .chest:hover{background-position: 0 -234px}
-.game{margin: 0 auto}
+
+/*.game li{width: 360px; margin: 0 auto}*/
+
 .game-keys{margin: 0 0 0 30px}
 .game-keys span p{padding-top: 60px; font-size: .875em}
 .game-keys span{background: url(../../images/game-keys.png) no-repeat center top; height: 70px; width: 30px; display: inline-block}
@@ -201,7 +211,7 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 
 /*** PRODUCT GALLERY ***/
 .credit-key article{margin: 30px auto}
-.credit-key h3 {font-size: 1.125em}
+.credit-key h3, .key-count{font-size: 1.125em}
 .credit-key h4{font-size: 1.000em}
 .credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top;
   -webkit-box-shadow: inset 0 0 5px #3E311D;
@@ -214,17 +224,16 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 .cart .btn:hover{background: #977E5F; color: #3E311D}
 .cart img{margin: 0 auto}
 
-.key-count{font-size: 1em; position:absolute;}
+.key-count{font-size: 1.375em}
 
 .popcount.yellow1 {
-border-color: #F4A506;
-background-color: #dfc12e;
-background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, hsl(40, 95%, 76%)), color-stop(100%, hsl(40, 95%, 61%)));
+background: #352D1E;
+/*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, hsl(40, 95%, 76%)), color-stop(100%, hsl(40, 95%, 61%)));
 background-image: -webkit-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
 background-image: -moz-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
 background-image: -ms-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
 background-image: -o-linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
-background-image: linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));
+background-image: linear-gradient(top, hsl(40, 95%, 76%), hsl(40, 95%, 61%));*/
 }
 
 .popcount {
@@ -233,21 +242,21 @@ position: absolute;
 top: -10px;
 right: 15px;
 line-height: 16px;
-/*height: 24px;*/
+height: 40px;
+width: 40px;
 padding: 10px;
 font-family: Arial, sans-serif;
-color: #534836 !important;
+color: #9B8263 !important;
 text-shadow: 0 1px hsla(0, 0%, 0%, 0.25);
-border-width: 1px;
-border-style: solid;
-border-radius: 15px;
--webkit-border-radius: 15px;
--moz-border-radius: 10px;
+/*border: 1px solid #5D4A2D;*/
+border-radius: 20px;
+/*-webkit-border-radius: 20px;
+-moz-border-radius: 20px;
 -webkit-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
 -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
+box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);*/
 }
-	
+
 .empty{padding-left: 15px}
 .shopping{font-size: .875em; padding: 0 0 10px 0}
 .total{font-size: 1.25em; padding-bottom: 30px}

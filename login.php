@@ -14,12 +14,12 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
   <div class="story img-responsive clearfix">
 	<!--GAME STORY-->
 		<!--Adobe Edge Runtime-->
-		<script type="text/javascript" charset="utf-8" src="story_v2_edgePreload.js"></script>
+		<script type="text/javascript" charset="utf-8" src="Opening_edgePreload.js"></script>
 		<style>
-			.edgeLoad-EDGE-30404443 { visibility:hidden; }
+			.edgeLoad-EDGE-3625037 { visibility:hidden; }
 		</style>
 		<!--Adobe Edge Runtime End-->
-		<div id="Stage" class="EDGE-1904043">
+		<div id="Stage" class="EDGE-3625037">
 		</div>
 	<!--end of GAME STORY-->
   </div>

@@ -139,16 +139,19 @@ body {
   font-size: 13px;
   line-height: 18px;
   /*color: #977E5F;*/
-  color: #6E5839;
+  /*color: #6E5839;*/
+  color: #FFF;
   background: url(../../assets/img/global-bg.jpg) repeat center top; 
   /*text-shadow:0 -1px 1px rgba(0, 0, 0, 0.2)*/
 }
 a {
-  color: #E2B435;
+  /* color: #E2B435; */
+  color: #FFF;
   text-decoration: none;
 }
 a:hover {
-  color: #956D40;
+  /*color: #956D40;*/
+  color: #E2B435;
   text-decoration: underline;
 }
 .row {
@@ -367,7 +370,8 @@ h6 {
   margin: 0;
   font-family: 'Karla', sans-serif;
   font-weight: bold;
-  color: #9B8263;
+  /*color: #9B8263;*/
+  color: #FFF;
   text-rendering: optimizelegibility;
 }
 h1 small,
@@ -1277,7 +1281,7 @@ table {
   line-height: 18px;
   text-align: left;
   vertical-align: top;
-  border-top: 1px solid #6E583A;
+  /* border-top: 1px solid #6E583A; */
 }
 .table th {
   font-weight: bold;
@@ -1358,7 +1362,8 @@ table {
 }
 .table tbody tr:hover td,
 .table tbody tr:hover th {
-  background: #977E5F;
+ /*  background: #977E5F; */
+  background: #8e775a;
 }
 table .span1 {
   float: none;
@@ -2123,7 +2128,7 @@ button.close {
   font-size: 13px;
   line-height: 18px;
   *line-height: 20px;
-  color: #333333;
+  /* color: #333333; */
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
@@ -2698,6 +2703,7 @@ input[type="submit"].btn.btn-mini {
   /*color: #999999;*/
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
+  background: url(../../assets/img/form-bg.jpg) repeat center top;
 }
 .nav li + .nav-header {
   margin-top: 9px;
@@ -2781,7 +2787,8 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
   color: #9B7D58;
-  background: #6E5839;
+  /* background: #6E5839;*/
+   background: #FFF;
   /*border: 1px solid #ddd;*/
   border-bottom-color: transparent;
   cursor: default;
@@ -3394,7 +3401,8 @@ input[type="submit"].btn.btn-mini {
 }
 .pagination a:hover,
 .pagination .active a {
-  background: #6E583A;
+  /* background: #6E583A; */
+  background: #FFF;
 }
 .pagination .active a {
   color: #A58A67;
@@ -3403,7 +3411,8 @@ input[type="submit"].btn.btn-mini {
 .pagination .disabled span,
 .pagination .disabled a,
 .pagination .disabled a:hover {
-  color: #6E5839;
+  /* color: #6E5839; */
+  color: #FFF;
   background-color: transparent;
   cursor: default;
 }
