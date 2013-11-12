@@ -723,14 +723,14 @@
     display: none;
   }
   .nav-collapse .nav .nav-header {
-    color: #999999;
+    color: #6E583A;
     text-shadow: none;
   }
   .nav-collapse .nav > li > a,
   .nav-collapse .dropdown-menu a {
     padding: 6px 15px;
     font-weight: bold;
-    color: #999999;
+    color: #5A5146;
     -webkit-border-radius: 3px;
        -moz-border-radius: 3px;
             border-radius: 3px;
