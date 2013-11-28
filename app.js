@@ -90,71 +90,16 @@ var onInterval = function() {
                 myInterval = setInterval(onInterval, 2000);
          }, 500);
 		 
-
-    }
-	
-	
-	
-
-
-    io.sockets.emit('timer', { result: data });
-
-};
-var myInterval = setInterval(onInterval, 2000);
-
-
-io.sockets.on('connection', function (socket){
-	
-	
-	
-	 socket.on('addUsers', function (data, callback) {
 		 
-		 var users	 = {
-			 data : data.box,
-			 socket_id : socket.id
-		 }
-		 
+		 for (var users  in clients) {
+					console.log('THIS IS THE USERS' + clients[users].username);
 
-		 
-		  socket.username = data.username;
-		  var message;
-
-		  if (clients.hasOwnProperty(data.username)){
-			  if (clients[data.username].username == data.username && clients[data.username].itemid ==  data.itemid && clients[data.username].box == data.box) {
-				  	delete clients[data.username];
-			  }else {
-					clients[data.username].itemid = data.itemid;
-			  		clients[data.username].box = data.box;
-			  		clients[data.username].key_price = data.key_price;
-			  		clients[data.username].message = 'You have successfully updated your Bid' ;  
-			  }
-			  
-		  }else {
-			  clients[data.username] = {
-				  username : data.username, 
-				  userid : data.user_id,
-				  itemid : data.itemid,  
-				  box : data.box, 
-				  socket_id : socket.id,
-				  key_price : data.key_price,
-				  message : 'You have successfully placed your Bid'
-			 }
-		  }
 		
-		 //io.sockets.socket(socket.id).emit('display result', {users: users});
-		 io.sockets.socket(socket.id).emit('displayUsers', {data: clients[data.username]});
-		
-	 });
-	 
-	 
-	 socket.on('result', function (result){
-		 	
-				if (clients.hasOwnProperty(result.data)) {
-					var itemid  = clients[result.data].itemid;
-					var userid  = clients[result.data].userid;
-					var box  = clients[result.data].box;
-					var keyPrice = clients[result.data].key_price;
-					var userSocket = clients[result.data].socket_id;
+					var itemid  = clients[users].itemid;
+					var userid  = clients[users].userid;
+					var box  = clients[users].box;
+					var keyPrice = clients[users].key_price;
+					var userSocket = clients[users].socket_id;
 					var message; 
 					
 					
@@ -191,11 +136,76 @@ io.sockets.on('connection', function (socket){
 							}
 					});
 					
-				}
+				
+			}
 			
+			io.sockets.emit('winner', {winner : winnerBox});
+		 
+
+    }
+	
+	
+	
+
+
+    io.sockets.emit('timer', { result: data });
+
+};
+var myInterval = setInterval(onInterval, 2000);
+
+
+io.sockets.on('connection', function (socket){
+	
+	
+	
+	 socket.on('addUsers', function (data, callback) {
+		 
+		 var users	 = {
+			 username : data.username,
+			 socket_id : socket.id
+		 }
+		 
+		  socket.username = data.username;
+		  var message;
+
+		  if (clients.hasOwnProperty(data.username)){
+			  if (clients[data.username].username == data.username && clients[data.username].itemid ==  data.itemid && clients[data.username].box == data.box) {
+				  	delete clients[data.username];
+			  }else {
+					clients[data.username].itemid = data.itemid;
+			  		clients[data.username].box = data.box;
+			  		clients[data.username].key_price = data.key_price;
+			  		clients[data.username].message = 'You have successfully updated your Bid' ;  
+			  }
+			  
+		  }else {
+			  
 			
-			socket.emit('winner', {winner : winnerBox});
+				  clients[data.username] = {
+				  username : data.username, 
+				  userid : data.user_id,
+				  itemid : data.itemid,  
+				  box : data.box, 
+				  socket_id : socket.id,
+				  key_price : data.key_price,
+				  message : 'You have successfully placed your Bid'
+			 	 }
+			  
+			  
+		  }
+
+		 //io.sockets.socket(socket.id).emit('display result', {users: users});
+		 io.sockets.socket(socket.id).emit('displayUsers', {data: clients[data.username]});
+		
 	 });
+	 
+	 
+	/* socket.on('result', function (result){
+				
+				
+				
+				
+	 });*/
 	 
 	 
 	 
