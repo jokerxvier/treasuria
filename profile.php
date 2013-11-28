@@ -7,7 +7,6 @@ if(isset($_SESSION['username']))
 
 <div id="wrap">
   <section class="container">
-<<<<<<< HEAD
 
     <article class="col-md-2"> 
       <div class="female"></div>
@@ -119,7 +118,7 @@ if(isset($_SESSION['username']))
   </article>
 
   </section><!--end of CONTAINER-->
-=======
+
     <div class="clearfix">
     <article class="col-md-2"> 
       <div class="female"></div>
@@ -193,7 +192,7 @@ if(isset($_SESSION['username']))
       </div>
     </article>
   </section>
->>>>>>> 8a978a65a66c214c6ed518ab1a0be363a32aa0d8
+
 </div><!--end of WRAP-->
 
 <?php
