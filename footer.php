@@ -5,7 +5,11 @@
   </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
      <script src="http://192.168.1.74:8080/socket.io/socket.io.js"></script>
+=======
+     <script src="http://192.168.1.75:8080/socket.io/socket.io.js"></script>
+>>>>>>> 8a978a65a66c214c6ed518ab1a0be363a32aa0d8
      <script src="assets/js/script.js"></script>
 	 <script src="assets/js/jquery.md5.js"></script>
     <script src="assets/js/validation.js" type="text/javascript"></script>
@@ -16,28 +20,32 @@
 
 	
 <script>
-			function getRandDaily(){
-						var fruits=[1, 5]
-						var fruitweight=[6, 3] // 60, 30
-						var totalweight=eval(fruitweight.join("+"))
-						var weighedfruits=new Array()
-						var currentfruit=0
-								
-						while (currentfruit<fruits.length){ 
-							for (i=0; i<fruitweight[currentfruit]; i++)
-								weighedfruits[weighedfruits.length]=fruits[currentfruit]
-								currentfruit++
-							}
-						var randomnumber=Math.floor(Math.random()*totalweight);
-							
-						return weighedfruits[randomnumber];
-			
-			}
+	function getRandDaily(){
+				var fruits=[1, 5]
+				var fruitweight=[6, 3] // 60, 30
+				var totalweight=eval(fruitweight.join("+"))
+				var weighedfruits=new Array()
+				var currentfruit=0
+						
+				while (currentfruit<fruits.length){ 
+					for (i=0; i<fruitweight[currentfruit]; i++)
+						weighedfruits[weighedfruits.length]=fruits[currentfruit]
+						currentfruit++
+					}
+				var randomnumber=Math.floor(Math.random()*totalweight);
+					
+				return weighedfruits[randomnumber];
+	
+	}
 			
 			
 	$(function() {
 				
+<<<<<<< HEAD
 				var socket = io.connect('http://192.168.1.74:8080');
+=======
+				var socket = io.connect('http://192.168.1.75:8080');
+>>>>>>> 8a978a65a66c214c6ed518ab1a0be363a32aa0d8
 				var user_id = '<?php echo (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : false  ?>';
 				var username = '<?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : false ?>';
 				
@@ -65,7 +73,7 @@
 						  dataType: 'json',
 						  data: params,
 						  success: function (result) {
-							
+							console.log(result);
 							if (result.success == 1){
 								$('.message').addClass('success').html(result.message);	
 							}else {
