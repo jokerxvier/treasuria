@@ -7,7 +7,7 @@ Description: Custom Theme for Treasuria
 Version: 1.00
 */
 
-/*** ==============================
+/*** ===============================
              IMPORT
 =============================== ***/
 @import url(http://fonts.googleapis.com/css?family=Milonga|Asul|Sigmar+One);
@@ -15,11 +15,11 @@ Version: 1.00
 @import "../css/signin.css";
 @import "../css/joyride-2.1.css";
 
-/*** ===================================
+/*** ====================================
              GLOBAL STYLES
 ==================================== ***/
-html, body{height: 100%}
-body{background: url(../img/global-bg.jpg) repeat center top; padding-bottom: 50px; font: normal 16px/1.5 'Asul', sans-serif; color: #b5956d}
+
+body{background: url(../img/global-bg.jpg) repeat center top; font: normal 16px/1.5 'Asul', sans-serif; color: #b5956d}
 h2, nav, footer, .choose{text-shadow: 1px 1px 1px #3E311D}
 h2, h3, h4{font-family: 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
@@ -31,44 +31,49 @@ input:focus{outline: none}
 .brown{color: #564732}
 .rt{margin-right: 15px}
 .border{border: 1px solid red}
-/* #wrap {
-  max-height: 100%;
+
+/*   STICKY FOOTER
+====================== */
+html, body{height: 100%}
+#wrap {
+  min-height: 100%;
   height: auto;
 
   margin: 0 auto -75px;
 
   padding: 0 0 75px;
 }
-#footer {
-  background: url(../img/footer-bg.png) repeat-x center top; height: 75px; line-height: 75px
-}*/
+footer {
+  background: url(../img/footer-bg.png) repeat-x center top; height: 75px; padding: 30px 0 0 0;
+}
 
 
 /*   ANIMATION
 ================= */
-.transition, .transition a, #submit, #reset{
-  -webkit-transition: all .5s ease-in-out;
-     -moz-transition: all .5s ease-in-out;
-      -ms-transition: all .5s ease-in-out;
-       -o-transition: all .5s ease-in-out;
-          transition: all .5s ease-in-out;
+.transition, .transition a{
+  -webkit-transition: all .5s ease-out;
+     -moz-transition: all .5s ease-out;
+      -ms-transition: all .5s ease-out;
+       -o-transition: all .5s ease-out;
+          transition: all .5s ease-out;
 }
 
 
-/*** ==============================
+/*** ===============================
              LAYOUT
 =============================== ***/
-footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; line-height: 75px}
 .content{margin: 30px; padding-bottom: 15px}
 
 /*   BRANDING & NAVIGATION
 ============================= */
 .branding-login{background: url(../img/logo-login.png) no-repeat top center; height: 59px; width: 222px; margin: 10px auto}
-.navbar{background: url(../img/form-bg.jpg) repeat center top; margin-bottom: 0; border-top: 5px solid #DFC12E; border-radius: 0; font-family: 'Milonga'}
+.navbar{background: url(../img/form-bg.jpg) repeat center top; margin-bottom: 0; /*border-image: url('../img/nav-border.png') 30 30 30 30;*/ border-radius: 0; font-family: 'Milonga'}
+.navbar-collapse{box-shadow: none}
 .navbar-header .mini-menu{background: #5D4F35}
 .navbar-header .mini-menu .icon-bar{background: #FFFFFF}
 .navbar-nav li a{line-height: 35px}
 .navbar-nav li .active, .navbar-nav li a:hover, .navbar-nav li a.current{background: none; color: #D59938; text-shadow: 1px 1px 1px #342B1B}
+
 /*   USER ACCOUNT  
 ===================== */
 .user-login li{display: inline}
@@ -76,16 +81,16 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 
 /*   KEY TALLY 
 ================== */
-.key-tally li{margin: 0 15px 0 0}
-.key-tally a{background: url(../img/mini-keys.png) no-repeat center top; height: 20px; width: 20px; display: inline-block; padding-left: 20px}
-.key-tally a.golden{background-position: 0 0}
-.key-tally a.amethyst{background-position: 0 -20px}
-.key-tally a.emerald{background-position: 0 -40px}
-.key-tally a.citrine{background-position: 0 -60px}
-.key-tally a.sapphire{background-position: 0 -80px}
-.key-tally a.coin{background-position: 0 -100px}
+.key-tally li{margin: 0 10px 0 0}
+.key-tally span{background: url(../img/mini-keys.png) no-repeat center top; height: 20px; width: 20px; padding-left: 20px}
+.key-tally span.golden{background-position: 0 0}
+.key-tally span.amethyst{background-position: 0 -20px}
+.key-tally span.emerald{background-position: 0 -40px}
+.key-tally span.citrine{background-position: 0 -60px}
+.key-tally span.sapphire{background-position: 0 -80px}
+.key-tally span.coin{background-position: 0 -100px}
 
-/*** =================================
+/*** ==================================
              PAGE STYLES
 ================================== ***/
 .error {font-size: .75em; font-style: italic; color: #fff; border: 1px solid #DE0000; margin: 5px auto; padding: 5px 10px}
@@ -96,14 +101,14 @@ footer{background: url(../img/footer-bg.png) repeat-x center top; height: 75px; 
 ================= */
 .alert {
 padding: 8px 35px 8px 14px;
-margin-bottom: 18px;
-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-background-color: #8bc5e8;
-border: 1px solid #7ed0e5;
+margin-bottom: 20px;
+/*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);*/
+background: #8A775A;
+/*border: 1px solid #7ed0e5;*/
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
 border-radius: 4px;
-color: #1c628b;
+color: #E5D9C3;
 }
 
 .alert-danger, .alert-error {
@@ -113,13 +118,13 @@ color: #bd4247;
 }
 
 .alert-success {
-background-color: #ccddbb;
-border-color: #c6d4aa;
-color: #669533;
+background: #514634;
+/*border-color: #FFE025;*/
+color: #FFE025;
 }
 
 .alert-info {
-background-color: #edebe1;
+background: #edebe1;
 border-color: #e0d9cb;
 color: #817b58;
 }
@@ -143,37 +148,23 @@ padding-bottom: 14px;
 	        border-radius: 5px;
 }
 
-@media (max-width: 600px) {
-  .register-container {width: 480px; margin-top: 35px}
-  }
-
-@media (max-width: 480px) {
-	.register-container {width: 280px; margin-top: 35px}
-}
-
-.avatar{background: url(../img/bg-keys.jpg) repeat center top; margin: 20px auto 30px auto}
-.avatar:hover{ 
-  -webkit-box-shadow: inset 0 0 10px #3E311D;
-     -moz-box-shadow: inset 0 0 10px #3E311D;
-          box-shadow: inset 0 0 10px #3E311D
-}
-.avatar img{margin: 20px auto 0 auto}
-
-.choose{padding-top: 30px; font-size: 1.500em}
   /*   PLAY PAGE 
 ==================== */
-.account-container, .register-container, .story, .game-time, .legend{
-  -webkit-box-shadow: 0 8px 6px -7px #3E311D;
-     -moz-box-shadow: 0 8px 6px -7px #3E311D;
-          box-shadow: 0 8px 6px -7px #3E311D
+.account-container, .register-container, .story, .game-time{
+  -webkit-box-shadow: 0 8px 10px -7px #3E311D;
+     -moz-box-shadow: 0 8px px -7px #3E311D;
+          box-shadow: 0 8px 8px -7px #3E311D
 }
 
-.game-time{background: #85C7D9 url(../img/game-daytime.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 30px auto; border: 1px solid #CBBDA1}
-/*.night{background: #796F8D url(../../images/night-game.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 0 auto}*/
-.timer{background: url(../../images/timer.png) no-repeat center top; height: 150px; width: 150px; margin: 40px auto 0 auto; position: relative}
-.timer p{position: absolute; top: 40px; left: 40px}
-.countdown{padding: 10px 0 0 3px; font-size: 3.5em}
-.ticker{background: url(../../images/ticker.png) no-repeat center top; height: 150px; width: 150px; margin: 40px auto 0 auto;
+.game-time{background: #95F1EE url(../img/bg-day.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 30px auto; padding: 15px 0 0 0}
+/*.night{background: #796F8D url(../img/bg-night.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 0 auto}*/
+
+/*** TIMER ***/
+.countdown{font-size: 3.5em; margin: -100px 0 0 0}
+.countdown .loading{font-size: 14px}
+.timer{background: url(../img/timer.png) no-repeat center top; height: 160px; width: 160px; position: relative; margin: 0 auto}
+.timer p{position: absolute; top: 40px; left: 45px}
+.ticker{background: url(../img/ticker.png) no-repeat center top; height: 160px; width: 160px; margin: 40px auto 0 auto;
     -webkit-animation: spin 1.5s linear infinite;
        -moz-animation: spin 1.5s linear infinite;
             animation: spin 1.5s linear infinite;
@@ -182,38 +173,62 @@ padding-bottom: 14px;
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-.legend{background: url(../img/form-bg.jpg) repeat center top; width: 360px; margin: 40px auto 0 auto}
-.legend .game-keys li{margin: 0 10px 0 0}
-.legend .coin{background: url(../img/mini-keys.png) no-repeat center top; height: 20px; width: 20px; background-position: 0 -100px; padding: 0 0 0 25px}
-.legend h4{padding: 10px 0 0 0}
+.legend{margin: 0 0 0 30px}
+.legend li{list-style-type: none}
 
-.chest{background: url(../../images/chest_spritesheet_02.png) no-repeat center top; height: 234px; width: 248px; margin: 0 auto}
-.chest:hover{background-position: 0 -234px}
+.bets li{list-style-type: none}
 
-/*.game li{width: 360px; margin: 0 auto}*/
+/*** TREASURE CHESTS ***/
+.chest{background: url(../img/chests.png) no-repeat 0 0; height: 231px; width: 245px; margin: 0 auto}
+.chest li, .chest-active li{list-style-type: none}
+.chest li.half{background-position: -245px 0}
+.chest li.x1{background-position: -490px 0}
+.chest li.x2{background-position: -735px 0}
+.chest li.x3{background-position: -980px 0}
+.chest li.x5{background-position: -1225px 0}
+.chest li.empty{background-position: -1470px 0}
+.chest-active{background: url(../img/chests.png) no-repeat center top !important; height: 231px; width: 245px; margin: 0 auto}
 
-.game-keys{margin: 0 0 0 30px}
-.game-keys span p{padding-top: 60px; font-size: .875em}
-.game-keys span{background: url(../../images/game-keys.png) no-repeat center top; height: 70px; width: 30px; display: inline-block}
-.game-keys span.gold-key{background-position: 0 0}
-.game-keys span.gold-key:hover{background-position: 0 -70px}
-.game-keys span.amethyst-key{background-position: 0 -140px}
-.game-keys span.amethyst-key:hover{background-position: 0 -210px}
-.game-keys span.emerald-key{background-position: 0 -280px}
-.game-keys span.emerald-key:hover{background-position: 0 -350px}
-.game-keys span.citrine-key{background-position: 0 -420px}
-.game-keys span.citrine-key:hover{background-position: 0 -490px}
-.game-keys span.sapphire-key{background-position: 0 -560px}
-.game-keys span.sapphire-key:hover{background-position: 0 -630px}
+
+/*** MAGICAL KEYS ***/
+.game-keys{width: 245px; margin: 0 auto; padding: 0 0 0 20px}
+.game-keys li{background: url(../../images/game-keys.png) no-repeat center top; height: 70px; width: 40px; cursor: pointer}
+.game-keys li.gold-key{background-position: 0 0}
+.game-keys li.amethyst-key{background-position: 0 -140px}
+.game-keys li.emerald-key{background-position: 0 -280px}
+.game-keys li.citrine-key{background-position: 0 -420px}
+.game-keys li.sapphire-key{background-position: 0 -560px}
+
+/*** KEY SELECT ***/
+.rotated {
+    -webkit-transform: rotate(-30deg);  /* Chrome, Safari 3.1+ */
+    -moz-transform: rotate(-30deg);  /* Firefox 3.5-15 */
+    -ms-transform: rotate(-30deg);  /* IE 9 */
+    -o-transform: rotate(-30deg);  /* Opera 10.50-12.00 */
+    transform: rotate(-30deg);  /* Firefox 16+, IE 10+, Opera 12.10+ */
+}
+
+.yes-or-no .btn{background: #8D785B; color: #433928}
+.yes-or-no .btn:hover{color: #8D785B; background: #433928}
+
+/*   CHALLENGE PAGE 
+======================= */
+.challenge{background: #69ACAD url(../img/challenge.jpg) no-repeat center top; max-height: 100%; min-height: 600px; width: 960px; margin: 30px auto; padding: 15px 0 0 0}
+.chest{background: url(../img/chests.png) no-repeat 0 0; height: 231px; width: 245px; margin: 0 auto}
+.x1{background: url(../img/chests.png) no-repeat -490px 0; height: 231px; width: 245px; margin: 0 auto}
+.x5{background: url(../img/chests.png) no-repeat -1225px 0; height: 231px; width: 245px; margin: 0 auto}
+
 
 /*   MERCHANT SHOP PAGE 
 ============================= */
 
 /*** PRODUCT GALLERY ***/
+.gallery h3,
+.gallery h4{height: 40px}
 .credit-key article{margin: 30px auto}
 .credit-key h3, .key-count{font-size: 1.125em}
 .credit-key h4{font-size: 1.000em}
-.credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top;
+.credit-key img{margin: 0 auto; background: url(../img/bg-keys.jpg) repeat center top; min-height: 120px;
   -webkit-box-shadow: inset 0 0 5px #3E311D;
      -moz-box-shadow: inset 0 0 5px #3E311D;
           box-shadow: inset 0 0 5px #3E311D
@@ -250,9 +265,9 @@ color: #9B8263 !important;
 text-shadow: 0 1px hsla(0, 0%, 0%, 0.25);
 /*border: 1px solid #5D4A2D;*/
 border-radius: 20px;
-/*-webkit-border-radius: 20px;
+-webkit-border-radius: 20px;
 -moz-border-radius: 20px;
--webkit-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
+/*-webkit-box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);
 -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
 box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3);*/
 }
@@ -262,7 +277,7 @@ box-shadow: 0 1px 1px hsla(0, 0%, 0%, 0.08), inset 0 1px hsla(0, 100%, 100%, 0.3
 .total{font-size: 1.25em; padding-bottom: 30px}
 
 .modal-header, .modal-footer{border: none}
-.modal-content{background: #544832; border: none}
+.modal-content{background: url(../img/form-bg.jpg) repeat center top; border: none}
 
 /*** CART ***/
 table{background: #A58A67; color: #635337; text-align: center}
@@ -274,3 +289,50 @@ table.table thead{padding: 10px 0}
 .checkout a{margin: 0 0 30px 20px}
 
 .panel{background: #443927}
+
+/*** ====================================
+             MEDIA QUERIES
+==================================== ***/
+@media (max-width: 600px) {
+  .register-container {width: 480px; margin-top: 35px}
+  }
+
+@media (max-width: 480px) {
+  .register-container {width: 280px; margin-top: 35px}
+}
+
+
+.avatar {
+    width: 290px;
+    height: 320px;
+    background: url(../img/male_avatar_sprite_1.png);
+    
+    -webkit-animation: play 1s steps(12) infinite;
+       -moz-animation: play 1s steps(12) infinite;
+        -ms-animation: play 1s steps(12) infinite;
+         -o-animation: play 1s steps(12) infinite;
+            animation: play s steps(12) infinite;
+}
+
+@keyframes play {
+   0% { background-position:    0px; }
+   100% { background-position: -3480px; }
+}
+
+
+.female {
+    width: 290px;
+    height: 320px;
+    background: url(../img/female_spritesheet_polish.png);
+    
+    -webkit-animation: play 1s steps(12) infinite;
+       -moz-animation: play 1s steps(12) infinite;
+        -ms-animation: play 1s steps(12) infinite;
+         -o-animation: play 1s steps(12) infinite;
+            animation: play s steps(12) infinite;
+}
+
+@keyframes play {
+   0% { background-position:    0px; }
+   100% { background-position: -3480px; }
+}

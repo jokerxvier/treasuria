@@ -1,12 +1,14 @@
 /* Connection in MYSQL */
 
 var mysql = require('mysql');
+var uuid = require('node-uuid');
 var connection = mysql.createConnection({
 	host     : 'localhost',
   	user     : 'root',
  	password : '',
 	database : 'treasure' 
 });
+
 
 connection.connect();
 /* end Connection*/
@@ -21,6 +23,8 @@ server.listen(8080);
 app.get('/', function (reg, res){
 	res.sendfile(__dirname + '/index.php');
 });
+
+
 
 function currTimer(){
 	var e = new Date();
@@ -42,121 +46,173 @@ function checkTime(t) {
     return 10 > t && (t = "0" + t), t
 }
 
+function genID(){
+	return uuid.v1({
+	  node: [0x01, 0x23],
+	  clockseq: 0x1234,
+	  msecs: new Date().getTime(),
+	  nsecs: 5678
+	}); 	
+}
+
+function randomFromInterval(from,to)
+{
+    return Math.floor(Math.random()*(to-from+1)+from);
+}
 
 
+
+var usernames = [];
+
+var userCount = 0;
+var clients = [];
 
 var countdown = 10;
 var startTime = currTimer();
+var roundID = uuid.v4(); 
+var winnerBox = 0;
 var onInterval = function() {
     countdown--;
+	var data = {
+		countdown : countdown,
+		startTime : startTime,
+		endTime : endTime,
+	}
     if(countdown == 0){
         var endTime = currTimer();
+		winnerBox = randomFromInterval(1,2);
         clearInterval(myInterval);
-        countdown = 10;
-
-
-            setTimeout(function(){
+		
+		 setTimeout(function(){
+				
+				countdown = 10;
+				roundID = uuid.v4(); 
                 myInterval = setInterval(onInterval, 2000);
-            }, 5000); 
-        
+         }, 500);
+		 
 
     }
+	
+	
+	
 
-    io.sockets.emit('timer', { countdown: countdown });
+
+    io.sockets.emit('timer', { result: data });
+
 };
 var myInterval = setInterval(onInterval, 2000);
 
 
-
-/*socket.on('reset', function (data) {
-	 countdown = 1000;
-	io.sockets.emit('timer', { countdown: countdown });
-});*/
-		
-
-
 io.sockets.on('connection', function (socket){
 	
-		socket.on('reset', function (data) {
-			 countdown = 10;
-			io.sockets.emit('timer', { countdown: countdown });
-		});
-    	
-		
-		
-		
-		
-  		socket.on('bid', function (data){
-
 	
-			 var sql = "SELECT *  FROM user_credits WHERE user_id = " + connection.escape(data.user) + "AND item_id =" + connection.escape(data.key);
-			 var query =  connection.query(sql, function(err, rows) { 
-			 	
-				if(rows.length > 0 ){
-					if (rows[0].item_qty > 0){
-						var post  = {user_id: data.user, item_id: rows[0].item_id};
-							var query2 = connection.query('INSERT INTO round_history SET ?', post, function(err, result) {
-								  //io.sockets.emit('bid list', result);
-								  
-								  if (result.affectedRows == 1){
-										 var sql = "SELECT count(user_id) AS bidCount FROM round_history WHERE user_id = " + connection.escape(data.user) + "AND item_id =" + connection.escape(data.key);
-										 var query =  connection.query(sql, function(err, bidResult) {
-											
-												 
-												 var query3 = connection.query('UPDATE user_credits SET item_qty = (item_qty - 1)  WHERE user_id = ? AND  item_id = ?', [data.user, rows[0].item_id], function(err, finalResult) {
-													 if(finalResult.affectedRows == 1) {
-															 io.sockets.emit('bid list', {itemid: rows, userid:  data.user, user : data.username , boxed : data.boxed, success : 1 });
-													 }
-												
-												 });//io.sockets.emit('bid list', {error : bidResult});
-											
-												
-										 });
-								  }
-							});
-					}else {
-						io.sockets.emit('bid list', {error : "You don't have enough Key"});
-					}
-					
-				}else {
-					 	io.sockets.emit('bid list', {error : "You don't have enough Key"});
-				}
-				
-			 
+	
+	 socket.on('addUsers', function (data, callback) {
+		 
+		 var users	 = {
+			 data : data.box,
+			 socket_id : socket.id
+		 }
+		 
 
-			 });
-			 
-		
-		
+		 
+		  socket.username = data.username;
+		  var message;
+
+		  if (clients.hasOwnProperty(data.username)){
+			  if (clients[data.username].username == data.username && clients[data.username].itemid ==  data.itemid && clients[data.username].box == data.box) {
+				  	delete clients[data.username];
+			  }else {
+					clients[data.username].itemid = data.itemid;
+			  		clients[data.username].box = data.box;
+			  		clients[data.username].key_price = data.key_price;
+			  		clients[data.username].message = 'You have successfully updated your Bid' ;  
+			  }
 			  
-			  
+		  }else {
+			  clients[data.username] = {
+				  username : data.username, 
+				  userid : data.user_id,
+				  itemid : data.itemid,  
+				  box : data.box, 
+				  socket_id : socket.id,
+				  key_price : data.key_price,
+				  message : 'You have successfully placed your Bid'
+			 }
+		  }
+		
+		 //io.sockets.socket(socket.id).emit('display result', {users: users});
+		 io.sockets.socket(socket.id).emit('displayUsers', {data: clients[data.username]});
+		
+	 });
+	 
+	 
+	 socket.on('result', function (result){
+		 	
+				if (clients.hasOwnProperty(result.data)) {
+					var itemid  = clients[result.data].itemid;
+					var userid  = clients[result.data].userid;
+					var box  = clients[result.data].box;
+					var keyPrice = clients[result.data].key_price;
+					var userSocket = clients[result.data].socket_id;
+					var message; 
+					
+					
+					
+					var insertQuery = connection.query('INSERT INTO round_history (item_id, user_id, created_at, box_id, winner_box) VALUES (?,?, ? , ?, ?)', [itemid, userid, currTimer(), box, winnerBox]);
+					var query = connection.query('UPDATE user_credits SET item_qty  = (item_qty - 1)  WHERE user_id = ? AND  item_id = ?', [userid, itemid], function(err, finalResult) {
+					if (finalResult.affectedRows == 1){
+							  if (box == winnerBox) {
+						
+										var query2 = connection.query('Select count(user_id) as userCount From user_points WHERE user_id = ? ', [userid],  function(err, rows) {
+												var sql3;
+												if (rows[0].userCount > 0){
+													sql3 = "Update user_points SET points = (points + " + keyPrice  + ") WHERE user_id = " + userid;
+												}else {
+													
+													sql3 = "Insert INTO  user_points SET points = " + keyPrice + ",  user_id = " + userid;  
+												}
+												
+												var query3 = connection.query(sql3, function(err, result) {
+														message = "You won: The winning Box is Box number :  " + winnerBox;
+														if (result.affectedRows == 1){
+															io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
+														
+														}
+												});
+										});
+										
+							   }else {
+								   message = "You Loss: The winning Box is Box number : " + winnerBox;	
+								   io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
 			
-		 });	
-		 
-		 
-		 
+							   }
+			
+							}
+					});
+					
+				}
+			
+			
+			socket.emit('winner', {winner : winnerBox});
+	 });
+	 
+	 
+	 
+
+	socket.on('disconnect users', function (data) {
 		
-		 
-		
-		
-				
-							
+		for (var users  in clients) {
+			delete clients[users];
+		}
+
+
+	});
+	
+
+	 
+	
 });
 
 
 
-
-
-/*
-socket.on('bid', function (data){
-	   connection.query( 'SELECT * FROM users', function(err, rows) {
-   		io.sockets.emit('bid list', rows);	
-  
-
-    	
- 	 });
-		
-
-  });	
-
-*/

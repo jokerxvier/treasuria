@@ -1,18 +1,71 @@
 <?php
-session_start();
-include("db_connect.php");
+session_start(); 
+include 'config.php';
 include("paypal.php");
-include("function.php");
-$datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
+include 'function.php';
+$action = (isset($_POST['action'])) ? $_POST['action'] : $_GET['action'];
+$fname = (isset($_POST['fname'])) ? test_input($_POST['fname']) : '';
+$pass = (isset($_POST['pass'])) ? test_input($_POST['pass']) : '';
+$lname = (isset($_POST['lname'])) ? test_input($_POST['lname']) : '';
+$email= (isset($_POST['email'])) ? test_input($_POST['email']) : '';
+$gender = (isset($_POST['gender'])) ? test_input($_POST['gender']) : '';
+$res = array();
+$userid  = (isset($_SESSION['user_id'])) ?  $_SESSION['user_id'] : '';
+switch ($action) {
+		
+	case "register" :
+	$hash = hash('sha256', $pass);
+	$salt = createSalt();
+	$hash = hash('sha256', $salt . $hash);
+	if (checkUserEmail('users', $email) == 0) {
+		$stmt = $mysqli->prepare("INSERT INTO users (email, firstname, lastname, password, gender, salt) VALUES (?,?,?,?,?, ?)");
+		$stmt->bind_param('ssssss', escape($email), escape($fname), escape($lname), $hash, escape($gender), $salt);
+		$stmt->execute();
+		
+		if ($mysqli->affected_rows == 1) {
+			$res['success'] = 1;
+			$res['message'] = 'You Have Successfully Register an Account';	
+		}
+	}else {
+		$res['success'] = 0;
+		$res['message'] = 'Email Already Taken';	
+	}
+	
+	echo json_encode($res);
+	
+	
+		
+	break;
+	
+	case "login" :
 
-?>
-
-<?php
-$action = (isset($_GET['action'])) ?  $_GET['action'] : '';
-switch($action)
-{
+		$stmt = $mysqli->prepare("SELECT password, salt, email, user_id FROM users WHERE email = ?");
+		$stmt->bind_param('s', escape($email));
+		$stmt->execute();
+		$stmt->bind_result($password, $salt, $email, $user_id);
+		$stmt->store_result();
+		
+		if($stmt->num_rows > 0){
+			$stmt->fetch();
+			$hash = hash('sha256', $salt . hash('sha256', $pass) );
+			if ($hash != $password){
+				header('Location: login.php');
+			}else {
+				session_regenerate_id (); //this is a security measure
+    			$_SESSION['valid'] = 1;
+				$_SESSION['username'] = $email;
+				$_SESSION['user_id'] = $user_id;
+				header('Location: index.php');
+				
+			}
+			
+			
+		}else {
+			header('Location: login.php');	
+		}
+	break;
+	
+	
 	case 'add':
 		
 		  $item_id =  isset($_GET['keyid']) ? $_GET['keyid'] : '';
@@ -36,6 +89,7 @@ switch($action)
 		}
 		
 	break;
+	
 	
 	case 'checkout' :
 	
@@ -74,8 +128,8 @@ switch($action)
 	break;
 	
 	case 'success' :
-		if( isset($_GET['token']) && !empty($_GET['token']) ) { // Token parameter exists
-			   // Get checkout details, including buyer information.
+		if( isset($_GET['token']) && !empty($_GET['token']) ) { 
+			 // Get checkout details, including buyer information.
 			   // We can save it for future reference or cross-check with the data we have
 			   $paypal = new Paypal();
 			   $checkoutDetails = $paypal -> request('GetExpressCheckoutDetails', array('TOKEN' => $_GET['token']));
@@ -95,260 +149,94 @@ switch($action)
 			   if( is_array($response) && $response['PAYMENTINFO_0_ACK'] == 'Success') { // Payment successful
 				   // We'll fetch the transaction ID for internal bookkeeping
 				   $transactionId = $response['PAYMENTINFO_0_TRANSACTIONID'];
-				   $user_id = getUserId($_SESSION["username"], $_SESSION["password"]);
+				   $user_id = $userid;
 				   /*$query_insert_login = mysql_query("UPDATE users SET login_date='$datetime' WHERE email='$username' and password='$password'");*/
 				   //unset($_SESSION['cart']);
 				   //header('Location: cart.php?success=1');
 				   $purchasedtotal = getPaypalItemTotal();
 				   $total = 0;
 				   
-
+					$flag = 0;
 				   
 				     if ($response['PAYMENTINFO_0_AMT'] == $purchasedtotal){
 						 foreach ($_SESSION['cart'] as $item_id => $qty){
-							$itemID =  getItemID($item_id);
-							$credits = getKeyValue($item_id);
-							$credTotal =$credits * $qty;
+							$itemID =  $item_id;
+							$credits = getAllKey('treasuria_key', $item_id);
+							
+							$credTotal =$credits[0][2] * $qty;
 							$total += $credTotal;
-							$query = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty, created_at) VALUES ('$user_id', '$credits', '$itemID', '$qty', '$datetime')");
-							if($query){
-									unset($_SESSION['cart']);	
-									header('Location: cart.php?success=1');
-							 }else {
-								echo mysql_error();
-							 }
+							
+							if (countTableCredits($userid, $item_id) > 0) {
+								$stmt = $mysqli->prepare("UPDATE user_credits SET item_qty = (item_qty + ?) WHERE  user_id = ? AND  item_id = ?");
+								$stmt->bind_param('iii', escape($qty), escape($user_id), escape($item_id));
+								$stmt->execute();
+								if ($mysqli->affected_rows == 1) {
+									$flag++;
+								}
+							}else {
+								$stmt = $mysqli->prepare("INSERT INTO user_credits (user_id, credits, item_id, item_qty, created_at) VALUES (?,?,?,?, NOW())");
+								$stmt->bind_param('iiii', escape($user_id), escape($credTotal), escape($item_id), escape($qty));
+								$stmt->execute();
+								if ($mysqli->affected_rows == 1) {
+									$flag++;
+								}
+							}
+			
 					   
 				 		  }
+						  
+						  if (count($_SESSION['cart']) == $flag){
+							  unset($_SESSION['cart']);	
+							  header('Location: cart.php?success=1');
+						  }
+						 
 						 
 					 }
 
 			   }
-			   
-			 
-			}
-			
-			
+		}
 	
-	break;
-	
-	case 'cancel' :
-		echo "cancel";
-
 	break;
 	
 	
 	case 'claim':
-		$user_id = $_SESSION['user_id'];
-		$prize = $_GET['prize'];
-		$points = getPoints($user_id);
+		$prize = (isset($_GET['prize'])) ? $_GET['prize'] : '' ;
+		$points = getPoints($userid);
 		
 		$galleryPoints = getGalleryPoints($prize);
+
 		if ($points >= $galleryPoints){
-				$query = mysql_query("Update user_points SET points = (points - '$galleryPoints') WHERE user_id = '$user_id' ");
-				$insert_query =  mysql_query("INSERT INTO claim_history (user_id, prize_id,  created_at,  status) VALUES ('$user_id', '$prize', '$datetime', 1)");
-				if($query AND $insert_query){
-					
-					$from = "jasonjavier06@gmail.com";
-					$replyTo = $from;
-					$subject = "Treasuria Product Claim";
-					$userFirstName = 'Jason';
-					$userEmail = $_SESSION["username"];
-					
-					$body = "Hi ".$userFirstName."<br><br>";
-					$body = "You Have Successfully Claim your Item. ";
-					$body = eregi_replace("[\]",'',$body);
-				
-					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
+			
+				$stmt = $mysqli->prepare("Update user_points SET points = (points - ?) WHERE user_id = ? ");
+				$stmt->bind_param('ii', escape($galleryPoints), escape($userid));
+				$stmt->execute();
+				if ($mysqli->affected_rows == 1) {
+					/*$insert_query = $mysqli->prepare("INSERT INTO claim_history (user_id, prize_id,  created_at,  status) VALUES (?, ?, NOW(), 1)");
+					$insert_query->bind_param('ii', escape($userid), escape($prize));	
+					$insert_query->execute();
+					if ($insert_query->affected_rows == 1) {
 						header('Location: gallery.php?message=1');
-					}
+					}*/
 					
-					
+					header('Location: gallery.php?message=1');
 				}
-				
+
 		}else {
 			header('Location: gallery.php?message=0');
 		}
 		
 	break;
 	
-
-
 	
-	case 'empty':
-		unset($_SESSION['cart']);
-		header('Location: merchant.php');
-	break;
-}	
 	
-switch($_SERVER['QUERY_STRING'])
-{
-	
-	case 'login':
-		$access = FALSE;
-		if(isset($_POST["submit"]))
-		{
-			$username = $_POST["username"];
-			$password = md5($_POST["password"]);
-			
-			$result = mysql_query("SELECT * FROM users WHERE email='$username' LIMIT 1");
-			$num_rows = mysql_num_rows($result);
-			if($num_rows>0)
-			{
-				while ($row = mysql_fetch_array($result))
-				{
-					$email = $row['email'];
-					$pass = $row['password'];
-					
-					$key = $row['key_email'];
-					
-					if($username==$email and $password==$pass)
-					{
-						if($key==NULL) //if not verified on their Email
-						{
-							$access = TRUE;
-							
-							$_SESSION["firstname"] = $row['firstname'];
-							$_SESSION['user_id'] = $row['user_id'];
-							$_SESSION["username"] = $username;
-							$_SESSION["password"] = $password;
-							
-							if($access==TRUE)
-							{
-								//$query_insert_login = mysql_query("UPDATE users SET login_date='$datetime' WHERE email='$username' and password='$password'");
-								
-								$query_insert_login = mysql_query("INSERT INTO login_logout (user_id, login_date) VALUES ('$_SESSION[user_id]', '$datetime')");
-								
-								if($query_insert_login)
-								{
-									header('Location: index.php');
-								}
-							}
-						}
-						else
-							{
-								$access = FALSE;
-								header('Location: login.php?error=not_verified');
-							}
-					}
-					else
-					{
-						$access = FALSE;
-						header('Location: login.php?error=failed_login');
-					}
-				}
-			}
-			else
-			{
-				$access = FALSE;
-				header('Location: login.php?error=failed_login');
-			}
-		}
-		
-	break;
-	
-	case 'logout':
-		if($_SESSION["username"])
-		{	
-			$query_insert_logout = mysql_query("UPDATE login_logout SET logout_date='$datetime' WHERE login_date!='0000-00-00 00:00:00' and logout_date='0000-00-00 00:00:00' and user_id='$_SESSION[user_id]'");
-			
-			if($query_insert_logout)
-			{
-				//session_destroy();
-				unset($_SESSION['username']);
-				header('Location: login.php');
-			}
-		}
-		else
-		{
-			header('Location: login.php');
-		}
-	break;
-	
-	case 'register':
-		if(isset($_POST["submit"]))
-		{
-			//validation at footer.php
-			$reg_firstname = mysql_escape_string($_POST["u_firstname"]);
-			$reg_lastname = mysql_escape_string($_POST["u_lastname"]);
-			$reg_username = mysql_escape_string($_POST["u_username"]); //username is equal to EMAIL
-			$reg_password = md5($_POST["u_password"]);
-			$reg_address = mysql_escape_string($_POST["u_address"]);
-			$reg_city = mysql_escape_string($_POST["u_city"]);
-			$reg_country = mysql_escape_string($_POST["u_country"]);
-			$reg_phone = mysql_escape_string($_POST["u_phone"]);
-			$reg_gender = mysql_escape_string($_POST["gender"]);
-			$reg_key = md5(uniqid(rand()));
-			
-			$_SESSION["u_firstname"] = $_POST["u_firstname"];
-			$_SESSION["u_lastname"] = $_POST["u_lastname"];
-			$_SESSION["u_username"] = $_POST["u_username"]; //username is equal to EMAIL
-			$_SESSION["u_password"] = md5($_POST["u_password"]);
-			$_SESSION["u_address"] = $_POST["u_address"];
-			$_SESSION["u_city"] = $_POST["u_city"];
-			$_SESSION["u_country"] = $_POST["u_country"];
-			$_SESSION["u_phone"] = $_POST["u_phone"];
-			
-			$result = mysql_query("SELECT * from users WHERE email='$reg_username'");
-			$num_rows = mysql_num_rows($result);
-			
-			if($num_rows)
-			{
-				// already registered
-				header('Location: register.php?error=email_error');
-			}
-			else
-			{
-				//user_type for subscribers is equal to 0
-				$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$reg_firstname','$reg_lastname','$reg_username','$reg_password','$reg_address','$reg_city','$reg_country','$reg_phone','$reg_gender','$datetime','$datetime','0','$reg_key')");
-				$last_inserted_id = mysql_insert_id();
-				
-				$select_key = mysql_query("SELECT * FROM treasuria_key");
-				while ($row = mysql_fetch_array($select_key))
-				{
-					$key_credits = $row['key_credits'];
-					$key_id = $row['key_id'];
-					
-					if($key_id=='1')
-					{
-						$item_qty = 5;
-					}
-					else if($key_id=='2')
-					{
-						$item_qty = 1;
-					}
-					else
-					{
-						$item_qty = 0;
-					}
-					$query_free_key = mysql_query("INSERT INTO user_credits (user_id, credits, item_id, item_qty, created_at) VALUES ('$last_inserted_id', '$key_credits', '$key_id', '$item_qty', '$datetime')");
-					
-				}
-				
-				$verification_link = get_base_url() ."/keyvalidate.php?email=".$reg_username."&key=".$reg_key;
-				if($query_insert_new_user AND $query_free_key)
-				{
-					$from = "jasonjavier06@gmail.com";
-					$replyTo= "jasonjavier06@gmail.com";
-					$subject = "Treasuria Verification Email";
-					$userFirstName = $reg_username;
-					$userEmail = $_SESSION["u_username"];
-					
-					$body = "Hi ".$userFirstName."<br><br>";
-					$body = "Verification Code: ".$verification_link;
-					$body = eregi_replace("[\]",'',$body);
-					
-					if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)) {
-							header('Location: register.php?verify=sentemail');
-					}
-					
-				}
-			}
-		}
-		else
-		{
-			header('Location: login.php');
-		}
+	case "logout" :
+		logout();
+		header('Location: login.php');
 	break;
 }
+
+
+
+
 
 ?>

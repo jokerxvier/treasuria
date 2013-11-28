@@ -1,41 +1,32 @@
-<?php include 'header.php'; ?>
-
-<?php	
-if(!isset($_SESSION['username']))
-{
-$key_error = "ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect";
-$verified = "SUCCESS: Email Address successfully verified, you gain free credits. You may now login.";
-$not_verified = "ERROR: Email Address not verified.";
-$error_activation = "ERROR: Oops! Your account could not be activated. Please recheck the link or contact the system administrator.";
-?>
-
+<?php include 'head.php' ?>
+<div id="wrap">
 <section class="container">
 
   <div class="story img-responsive clearfix">
 	<!--GAME STORY-->
 		<!--Adobe Edge Runtime-->
-		<script type="text/javascript" charset="utf-8" src="Opening_edgePreload.js"></script>
+		<!--<script type="text/javascript" charset="utf-8" src="Opening_edgePreload.js"></script>
 		<style>
 			.edgeLoad-EDGE-3625037 { visibility:hidden; }
 		</style>
 		<!--Adobe Edge Runtime End-->
-		<div id="Stage" class="EDGE-3625037">
-		</div>
+		<!--<div id="Stage" class="EDGE-3625037">
+		</div-->
 	<!--end of GAME STORY-->
   </div>
   
   <div class="account-container"> 
     <div class="content clearfix">
     
-    <form action="process.php?login" method="post" id="treasuria_login" name="treasuria_login">
-    
+    <form action="process.php" method="post" id="treasuria_login" name="treasuria_login">
+    	<input type="hidden" name="action" value="login" />
       <h1 class="branding-login"></h1>   
       
       <div class="form-horizontal clearfix">
-		<?php if(isset($_GET["error"]) and $_GET["error"]=="failed_login") { ?> <div class="error"> <?php echo $key_error; ?> </div> <?php } ?>
+		<?php /*?><?php if(isset($_GET["error"]) and $_GET["error"]=="failed_login") { ?> <div class="error"> <?php echo $key_error; ?> </div> <?php } ?>
         <?php if(isset($_GET["error"]) and $_GET["error"]=="not_verified") { ?> <div class="error"> <?php echo $not_verified; ?> </div> <?php } ?>
         <?php if(isset($_GET["verify"]) and $_GET["verify"]=="success") { ?> <div class="success"> <?php echo $verified; ?> </div> <?php } ?>
-        <?php if(isset($_GET["error"]) and $_GET["error"]=="error_activation") { ?> <div class="error"> <?php echo $error_activation; ?> </div> <?php } ?>
+        <?php if(isset($_GET["error"]) and $_GET["error"]=="error_activation") { ?> <div class="error"> <?php echo $error_activation; ?> </div> <?php } ?><?php */?>
         
 		
         <p>Please provide your details</p>
@@ -43,14 +34,14 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
         <div class="form-group">
           <label for="admin_username" class="col-md-4 control-label">Email Address</label>
           <div class="col-md-8">
-            <input type="text" class="form-control" id="admin_username" name="username" value="" placeholder="Email Address" class="login username-field" />
+            <input type="text" class="form-control" id="email" name="email" value="" placeholder="Email Address" class="login username-field" />
           </div>		  
         </div> <!--end of USERNAME-->
         
         <div class="form-group">
           <label for="admin_password" class="col-md-4 control-label">Password</label>
           <div class="col-md-8">
-            <input type="password" class="form-control" id="admin_password" name="password" value="" placeholder="Password" class="login password-field"/>
+            <input type="password" class="form-control" id="pass" name="pass" value="" placeholder="Password" class="login password-field"/>
           </div>
         </div> <!--end of PASSWORD-->
         
@@ -71,15 +62,9 @@ $error_activation = "ERROR: Oops! Your account could not be activated. Please re
 </div> <!--end of ACCOUNT-CONTAINER-->
 
 
-</section>
-
+</section><!--end of CONTAINER-->
+</div><!--end of WRAP-->
 
 <?php include 'footer.php'; ?>
-<?php
-}
-else
-{
-header('Location: index.php');
-}
-?>
+
 

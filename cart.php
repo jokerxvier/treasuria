@@ -3,17 +3,9 @@ include 'header.php';
 
 ?>
 
-<?php
-if(isset($_SESSION['username']))
-{
-	$username = $_SESSION['username'];
-	$pass = $_SESSION['password'];
 
 
-	
-	$userid = getUserId($username, $pass);
-?>
-
+<div id="wrap">
 	<section class="container cart">
 	  <h2>Merchant Shop</h2>
     <div class="pull-right checkout" >
@@ -35,17 +27,16 @@ if(isset($_SESSION['username']))
 		  $total = 0;
 		  if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) :
 				  foreach ($_SESSION['cart'] as $item_id => $qty){
-						$data = displayCartList($item_id);
-			
+						$data = getAllKey('treasuria_key', $item_id);
 						
 						foreach($data as $key=>$item){
-							$price = $item['price'] * $qty;
+							$price = $item[4] * $qty;
 							$total += $price; 
 		
 				  ?>
 				  <tr>
-					<td><img src="assets/img/<?php echo $item['key_img'] ?>" class="img-responsive" alt="Cart Key" width="80" /></td>
-					<td valign="middle" height="92" style="vertical-align: middle;"><?php echo $item['key_name'] .' - '. $item['key_credits']   ?></td>
+					<td><img src="assets/img/<?php echo $item[1] ?>" class="img-responsive" alt="Cart Key" width="80" /></td>
+					<td valign="middle" height="92" style="vertical-align: middle;"><?php echo $item[3] .' - '. $item[2]   ?></td>
 					<td style="vertical-align: middle;"><?php echo $qty ?></td>
 					<td style="vertical-align: middle;"><?php echo ' $'.number_format($price, 2) ?></td>
 				  </tr>
@@ -84,19 +75,8 @@ if(isset($_SESSION['username']))
         </div>
         <?php endif; ?>
 	</section><!--end of CONTAINER-->
+</div><!--end of WRAP-->
 
-	<footer>
-	  <div class="container">
-		<p class="text-center">&copy; 2013 Treasuria</p>
-	  </div>
-	</footer>
-	
-<?php
-}
-else
-{
-header('Location: login.php');
-}
-?>
+
 
 <?php include 'footer.php'; ?>

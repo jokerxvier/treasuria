@@ -1,64 +1,38 @@
 <?php 
-session_start();
+include 'head.php';
 include "qrcode/BarcodeQR.php"; 
+$url = basename($_SERVER['PHP_SELF'], ".php");
 
+if($url!='login') {
+	if (!isLoggedIn()){
+		header('Location: login.php');
 
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Treasuria</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/css/style.css"/>
+	}
 	
-	<script type="text/javascript" charset="utf-8" src="assets/js/buzz.js"> </script>
-</head>
-<body>
-<?php
-if(isset($_SESSION['username']))
-{
-
-include("db_connect.php");
-include "function.php"; 
-
-$datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
-$session_username = $_SESSION['username'];
-$session_user_id = $_SESSION['user_id'];
+}
 
 
-$tableName = 'user_credits';
-$condition = 'user_id = '. $session_user_id. '';
-$user_credit = getTableData($tableName, $condition);
-
-
-$pointsTable = 'user_points';
-$user_points = getTableData($pointsTable, $condition);
-
-//getting base name of PHP $url=basename($_SERVER['PHP_SELF'], ".php");
+$userid = $_SESSION['user_id'];
 ?>
-
 <header>
 	<div id="wrap">
 	<div class="container">
 		<div class="clearfix">
 			<ul class="list-inline user-login pull-right">
-			  <li><?php echo "Hi ".$_SESSION['firstname']."!"; ?></li><span class="hidem">|</span>
-			  <li><a href="process.php?logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
+			  <li><?php echo "Hi ".$_SESSION['username']."!"; ?></li><span class="hidem">|</span>
+			  <li><a href="process.php?action=logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
 			</ul>
 		</div>
 		<div>
-			<ul class="list-inline user-login pull-right key-tally">
-			 <li> <a href="#" class="golden" alt="Golden Gem Key"></span> <?php echo getCreditsTotal(1, $session_user_id);  ?> </a></li>
-			 <li> <a href="#" class="amethyst" alt="Amethyst Gem Key"><?php echo getCreditsTotal(2, $session_user_id);  ?></a></li>
-				<li> <a href="#" class="emerald" alt="Emerald Gem Key"> <?php echo getCreditsTotal(3, $session_user_id);  ?> </a></li>
-			   <li> <a href="#" class="citrine" alt="Citrine Gem Key"> <?php echo getCreditsTotal(4, $session_user_id);  ?> </a></li>
-			 <li> <a href="#" class="sapphire" alt="Sapphire Gem Key">  <?php echo getCreditsTotal(5, $session_user_id);  ?> </a></li> <span class="hidem">|</span>
-			 <li> <a href="#" class="coin" alt="Gold Coins"> <?php echo (isset($user_points['error']) AND $user_points['error'] == true ) ? 0 :  $user_points['points']; ?> </a></li>
-		   </ul>
+		  <ul class="list-inline user-login pull-right key-tally">
+			<li> <span class="golden" alt="Golden Gem Key"></span><em class="key-1"><?php echo  getKeyValue(1, $userid) ?></em></li>
+			<li> <span class="amethyst" alt="Amethyst Gem Key"><em class="key-2"><?php echo getKeyValue(2, $userid) ?></em></li>
+			<li> <span class="emerald" alt="Emerald Gem Key"><em class="key-3"><?php echo getKeyValue(3, $userid) ?></em></li>
+			<li> <span class="citrine" alt="Citrine Gem Key"><em class="key-4"><?php echo getKeyValue(4, $userid) ?></em></li>
+			<li> <span class="sapphire" alt="Sapphire Gem Key"><em class="key-5"><?php echo getKeyValue(5, $userid) ?></em></li>
+			<li>|</li>
+		    <li> <span class="coin" alt="Gold Coins"><?php  echo getCreditsValue($userid) ?></span></li>
+		  </ul>
 		</div>
 	</div>
 
@@ -74,10 +48,8 @@ $user_points = getTableData($pointsTable, $condition);
 		</div><!--NAVBAR-HEADER-->
 		<div class="collapse navbar-collapse col-xs-12 col-md-4 clearfix">
 		  <ul class="nav navbar-nav">
-			<?php $url=basename($_SERVER['PHP_SELF'], ".php"); ?>
-			<!--<li class="active"><a href="#" title="The Story">The Story</a></li>-->
 			<li><a href="index.php" <?php if($url=='index') { echo 'class="active"';} ?> title="Play">Play</a></li>
-			<!--<li><a href="challenge.php" title="Daily Challenge">Daily Challenge</a></li>-->
+			<li><a href="challenge.php" <?php if($url=='challenge') { echo 'class="active"';} ?> title="Daily Challenge">Daily Challenge</a></li>
 			<li><a href="gallery.php" <?php if($url=='gallery') { echo 'class="active"';} ?> title="Treasure Gallery">Treasure Gallery</a></li>
 			<li><a href="merchant.php" <?php if($url=='merchant') { echo 'class="active"';} ?> title="Merchant Shop">Merchant Shop</a></li>
 			<li><a href="tutorial.php" <?php if($url=='tutorial') { echo 'class="active"';} ?> title="Tuttorial">Tutorial</a></li>
@@ -89,6 +61,3 @@ $user_points = getTableData($pointsTable, $condition);
 
 </header>
 	
-<?php
-}
-?>

@@ -6,103 +6,91 @@ if(isset($_SESSION['username']))
 
 ?>
 
-	<section class="container" id="tutorial">
-		<article class="content">
+<div id="wrap">
+	<section class="container">
 
-  <section class="container">
+    <div class="legend">
+      <h3>Legend :</h3>
+      <ul class="list-inline key-tally">
+        <li> <span class="golden" alt="Golden Gem Key"></span> = 20 Gold Coins</li>
+        <li> <span class="amethyst" alt="Amethyst Gem Key"></span> = 100 Gold Coins</li>
+        <li> <span class="emerald" alt="Emerald Gem Key"> </span> = 200 Gold Coins</li>
+        <li> <span class="citrine" alt="Citrine Gem Key"> </span> = 400 Gold Coins</li>
+        <li> <span class="sapphire" alt="Sapphire Gem Key"> </span> = 1000 Gold Coins</li> 
+      </ul>
+    </div>
 
-    <div class="col-md-12">
-        <h2 id="numero1" class="so-awesome">Tutorial</h2>
-          <p>Welcome to Treasuria! The adventure to hunt the greatest treasure is on!</p>
-      </div>
     <article class="game-time img-responsive">
-      <div class="col-md-12 clearfix">
-        <div>
-          <div class="timer">
-            <div class="ticker"></div>
-            <p>Pick Now!</p>
-            <p class="countdown">45</p>
+      <div class="col-md-12">
+        <div class="timer" id="step5">
+          <div class="ticker"></div>
+          <p>Pick Now!</p>
+          <div class="countdown text-center">30</div>
+        </div><!--end of TIMER-->
+      </div>
+
+      <div id="step1" class="tutorial">
+        <div class="row game">
+          <div class="col-md-6">
+            <div class="chest" id="step3"></div>
+            <ul class="list-inline game-keys">
+              <li class="gold-key"></li>
+              <li class="amethyst-key"></li>
+              <li class="emerald-key"></li>
+              <li class="citrine-key"></li>
+              <li class="sapphire-key"></li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <div class="chest"></div>
+            <ul class="list-inline game-keys" id="step2">
+              <li class="gold-key"></li>
+              <li class="amethyst-key"></li>
+              <li class="emerald-key"></li>
+              <li class="citrine-key"></li>
+              <li class="sapphire-key"></li>
+            </ul>
           </div>
         </div>
-        <!--<h2>60 seconds remaining</h2>-->
-      </div>  
-        <ul class="list-inline game">
-          <li class="col-md-offset-2 col-sm-offset-1">
-            <div class="chest"></div>
-   
-            <ul class="list-inline game-keys" id="numero2">
-              <li><span class="gold-key"></span></li>
-              <li><span class="amethyst-key"></span></li>
-              <li><span class="emerald-key"></span></li>
-              <li><span class="citrine-key"></span></li>
-              <li><span class="sapphire-key"></span></li>
-            </ul>
-
-          </li>
-          <li class="col-md-offset-1 col-sm-offset-1">
-            <div class="chest" id="numero3"></div>
-            <ul class="list-inline game-keys">
-              <li><span class="gold-key"></span></li>
-              <li><span class="amethyst-key"></span></li>
-              <li><span class="emerald-key"></span></li>
-              <li><span class="citrine-key"></span></li>
-              <li><span class="sapphire-key"></span></li>
-            </ul>
-          </li>
-        </ul>
+      </div><!--end of STEP1-->
     </article>
-  </section>
+    <!--GAME TRIGGER BUTTONS-->
+    <!--<button type="button" data-toggle="modal" data-target="#myWin">WIN POP UP BOX</button>
+    <button type="button" data-toggle="modal" data-target="#myLose">LOSE POP UP BOX</button>-->
+    <!--end of GAME TRIGGER BUTTONS-->
 
-     <!-- <div class="col-md-12">
-        <h2 id="numero1" class="so-awesome">Tutorial</h2>
-          <p>Welcome to Treasuria! The adventure to hunt the greatest treasure is on!</p>
-      </div>
-
-      <div class="col-md-12">
-        <h3 id="numero3">Get the Most Out of Your App!</h3>
-          <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-      </div>
-
-      <div class="col-md-4 col-md-offset-4">
-        <h3 id="numero2">Customize Each Stop Along the Way</h3>
-          <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Curabitur blandit tempus porttitor. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Aenean lacinia bibendum nulla sed consectetur. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amet fermentum.</p>
-      </div>-->
-
+     <article>
             <ol id="joyRideTipContent">
-              <li data-class="so-awesome" data-text="Next" class="custom">
-                <h2>Getting Started!</h2>
-                <p>The player must open one of two chests using a key to win gold coins that can be used to redeem rewards.</p>
+              <li data-class="tutorial" data-text="Next" class="custom"  data-options="tipLocation:left">
+                <h2>Welcome!</h2>
+                  <p>Treasuria is an online betting game where you can win and discover treasures.</p>
+                  <!--<img class="pull-right" src="assets/img/male-avatar.png" />-->
               </li>
-              <li data-id="numero2" data-button="Next" data-options="tipLocation:top;tipAnimation:fade">
-                <h2>Buy Key</h2>
-                <p>The players must spend real money buy up to five different keys from the Merchant Shop.</p>
+              <li data-id="step2" data-button="Next" data-options="tipLocation:top;tipAnimation:fade">
+                <h2>Buy a Magical Key</h2>
+                  <p>Buy keys at the Merchant Shop to be able to open a chest.</p>
               </li>
-              <li data-id="numero3" data-button="Next" data-options="tipLocation:bottom">
-                <h2>Open Chest</h2>
-                <p>The player can only open one of the two chests. He can do this by clicking any of the five keys underneath it. After the timer has expired, the chest will be opened and its contents revealed.</p>
+              <li data-id="step3" data-button="Next" data-options="tipLocation:bottom">
+                <h2>Open a Chest</h2>
+                  <p>Select one of the five keys under the chest you choose.</p>
               </li>
-              <li data-button="Next">
-                <h2>Stop #4</h2>
-                <p>It works as a modal too!</p>
+              <li data-button="Game On">
+                <h2>Happy Hunting!</h2>
+                  <p>Great treasures await.</p>
               </li>
-              <li data-class="someclass" data-button="Next" data-options="tipLocation:right">
-                <h2>Stop #4.5</h2>
-                <p>It works with classes, and only on the first visible element with that class.</p>
+              <li data-id="step5" data-button="Next">
+                <h2>Watch the Time!</h2>
+                <p>You only have 60 seconds to place your bet.</p>
               </li>
-              <li data-id="numero5" data-button="Close">
-                <h2>Stop #5</h2>
-                <p>Now what are you waiting for? Add this to your projects and get the most out of your apps!</p>
+              <li data-button="Game On">
+                <h2>Happy Hunting!</h2>
+                  <p>Great treasures await.</p>
               </li>
             </ol>
 		</article>
 	</section><!--end of CONTAINER-->
+</div><!--end of WRAP-->
 
-	<footer class="navbar-fixed-bottom">
-	  <div class="container">
-		<p class="text-center">&copy; 2013 Treasuria</p>
-	  </div>
-	</footer>
-	
 <?php
 }
 else

@@ -1,44 +1,38 @@
-<?php include 'header.php'; ?>
-<?php	
-if(!isset($_SESSION['username']))
-{
-
-$sentverification = "SUCCESS: A verification Code was sent to your Email Address, please confirm to continue your login.";
-$email_error = "ERROR: That Email Address has already been registered.";
-?>
-  
+<?php include 'head.php' ?>
+<div id="wrap">
 <section class="container">
   <div class="register-container register">
   
   <div class="content clearfix">
     
-    <form action="process.php?register" id="reg_treasuria" class="reg_treasuria" method="post" >
-    
+    <form action="#" id="reg_treasuria" class="reg_treasuria" method="post" >
+      <input type="hidden"  name="action" value="register" />	
       <h1 class="branding-login"></h1>   
       
       <div class="form-horizontal clearfix">
-		<?php if(isset($_GET["error"]) and $_GET["error"]=="email_error") { ?> <div class="error"> <?php echo $email_error; ?> </div> <?php } ?>
-        <?php if(isset($_GET["verify"]) and $_GET["verify"]=="sentemail") { ?> <div class="success"> <?php echo $sentverification; ?> </div> <?php } ?>
+      	<div class="message"></div>
+		<?php /*?><?php if(isset($_GET["error"]) and $_GET["error"]=="email_error") { ?> <div class="error"> <?php echo $email_error; ?> </div> <?php } ?>
+        <?php if(isset($_GET["verify"]) and $_GET["verify"]=="sentemail") { ?> <div class="success"> <?php echo $sentverification; ?> </div> <?php } ?><?php */?>
           <p>Please complete form to create new account</p>
 
         <div class="form-group">
           <label for="u_firstname" class="col-lg-4 control-label">First Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_firstname" name="u_firstname" value="<?php if(isset($_SESSION['u_firstname'])) { echo $_SESSION['u_firstname']; } else { } ?>" placeholder="First Name" />
+            <input type="text" class="form-control" id="u_firstname" name="u_firstname" value="" placeholder="First Name" />
           </div>
         </div><!--end of FIRST NAME-->
 
         <div class="form-group">
           <label for="u_lastname" class="col-lg-4 control-label">Last Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_lastname" name="u_lastname" value="<?php if(isset($_SESSION['u_lastname'])) { echo $_SESSION['u_lastname']; } ?>" placeholder="Last Name"/>
+            <input type="text" class="form-control" id="u_lastname" name="u_lastname" value="" placeholder="Last Name"/>
           </div>
         </div><!--end of LAST NAME-->
 
         <div class="form-group">
           <label for="u_username" class="col-lg-4 control-label">Email Address</label>
           <div class="col-lg-8">
-            <input type="email" class="form-control" id="u_username" name="u_username" value="<?php if(isset($_SESSION['u_username'])) { echo $_SESSION['u_username']; } ?>" placeholder="Username"  />
+            <input type="email" class="form-control" id="u_username" name="u_username" value="" placeholder="Email"  />
           </div>
         </div><!--end of USERNAME / EMAIL-->
         
@@ -55,34 +49,7 @@ $email_error = "ERROR: That Email Address has already been registered.";
             <input type="password" class="form-control" id="u_c_password" name="u_c_password" value="" placeholder="Confirm Password" />
           </div>
         </div><!--end of CONFIRM PASSWORD-->
-        
-		    <div class="form-group">
-          <label for="u_address" class="col-lg-4 control-label">Address</label>
-          <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_address" name="u_address" value="<?php if(isset($_SESSION['u_address'])) { echo $_SESSION['u_address']; } ?>" placeholder="Address" />
-          </div>
-        </div><!--end of ADDRESS-->
-        
-		    <div class="form-group">
-          <label for="u_city" class="col-lg-4 control-label">City</label>
-          <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_city" name="u_city" value="<?php if(isset($_SESSION['u_city'])) { echo $_SESSION['u_city']; } ?>" placeholder="City" />
-          </div>  
-        </div><!--end of CITY-->
-		
-        <div class="form-group">
-          <label for="u_country" class="col-lg-4 control-label">Country</label>
-          <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_country" name="u_country" value="<?php if(isset($_SESSION['u_country'])) { echo $_SESSION['u_country']; } ?>" placeholder="Country" />
-          </div>
-        </div><!--end of COUNTRY-->
-		
-        <div class="form-group">
-          <label for="u_phone" class="col-lg-4 control-label">Contact Number</label>
-          <div class="col-lg-8">
-            <input type="text" class="form-control" id="u_phone" name="u_phone" value="<?php if(isset($_SESSION['u_phone'])) { echo $_SESSION['u_phone']; } ?>" placeholder="Contact Number" />
-          </div>
-        </div><!--end of CONTACT NUMBER-->
+       
        
 	    	<div class="form-group">
           <label for="u_gender" class="col-lg-4 control-label">Gender</label> 
@@ -115,14 +82,7 @@ $email_error = "ERROR: That Email Address has already been registered.";
   
 </div> <!--end of REGISTER-CONTAINER-->
 
-</section>
-
+</section><!--end of CONTAINER-->
+</div><!--end of WRAP-->
 <?php include 'footer.php'; ?>
 
-<?php
-}
-else
-{
-header('Location: index.php');
-}
-?>

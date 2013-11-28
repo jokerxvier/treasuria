@@ -16,96 +16,48 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="wrap">
 <section class="container credit-key">
 	<h2>Merchant Shop</h2>
 
 <div class="clearfix">
-<?php
-if(isset($_SESSION['username']))
-{
-	$result_key = mysql_query("SELECT * FROM treasuria_key");
-	$num_rows_key = mysql_num_rows($result_key);
-	if($num_rows_key>0)
-	{
-		while ($row_key = mysql_fetch_array($result_key))
-		{
-			$key_uniq = $row_key['key_uniq'];
-			$key_id = $row_key['key_id'];
-			$key_img = $row_key['key_img'];
-			$key_credits = $row_key['key_credits'];
-			$key_name = $row_key['key_name'];
-			$key_price = $row_key['key_price'];
+
+			<?php 
+				$data = getAllKey('treasuria_key');
+				foreach ($data as $key=>$val){
 			
 			?>
-			
 			<article class="col-xs-6 col-md-2 text-center"> 
 				
-				<?php  if(isset( $_SESSION['cart'][$key_uniq])) { ?>
+				<span class="popcount yellow1"><?php echo (isset($_SESSION['cart'][$val[0]])) ? $_SESSION['cart'][$val[0]] : 0  ?></span>
+				<img src="assets/img/<?php echo $val[1] ?>" class="img-responsive img-rounded" alt="Key Credits"/>
 				
-					<span class="popcount yellow1"> <?php echo  $_SESSION['cart'][$key_uniq]; ?></span>
-				<?php } ?>
-				
-                <?php 
-           			 	$qr = new BarcodeQR(); 
-						$images = $qr->paypal($key_name, $key_price, '1', $key_uniq);
-					?>
-                <input type="hidden" value="<?php echo $images ?>" class="txt-qrcde" />
-				<img src="assets/img/<?php echo $key_img;?>" class="img-responsive img-rounded" alt="Key Credits"/>
-				
-				<h3 class="item-title"><?php echo $key_name;?></h3>
-				<h4><!--<?php //echo $key_credits;?> Credits for <br>--> $ <?php echo $key_price;?></h4>
+				<h3 class="item-title"><?php echo $val[3] ?></h3>
+				<h4><!--<?php //echo $key_credits;?> Credits for <br>--> $ <?php echo $val[4] ?></h4>
                 <div class="shopping">
-				  <a href="process.php?action=add&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-plus"></span> Add</a><span class="hidem">|</span>
-				  <a href="process.php?action=remove&keyid=<?php echo $key_uniq;?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>
+				  <a href="process.php?action=add&keyid=<?php echo $val[0] ?>" name="key_id"><span class="glyphicon glyphicon-plus"></span> Add</a><span class="hidem">|</span>
+				  <a href="process.php?action=remove&keyid=<?php echo $val[0] ?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>
 
 			    </div>
-			    <a class="btn btn-sm modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value="<?php echo $key_uniq;?>"> </a>
+			    <a class="btn btn-sm modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value=""> </a>
 			          
-	</article>		
-    <?php
-		}
-	?>
+			</article>	
+            
+            <?php } ?>	
+            
+            
+   
 </div> 
 
 <div class="total">
-		<?php
-		if(isset($_SESSION['cart']) and is_array($_SESSION['cart']))
-		{
-			$totalquantity = 0;
-			foreach($_SESSION['cart'] AS $keyid => $itemQuantity)
-			{
-				$totalquantity = $totalquantity + $itemQuantity;
-			}
-		}
-		else
-		{
-			$totalquantity = 0;
-		}
-		echo "TOTAL: ".$totalquantity;
-	}
-	else
-	{
-		//echo "empty";
-	}
-
-?>
+<?php echo "TOTAL: ". getCartTotal(); ?>
 
 <a href="cart.php" name="key_id" class="empty">View Cart <span class="glyphicon glyphicon-shopping-cart"></span></a>
 </div>	
 </section><!--end of CONTAINER-->
+</div><!--end of WRAP-->
 
-	<footer>
-	  <div class="container">
-		<p class="text-center">&copy; 2013 Treasuria</p>
-	  </div>
-	</footer>
-	
-<?php
-}
-else
-{
-header('Location: login.php');
-}
-?>
+
 
 <?php include 'footer.php'; ?>
