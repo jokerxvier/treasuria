@@ -23,8 +23,37 @@ switch ($action) {
 		$stmt->execute();
 		
 		if ($mysqli->affected_rows == 1) {
-			$res['success'] = 1;
-			$res['message'] = 'You Have Successfully Register an Account';	
+			$display_query = $mysqli->prepare("SELECT user_id FROM users WHERE email = ?");
+			$display_query->bind_param('s', escape($email));
+			$display_query->execute();
+			$display_query->store_result();
+			
+			if ($display_query->num_rows > 0) {
+				$display_query->bind_result($user_id);
+				$display_query->fetch();
+				$count = 0;
+				for ($i = 1; $i <= 2;  $i++){
+					$value = ($i == 1) ? 5 : 1;
+					$key_query = $mysqli->prepare("INSERT INTO user_credits (user_id, created_at, item_qty, item_id) VALUES (?, NOW(), ?, ?)");	
+					$key_query->bind_param('iii', escape($user_id), $value,$i);
+					$key_query->execute();
+					if ($key_query->affected_rows == 1){
+						$count++;
+					}
+				}
+				
+				if ($count == 2){
+					$res['success'] = 1;
+					$res['message'] = 'You Have Successfully Register an Account';	
+				}
+				
+					$res['success'] = $user_id;
+					$res['message'] = 'You Have Successfully Register an Account';	
+				
+			}
+			
+			
+			
 		}
 	}else {
 		$res['success'] = 0;
