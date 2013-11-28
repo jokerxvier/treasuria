@@ -5,7 +5,7 @@ $ses_username = $_SESSION["a_username"];
 if(isset($ses_username))
 {
 include('header.php');
-include('admin_function.php');
+//include('admin_function.php');
 
 $update_success = "Item Data Successfully Updated!";
 $delete_success = "Item Successfully Deleted!";
@@ -52,23 +52,18 @@ $enabled_success = "Item Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$key_query = mysql_query("SELECT * FROM treasuria_key WHERE deleted='0'");
-							$count_key_query = mysql_num_rows($key_query);
+							$key_query = $mysqli->prepare("SELECT key_uniq, key_id, key_img, key_credits, key_name, key_price, created_at, updated_at, deleted FROM treasuria_key WHERE deleted='0'");
+							$key_query->execute();
+							$key_query->bind_result($key_uniq, $key_id, $key_img, $key_credits, $key_name, $key_price, $created_at, $updated_at, $deleted);
+							$key_query->store_result();
+							
 							$ctr = 0;
-								
-								if($count_key_query>0)
-								{
-									while($row_key = mysql_fetch_array($key_query))
-									{
-										$ctr += 1;
-										$key_uniq = $row_key['key_uniq'];
-										$key_id = $row_key['key_id'];
-										$key_img = $row_key['key_img'];
-										$key_credits = $row_key['key_credits'];
-										$key_name = $row_key['key_name'];
-										$key_price = $row_key['key_price'];
-										$created_at = date('M d, Y', strtotime($row_key["created_at"]) );
-										$updated_at = date('M d, Y', strtotime($row_key["updated_at"]) );										
+							if($key_query->num_rows > 0){
+								while($key_query->fetch()){
+								$ctr +=1;
+										
+										$created_at = date('M d, Y', strtotime($created_at) );
+										$updated_at = date('M d, Y', strtotime($updated_at) );										
 									?>
 										
 										<tr>
@@ -76,7 +71,7 @@ $enabled_success = "Item Successfully Enabled!";
 											<td><img src="../assets/img/<?php echo $key_img; ?>" width="50px"></td>
 											<td class="center"><?php echo $key_name; ?></td>
 											<td class="center"><?php echo $key_credits; ?></td>
-											<td class="center"><?php echo $key_price; ?></td>
+											<td class="center"><?php echo number_format($key_price, 2, '.', ''); ?></td>
 											<!--<td class="center"><?php //echo $created_at; ?></td>-->
 											<td class="center"><?php echo $updated_at; ?></td>
 											<td class="center">

@@ -1,11 +1,8 @@
 <?php session_start(); ?>
 <?php
 include('header.php');
-include("admin_function.php");
-
 $action = (isset($_GET['action'])) ?  $_GET['action'] : '';
 ?>
-
 <div>
 	<ul class="breadcrumb">
 		<li>
@@ -19,10 +16,7 @@ $action = (isset($_GET['action'])) ?  $_GET['action'] : '';
 		</li>
 	</ul>
 </div>
-
 <?php
-
-
 switch($action)
 {
 	case 'add':
@@ -56,8 +50,6 @@ switch($action)
 									$_SESSION['gender'] = $post_gender = mysql_escape_string($_POST["gender"]);
 									$post_user_type = '1'; //administrator
 									
-									
-									
 									if($post_firstname=='' OR $post_lastname=='' OR $post_username=='' OR $post_password=='' OR $post_c_password=='' OR $post_address=='' OR $post_city=='' OR $post_country=='' OR $post_phone=='' OR $post_gender=='')
 									{
 										?> <div class="alert alert-error"><p>ERROR: Don't leave blank space.</p></div> <?php
@@ -70,22 +62,26 @@ switch($action)
 										}
 										else //pass match
 										{
-											$result_registered = mysql_query("SELECT * from users WHERE email='$post_username'");
-											$num_rows_registered = mysql_num_rows($result_registered);
+											$result_registered = $mysqli->prepare("SELECT email from users WHERE email='$post_username'");
+											$result_registered->execute();
+											$result_registered->bind_result($email);
+											$result_registered->store_result();
 											
-											if($num_rows_registered) //if already registered
-											{
+											if($result_registered->num_rows > 0){
 												?> <div class="alert alert-error"><p>ERROR: Email Already Registered </p></div> <?php
 											}
 											else
 											{
 												if (is_numeric($post_phone))
 												{
-													$query_insert_new_user = mysql_query("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type,key_email) VALUES ('$post_firstname','$post_lastname','$post_username','$post_c_password','$post_address','$post_city','$post_country','$post_phone','$post_gender','$datetime','$datetime','$post_user_type','')");
+												    $query_insert_new_user = $mysqli->prepare("INSERT INTO users (firstname,lastname,email,password,address,city,country,phone,gender,created_at,updated_at,user_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)");
+													$query_insert_new_user->bind_param('sssssssisi',$post_firstname,$post_lastname,$post_username,$post_password,$post_address,$post_city,$post_country,$post_phone,$post_gender,$post_user_type);
+													$query_insert_new_user->execute();
+													$result_registered->store_result();
 													
 													if($query_insert_new_user)
 													{
-														$last_userid = mysql_insert_id();
+														$last_userid = $mysqli->insert_id;
 														$rand = MD5($datetime);
 														$s = "added";
 														echo $URL="edit_members.php?action=edit&user_id=$last_userid&$rand&s=$s";
@@ -181,12 +177,12 @@ switch($action)
 										</label>
 									</div>
 								</div>
-								<div class="control-group">
+								<!--<div class="control-group">
 								  <label class="control-label" for="fileInput">Upload Image/Avatar</label>
 								  <div class="controls">
 									<input class="input-file uniform_on" id="fileInput" type="file">
 								  </div>
-								</div>  
+								</div>  -->
 								<div class="form-actions">
 								  <button type="submit" name="submit" class="btn btn-primary">Save changes</button>
 								</div>
@@ -203,28 +199,13 @@ switch($action)
 	break;
 	
 	case 'edit':
-		$subscribers_query = mysql_query("SELECT * FROM users WHERE user_id='$_GET[user_id]'");
-		$count_subscribers_query = mysql_num_rows($subscribers_query);
-		$ctr_member = 0;
-		if($count_subscribers_query>0)
-		{
-			while($row_members = mysql_fetch_array($subscribers_query))
-			{
-				$ctr_member += 1;
-				$user_id = $row_members["user_id"];
-				$firstname = $row_members["firstname"];
-				$lastname = $row_members["lastname"];
-				$email = $row_members["email"];
-				$address = $row_members["address"];
-				$city = $row_members["city"];
-				$country = $row_members["country"];
-				$created_at = date('M d, Y', strtotime($row_members["created_at"]) );
-				$phone = $row_members["phone"];
-				$gender = $row_members["gender"];
-				$user_type = $row_members["user_type"];
-				$deleted = $row_members["deleted"];
-				$key_email = $row_members["key_email"];
-				
+		$p_query = $mysqli->prepare("SELECT * FROM users WHERE user_id='$_GET[user_id]'");
+		$p_query->execute();
+		$p_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+		$p_query->store_result();
+		
+		if($p_query->num_rows > 0){
+			while($p_query->fetch()){
 				/*
 				for future -- if madami ng AVATAR . . . .
 				
@@ -307,7 +288,11 @@ switch($action)
 									}
 									else
 									{
-										$update_edit = mysql_query("UPDATE users SET firstname='$post_firstname', lastname='$post_lastname', address='$post_address', city='$post_city', country='$post_country', phone='$post_phone', gender='$post_gender', updated_at='$datetime', user_type='$post_user_type' WHERE user_id='$_GET[user_id]'");
+										$update_edit = $mysqli->prepare("UPDATE users SET firstname=?, lastname=?, address=?, city=?, country=?, phone=?, gender=?, updated_at=NOW(), user_type=? WHERE user_id='$_GET[user_id]'");
+										$update_edit->bind_param('sssssisi',$post_firstname,$post_lastname,$post_address,$post_city,$post_country,$post_phone,$post_gender,$post_user_type);
+										$update_edit->execute();
+										$update_edit->store_result();
+										
 										if($update_edit)
 										{
 											?> <meta http-equiv="refresh" content="0" > <?php

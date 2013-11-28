@@ -1,12 +1,12 @@
 <?php
-
-include("../db_connect.php");
-$datetime = date('Y-m-d H:i:s');
+include 'db_connect.php';
 $databaseconnect = NEW databaseconnect();
 $databaseconnect->dbconnect();
+$datetime = date('Y-m-d H:i:s');
 
 function UserCount() {
 //ilan lahat ng members
+
 $result_count = mysql_query("SELECT * FROM users WHERE deleted='0' AND user_type='0'");
 $count_rows = mysql_num_rows($result_count);
 return $count_rows;

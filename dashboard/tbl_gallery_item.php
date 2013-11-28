@@ -5,7 +5,7 @@ $ses_username = $_SESSION["a_username"];
 if(isset($ses_username))
 {
 include('header.php');
-include('admin_function.php');
+//include('admin_function.php');
 
 $update_success = "Item Data Successfully Updated!";
 $delete_success = "Item Successfully Deleted!";
@@ -51,24 +51,19 @@ $enabled_success = "Item Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$item_query = mysql_query("SELECT * FROM treasuria_gallery");
-							$count_item_query = mysql_num_rows($item_query);
-								$ctr = 0;
-								
-								if($count_item_query>0)
-								{
-									while($row_item = mysql_fetch_array($item_query))
-									{
-										$ctr += 1;
-										$prize_name = $row_item['prize_name'];
-										$prize_id = $row_item['prize_id'];
-										$prize_img = $row_item['prize_img'];
-										$prize_credits = $row_item['prize_credits'];
-										$deleted = $row_item['deleted'];
+							
+							$item_query = $mysqli->prepare("SELECT prize_id, prize_name, prize_img, prize_credits, created_at, updated_at, deleted FROM treasuria_gallery");
+							$item_query->execute();
+							$item_query->bind_result($prize_id, $prize_name, $prize_img, $prize_credits, $created_at, $updated_at, $deleted);
+							$item_query->store_result();
+							
+							$ctr = 0;
+							if($item_query->num_rows > 0){
+								while($item_query->fetch()){
+								$ctr +=1;
 										
-										
-										$prize_created_at = date('M d, Y', strtotime($row_item['created_at']) );
-										$prize_updated_at = date('M d, Y', strtotime($row_item['updated_at']) );
+										$prize_created_at = date('M d, Y', strtotime($created_at) );
+										$prize_updated_at = date('M d, Y', strtotime($updated_at) );
 										
 										if($deleted=='1')
 										{
@@ -110,10 +105,6 @@ $enabled_success = "Item Successfully Enabled!";
 									}
 								}
 							?>
-							
-							
-							
-							
 						  </tbody>
 					  </table>            
 					</div>

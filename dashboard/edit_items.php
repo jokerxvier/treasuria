@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
 include('header.php');
-include("admin_function.php");
+//include("admin_function.php");
 
 $action = (isset($_GET['action'])) ?  $_GET['action'] : '';
 ?>
@@ -106,12 +106,15 @@ switch($action)
 															  //echo "Stored in: " . "../assets/img/gallery/" . time() . $_FILES["post_image"]["name"];
 															  
 															$prize_name_uniq = MD5($prize_name);
-												
-															$insert_item = mysql_query("INSERT INTO treasuria_gallery(prize_uniq, prize_img, prize_name, prize_credits, created_at, updated_at) VALUES ('$prize_name_uniq','$prize_img','$prize_name','$prize_credits','$datetime','$datetime')");
+															
+															$insert_item = $mysqli->prepare("INSERT INTO treasuria_gallery(prize_uniq, prize_img, prize_name, prize_credits, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())");
+															$insert_item->bind_param('sssi',$prize_name_uniq,$prize_img,$prize_name,$prize_credits);
+															$insert_item->execute();
+															$insert_item->store_result();
 															
 															if($insert_item)
 															{
-																$last_itemid = mysql_insert_id();
+																$last_userid = $mysqli->insert_id;
 																$rand = MD5($datetime);
 																$s = "added";
 																echo $URL="edit_items.php?action=edit&prize_id=$last_itemid&$rand&s=$s";
@@ -219,18 +222,20 @@ switch($action)
 									{	
 										//IMAGE UPLOADER//
 										
-											if ($_FILES["file"]["error"] > 0)
+											if ($_FILES["file"]["error"] > 0) //if doesnt need to revise the image		
 											{
 												//if no new image
 												?> <!--<div class="alert alert-error"><p> <?php	//echo "Return Code: " . $_FILES["file"]["error"] . "<br>"; ?></p></div>--> <?php
 												
-												$update_edit_item = mysql_query("UPDATE treasuria_gallery SET prize_name='$prize_name', prize_credits='$prize_credits', updated_at='$datetime' WHERE prize_id='$_GET[prize_id]'");
-														
+												$update_edit_item = $mysqli->prepare("UPDATE treasuria_gallery SET prize_name=?, prize_credits=?, updated_at=NOW() WHERE prize_id='$_GET[prize_id]'");
+												$update_edit_item->bind_param('si',$prize_name,$prize_credits);
+												$update_edit_item->execute();
+												$update_edit_item->store_result();
+												
 												if($update_edit_item)
 												{
 													?> <meta http-equiv="refresh" content="0" > <?php
 												}
-												
 											}
 											else
 											{	

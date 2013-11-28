@@ -5,7 +5,7 @@ $ses_username = $_SESSION["a_username"];
 if(isset($ses_username))
 {
 include('header.php');
-include('admin_function.php');
+//include('admin_function.php');
 
 $update_success = "User Data Successfully Updated!";
 $delete_success = "User Successfully Deleted!";
@@ -54,28 +54,15 @@ $enabled_success = "User Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$subscribers_query = mysql_query("SELECT * FROM users WHERE user_type='0'");
-							$count_subscribers_query = mysql_num_rows($subscribers_query);
+							$subscribers_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_type='0'");
+							$subscribers_query->execute();
+							$subscribers_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+							$subscribers_query->store_result();
 							$ctr_member = 0;
-								if($count_subscribers_query>0)
-								{
-									while($row_members = mysql_fetch_array($subscribers_query))
-									{
-										$ctr_member += 1;
-										$user_id = $row_members["user_id"];
-										$firstname = $row_members["firstname"];
-										$lastname = $row_members["lastname"];
-										$email = $row_members["email"];
-										$address = $row_members["address"];
-										$city = $row_members["city"];
-										$country = $row_members["country"];
-										$created_at = date('M d, Y', strtotime($row_members["created_at"]) );
-										$phone = $row_members["phone"];
-										$gender = $row_members["gender"];
-										$user_type = $row_members["user_type"];
-										$deleted = $row_members["deleted"];
-										$key_email = $row_members["key_email"];
-										
+							 
+							if($subscribers_query->num_rows > 0){
+								while($subscribers_query->fetch()){		
+									$ctr_member += 1; 
 										/*
 										for future -- if madami ng AVATAR . . . .
 										
@@ -191,28 +178,16 @@ $enabled_success = "User Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$subscribers_query = mysql_query("SELECT * FROM users WHERE user_type='1'");
-							$count_subscribers_query = mysql_num_rows($subscribers_query);
+							$subscribers_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_type='1'");
+							$subscribers_query->execute();
+							$subscribers_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+							$subscribers_query->store_result();
 							$ctr_member = 0;
-								if($count_subscribers_query>0)
-								{
-									while($row_members = mysql_fetch_array($subscribers_query))
-									{
-										$ctr_member += 1;
-										$user_id = $row_members["user_id"];
-										$firstname = $row_members["firstname"];
-										$lastname = $row_members["lastname"];
-										$email = $row_members["email"];
-										$address = $row_members["address"];
-										$city = $row_members["city"];
-										$country = $row_members["country"];
-										$created_at = date('M d, Y', strtotime($row_members["created_at"]) );
-										$phone = $row_members["phone"];
-										$gender = $row_members["gender"];
-										$user_type = $row_members["user_type"];
-										$deleted = $row_members["deleted"];
-										$key_email = $row_members["key_email"];
-										
+							 
+							if($subscribers_query->num_rows > 0){
+								while($subscribers_query->fetch()){		
+									$ctr_member += 1; 
+									
 										/*
 										for future -- if madami ng AVATAR . . . .
 										
@@ -321,37 +296,21 @@ $enabled_success = "User Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$points_query = mysql_query("SELECT * FROM user_points ORDER BY points DESC");
-							$count_points_query = mysql_num_rows($points_query);
-							if($count_points_query>0)
-							{
-								$ctr_admin = 0;
-								while($row_points = mysql_fetch_array($points_query))
-								{
-									$points = $row_points['points'];
-									$user_id_points = $row_points['user_id'];
-								
-									$p_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_points' AND key_email=' ' AND user_type='0' AND deleted='0'");
-									$count_p_query = mysql_num_rows($p_query);
-									if($count_p_query>0)
-									{
-										while($row_p = mysql_fetch_array($p_query))
-										{
-											$ctr_admin += 1;
-											$user_id = $row_p["user_id"];
-											$firstname = $row_p["firstname"];
-											$lastname = $row_p["lastname"];
-											$email = $row_p["email"];
-											$address = $row_p["address"];
-											$city = $row_p["city"];
-											$country = $row_p["country"];
-											$created_at = $row_p["created_at"];
-											$phone = $row_p["phone"];
-											$gender = $row_p["gender"];
-											$user_type = $row_p["user_type"];
-											$deleted = $row_p["deleted"];
-											$key_email = $row_p["key_email"];
-											
+							$points_query = $mysqli->prepare("SELECT user_id, points FROM user_points ORDER BY points DESC");
+							$points_query->execute();
+							$points_query->bind_result($user_id_points, $points);
+							$points_query->store_result();
+							$ctr_admin = 0;
+							if($points_query->num_rows > 0){
+								while($points_query->fetch()){
+									$ctr_admin += 1;
+									$p_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_points' AND deleted='0'");
+									$p_query->execute();
+									$p_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+									$p_query->store_result();
+									
+									if($p_query->num_rows > 0){
+										while($p_query->fetch()){	
 												/*
 												for future -- if madami ng AVATAR . . . .
 												
@@ -378,7 +337,6 @@ $enabled_success = "User Successfully Enabled!";
 												{
 													$avatar_img = "no_image.png";
 												}
-												
 												?>
 													<tr>
 														<td><?php echo $ctr_admin; ?></td>
@@ -390,15 +348,9 @@ $enabled_success = "User Successfully Enabled!";
 												<?php
 										}
 									}
-										
 								}
 							}	
 							?>
-							
-							
-							
-							
-							
 						  </tbody>
 					  </table>            
 					</div>
@@ -429,37 +381,23 @@ $enabled_success = "User Successfully Enabled!";
 						  </thead>   
 						  <tbody>
 							<?php
-							$credits_query = mysql_query("SELECT SUM(credits) AS creditsTotal, user_id FROM user_credits GROUP BY user_id ORDER BY creditsTotal DESC LIMIT 5");
-							$count_credits_query = mysql_num_rows($credits_query);
-							if($count_credits_query>0)
-							{
-								$ctr_admin = 0;
-								while($row_credits = mysql_fetch_array($credits_query))
-								{
-									$credits = $row_credits['creditsTotal'];
-									$user_id_credits = $row_credits['user_id'];
+							$credits_query = $mysqli->prepare("SELECT SUM(credits) AS credits, user_id FROM user_credits GROUP BY user_id ORDER BY credits DESC LIMIT 5");
+							$credits_query->execute();
+							$credits_query->bind_result($credits, $user_id_credits);
+							$credits_query->store_result();
+							
+							if($credits_query->num_rows > 0){
+								while($credits_query->fetch()){
 								
-									$c_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_credits' AND user_type='0' AND deleted='0'");
-									$count_c_query = mysql_num_rows($c_query);
-									if($count_c_query>0)
-									{
-										while($row_c = mysql_fetch_array($c_query))
-										{	
-											$ctr_admin += 1;
-											$user_id = $row_c["user_id"];
-											$firstname = $row_c["firstname"];
-											$lastname = $row_c["lastname"];
-											$email = $row_c["email"];
-											$address = $row_c["address"];
-											$city = $row_c["city"];
-											$country = $row_c["country"];
-											$created_at = $row_c["created_at"];
-											$phone = $row_c["phone"];
-											$gender = $row_c["gender"];
-											$user_type = $row_c["user_type"];
-											$deleted = $row_c["deleted"];
-											$key_email = $row_c["key_email"];
-											
+									$c_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_credits' AND deleted='0'");
+									$c_query->execute();
+									$c_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+									$c_query->store_result();
+									
+									$ctr = 0;
+									if($c_query->num_rows > 0){
+										while($c_query->fetch()){
+										$ctr +=1;
 												/*
 												for future -- if madami ng AVATAR . . . .
 												
@@ -489,7 +427,7 @@ $enabled_success = "User Successfully Enabled!";
 													
 												?>
 													<tr>
-														<td><?php echo $ctr_admin; ?></td>
+														<td><?php echo $ctr; ?></td>
 														<td><img src="../assets/img/avatar/<?php echo $avatar_img; ?>"></td>
 														<td><?php echo $firstname ." ". $lastname; ?></td>
 														<td class="center"><?php echo $email; ?></td>

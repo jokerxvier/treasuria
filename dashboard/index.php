@@ -1,4 +1,5 @@
-<?php session_start(); ?>
+<?php session_start();
+?>
 <?php
 
 $ses_username = $_SESSION["a_username"];
@@ -6,7 +7,7 @@ $ses_username = $_SESSION["a_username"];
 if(isset($ses_username))
 {
 include('header.php');
-include('admin_function.php');
+//include('admin_function.php');
 ?>
 	<div>
 		<ul class="breadcrumb">
@@ -22,21 +23,39 @@ include('admin_function.php');
 		<a data-rel="tooltip" title="" class="well span3 top-block" href="tbl_users_data.php">
 			<span class="icon32 icon-red icon-user"></span>
 			<div>Total Active Member(s)</div>
-			<div><?php echo UserCount(); ?></div>
+			<div>
+			<?php
+				$result_count = $mysqli->prepare("SELECT * FROM users WHERE deleted='0' AND user_type='0'");
+				$result_count -> execute();
+				$result_count -> store_result();
+				echo $result_count->num_rows;
+			?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 		
 		<a data-rel="tooltip" title="" class="well span3 top-block" href="tbl_users_data.php">
 			<span class="icon32 icon-red icon-user"></span>
 			<div>Total Pending Member(s)</div>
-			<div><?php echo UserPendingCount(); ?></div>
+			<div><?php
+				$result_count1 = $mysqli->prepare("SELECT * FROM users WHERE key_email!='' AND deleted='0' AND user_type='0'");
+				$result_count1 -> execute();
+				$result_count1 -> store_result();
+				echo $result_count1->num_rows;
+				?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 
 		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="tbl_gallery_item.php">
 			<span class="icon32 icon-color icon-star-on"></span>
 			<div>Total Gallery Item(s) </div>
-			<div><?php echo GalleryItemCount(); ?></div>
+			<div>
+			<?php
+				$result_count2 = $mysqli->prepare("SELECT * FROM treasuria_gallery WHERE deleted='0'");
+				$result_count2 -> execute();
+				$result_count2 -> store_result();
+				echo $result_count2->num_rows;
+			?>
+			</div>
 			<!--<span class="notification"> </span>-->
 		</a>
 
@@ -50,7 +69,12 @@ include('admin_function.php');
 		<a data-rel="tooltip" title="4 new pro members." class="well span3 top-block" href="tbl_keys.php">
 			<span class="icon32 icon-color icon-star-on"></span>
 			<div>Total Key(s)</div>
-			<div><?php echo CounterKeys(); ?></div>
+			<div><?php
+				$result_count3 = $mysqli->prepare("SELECT * FROM treasuria_key WHERE deleted='0'");
+				$result_count3 -> execute();
+				$result_count3 -> store_result();
+				echo $result_count3->num_rows;
+			?></div>
 			<!--<span class="notification"> </span>-->
 		</a>
 		
@@ -75,42 +99,27 @@ include('admin_function.php');
 				<div class="box-content">
 					<ul class="dashboard-list">
 						<?php
-							$subscribers_query = mysql_query("SELECT * FROM users WHERE user_type='0' and deleted='0' ORDER BY RAND() LIMIT 5");
-							$count_subscribers_query = mysql_num_rows($subscribers_query);
-							$ctr_member = 0;
-								if($count_subscribers_query>0)
-								{
-									while($row_members = mysql_fetch_array($subscribers_query))
-									{
-										$ctr_member += 1;
-										$user_id = $row_members["user_id"];
-										$firstname = $row_members["firstname"];
-										$lastname = $row_members["lastname"];
-										$email = $row_members["email"];
-										$address = $row_members["address"];
-										$city = $row_members["city"];
-										$country = $row_members["country"];
-										$created_at = $row_members["created_at"];
-										$phone = $row_members["phone"];
-										$gender = $row_members["gender"];
-										$user_type = $row_members["user_type"];
-										$deleted = $row_members["deleted"];
-										$key_email = $row_members["key_email"];
-										
+							$subscribers_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_type='0' and deleted='0' ORDER BY RAND() LIMIT 5");
+							$subscribers_query->execute();
+							$subscribers_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+							$subscribers_query->store_result();
+							
+							if($subscribers_query->num_rows > 0){
+								while($subscribers_query->fetch()){										
 											/*
-												for future -- if madami ng AVATAR . . . .
+											for future -- if madami ng AVATAR . . . .
+											
+											$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
+											while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
+											{
+												$avatar_id = $row_avatarq["avatar_id"];
 												
-												$subscribers_avatarquery = mysql_query("SELECT * FROM user_avatar WHERE user_id='$user_id'");
-												while($row_avatarq = mysql_fetch_array($subscribers_avatarquery))
+												$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
+												while($row_avatar = mysql_fetch_array($avatarquery))
 												{
-													$avatar_id = $row_avatarq["avatar_id"];
-													
-													$avatarquery = mysql_query("SELECT * FROM avatar_choices WHERE avatar_id='$avatar_id'");
-													while($row_avatar = mysql_fetch_array($avatarquery))
-													{
-														$avatar_img = $row_avatar["image"];
-													}
-												} */
+													$avatar_img = $row_avatar["image"];
+												}
+											} */
 												if($gender=='M')
 												{
 													$avatar_img = "male.png";
@@ -124,17 +133,21 @@ include('admin_function.php');
 													$avatar_img = "no_image.png";
 												}
 											
-											$login_date = "0000-00-00 00:00:00";
-											$subscribers_loginquery = mysql_query("SELECT * FROM login_logout WHERE user_id='$user_id'");
-											if($subscribers_loginquery>0)
-											{
-												while($row_login = mysql_fetch_array($subscribers_loginquery))
-												{
-													//$login_date = date('M d, Y h:i:s', strtotime($row_login['login_date']) );
-													
-													$login_date = $row_login["login_date"];
+											$subscribers_loginquery = $mysqli->prepare("SELECT login_date FROM login_logout WHERE user_id='$user_id'");
+											$subscribers_loginquery->execute();
+											$subscribers_loginquery->bind_result($login_date);
+											$subscribers_loginquery->store_result();
+											
+											if($subscribers_loginquery->num_rows > 0){
+												while($subscribers_loginquery->fetch()){
+												$login_date = $login_date;
 												}
 											}
+											else
+											{
+												$login_date = "0000-00-00 00:00:00";
+											}
+											
 											
 
 										if($key_email==NULL)
@@ -204,35 +217,21 @@ include('admin_function.php');
 				<div class="box-content">
 					<ul class="dashboard-list">
 						<?php
-							$points_query = mysql_query("SELECT * FROM user_points ORDER BY points DESC");
-							$count_points_query = mysql_num_rows($points_query);
-							if($count_points_query>0)
-							{
-								while($row_points = mysql_fetch_array($points_query))
-								{
-									$points = $row_points['points'];
-									$user_id_points = $row_points['user_id'];
-								
-									$p_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_points' AND user_type='0' AND deleted='0' LIMIT 5");
-									$count_p_query = mysql_num_rows($p_query);
-									if($count_p_query>0)
-									{
-										while($row_p = mysql_fetch_array($p_query))
-										{
-											$user_id = $row_p["user_id"];
-											$firstname = $row_p["firstname"];
-											$lastname = $row_p["lastname"];
-											$email = $row_p["email"];
-											$address = $row_p["address"];
-											$city = $row_p["city"];
-											$country = $row_p["country"];
-											$created_at = $row_p["created_at"];
-											$phone = $row_p["phone"];
-											$gender = $row_p["gender"];
-											$user_type = $row_p["user_type"];
-											$deleted = $row_p["deleted"];
-											$key_email = $row_p["key_email"];
-											
+							$points_query = $mysqli->prepare("SELECT user_id, points FROM user_points ORDER BY points DESC LIMIT 5");
+							$points_query->execute();
+							$points_query->bind_result($user_id_points, $points);
+							$points_query->store_result();
+							
+							if($points_query->num_rows > 0){
+								while($points_query->fetch()){
+									
+									$p_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_points' AND deleted='0'");
+									$p_query->execute();
+									$p_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+									$p_query->store_result();
+									
+									if($p_query->num_rows > 0){
+										while($p_query->fetch()){	
 												/*
 												for future -- if madami ng AVATAR . . . .
 												
@@ -292,35 +291,20 @@ include('admin_function.php');
 				<div class="box-content">
 					<ul class="dashboard-list">
 						<?php
-							$credits_query = mysql_query("SELECT SUM(credits) AS creditsTotal, user_id FROM user_credits GROUP BY user_id ORDER BY credits DESC LIMIT 5");
-							$count_credits_query = mysql_num_rows($credits_query);
-							if($count_credits_query>0)
-							{
-								while($row_credits = mysql_fetch_array($credits_query))
-								{
-									$credits = $row_credits['creditsTotal'];
-									$user_id_credits = $row_credits['user_id'];
-								
-									$c_query = mysql_query("SELECT * FROM users WHERE user_id='$user_id_credits' AND user_type='0' AND deleted='0'");
-									$count_c_query = mysql_num_rows($c_query);
-									if($count_c_query>0)
-									{
-										while($row_c = mysql_fetch_array($c_query))
-										{	
-											$user_id = $row_c["user_id"];
-											$firstname = $row_c["firstname"];
-											$lastname = $row_c["lastname"];
-											$email = $row_c["email"];
-											$address = $row_c["address"];
-											$city = $row_c["city"];
-											$country = $row_c["country"];
-											$created_at = $row_c["created_at"];
-											$phone = $row_c["phone"];
-											$gender = $row_c["gender"];
-											$user_type = $row_c["user_type"];
-											$deleted = $row_c["deleted"];
-											$key_email = $row_c["key_email"];
-											
+							$credits_query = $mysqli->prepare("SELECT SUM(credits) AS credits, user_id FROM user_credits GROUP BY user_id ORDER BY credits DESC LIMIT 5");
+							$credits_query->execute();
+							$credits_query->bind_result($credits, $user_id_credits);
+							$credits_query->store_result();
+							
+							if($credits_query->num_rows > 0){
+								while($credits_query->fetch()){
+									$c_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_credits' AND deleted='0'");
+									$c_query->execute();
+									$c_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
+									$c_query->store_result();
+									
+									if($c_query->num_rows > 0){
+										while($c_query->fetch()){
 												/*
 												for future -- if madami ng AVATAR . . . .
 												
@@ -370,7 +354,7 @@ include('admin_function.php');
 		</div><!--/span-->
 	</div><!--/row-->
 	
-	<div class="row-fluid sortable">
+	<!--<div class="row-fluid sortable">
 		<div class="box span4">
 			<div class="box-header well" data-original-title>
 				<h2><i class="icon-list-alt"></i> Realtime Traffic</h2>
@@ -384,8 +368,8 @@ include('admin_function.php');
 					<p class="clearfix">You can update a chart periodically to get a real-time effect by using a timer to insert the new data in the plot and redraw it.</p>
 					<p>Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds</p>
 			</div>
-		</div><!--/span-->
-	</div><!--/row-->
+		</div>
+	</div> -->
 	
 	
 <?php
