@@ -1,9 +1,7 @@
 <?php session_start(); ?>
 <?php
-include("../db_connect.php");
+include 'db_connect.php';
 $datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
 
 switch($_SERVER['QUERY_STRING'])
 {
@@ -11,23 +9,18 @@ switch($_SERVER['QUERY_STRING'])
 		if(isset($_POST["submit"]))
 		{
 			$admin_username = $_POST["username"];
-			$admin_password = md5($_POST["password"]);
 			
-			$result_admin = mysql_query("SELECT * FROM users WHERE email='$admin_username' AND user_type='1' LIMIT 1");
-			$num_rows = mysql_num_rows($result_admin);
+			$result_admin = $mysqli->prepare("SELECT user_id, firstname, password, salt, email, user_id, key_email, user_type FROM users WHERE email = ?");
+			$result_admin->bind_param('s', $admin_username);
+			$result_admin->execute();
+			$result_admin->bind_result($user_id, $firstname, $admin_pass, $salt, $admin_email, $user_id, $key, $user_type);
+			$result_admin->store_result();
 			
-			if($num_rows>0)
+			if($result_admin->num_rows > 0)
 			{
+				$result_admin->fetch();
+				$admin_password = hash('sha256', $salt . hash('sha256', $_POST["password"]) );
 				
-				while ($row = mysql_fetch_array($result_admin))
-				{
-					$admin_email = $row['email'];
-					$admin_pass = $row['password'];
-					$user_type = $row['user_type'];
-					
-					
-					$key = $row['key_email']; //email verified
-					
 					if($admin_username==$admin_email and $admin_password == $admin_pass and $user_type==1)
 					{
 						if($key==NULL) //if not verified on their Email
@@ -36,9 +29,9 @@ switch($_SERVER['QUERY_STRING'])
 							
 							if($access==TRUE)
 							{	
-								echo $_SESSION["firstname"] = $row['firstname'];
-								echo $_SESSION["user_id"] = $row['user_id'];
-								echo $_SESSION["a_username"] = $admin_email;
+								$_SESSION["firstname"] = $firstname;
+								$_SESSION["user_id"] = $user_id;
+								$_SESSION["a_username"] = $admin_email;
 								
 								$query_insert_login = mysql_query("INSERT INTO login_logout (user_id, login_date) VALUES ('$_SESSION[user_id]', '$datetime')");
 								
@@ -59,9 +52,6 @@ switch($_SERVER['QUERY_STRING'])
 						$access = FALSE;
 						header('Location: login.php?error=failed_login');
 					}
-					
-				
-				}
 			}
 			else
 			{

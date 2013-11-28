@@ -217,7 +217,7 @@ include('header.php');
 				<div class="box-content">
 					<ul class="dashboard-list">
 						<?php
-							$points_query = $mysqli->prepare("SELECT user_id, points FROM user_points ORDER BY points DESC LIMIT 5");
+							$points_query = $mysqli->prepare("SELECT user_id, points FROM user_points ORDER BY points DESC");
 							$points_query->execute();
 							$points_query->bind_result($user_id_points, $points);
 							$points_query->store_result();
@@ -225,7 +225,7 @@ include('header.php');
 							if($points_query->num_rows > 0){
 								while($points_query->fetch()){
 									
-									$p_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_points' AND deleted='0'");
+									$p_query = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE user_id='$user_id_points' AND deleted='0' LIMIT 5");
 									$p_query->execute();
 									$p_query->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $email, $key_email, $phone, $gender, $user_type, $deleted);
 									$p_query->store_result();

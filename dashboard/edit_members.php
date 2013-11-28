@@ -41,8 +41,15 @@ switch($action)
 									$_SESSION['firstname'] = $post_firstname = mysql_escape_string($_POST["firstname"]);
 									$_SESSION['lastname'] = $post_lastname = mysql_escape_string($_POST["lastname"]);
 									$_SESSION['username'] = $post_username = mysql_escape_string($_POST["username"]);
-									$_SESSION['password'] = $post_password = md5($_POST["password"]);
-									$_SESSION['c_password'] = $post_c_password = md5($_POST["c_password"]);
+									
+									$hashpassword = hash('sha256', $_POST["password"]);
+									$saltpassword = createSalt();
+									$_SESSION['password']= $post_password = hash('sha256', $saltpassword . $hashpassword);
+									
+									$hashc_password = hash('sha256', $_POST["c_password"]);
+									$saltc_password = createSalt();
+									$_SESSION['c_password']= $post_c_password = hash('sha256', $saltc_password . $hashc_password);
+									
 									$_SESSION['address'] = $post_address = mysql_escape_string($_POST["address"]);
 									$_SESSION['city'] = $post_city = mysql_escape_string($_POST["city"]);
 									$_SESSION['country'] = $post_country = mysql_escape_string($_POST["country"]);
