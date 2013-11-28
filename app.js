@@ -200,7 +200,7 @@ io.sockets.on('connection', function (socket){
 	 });
 	 
 	 
-<<<<<<< HEAD
+
 	 socket.on('result', function (result){
 		 	
 				if (clients.hasOwnProperty(result.data)) {
@@ -250,16 +250,14 @@ io.sockets.on('connection', function (socket){
 			
 			socket.emit('winner', {winner : winnerBox});
 	 });
-=======
+
 	/* socket.on('result', function (result){
 				
 				
 				
 				
 	 });*/
->>>>>>> 67f0532d298c872c12be7f06ed9a610a97c868a8
-	 
-	 
+
 	 
 
 	socket.on('disconnect users', function (data) {
