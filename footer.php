@@ -16,23 +16,23 @@
 
 	
 <script>
-			function getRandDaily(){
-						var fruits=[1, 5]
-						var fruitweight=[6, 3] // 60, 30
-						var totalweight=eval(fruitweight.join("+"))
-						var weighedfruits=new Array()
-						var currentfruit=0
-								
-						while (currentfruit<fruits.length){ 
-							for (i=0; i<fruitweight[currentfruit]; i++)
-								weighedfruits[weighedfruits.length]=fruits[currentfruit]
-								currentfruit++
-							}
-						var randomnumber=Math.floor(Math.random()*totalweight);
-							
-						return weighedfruits[randomnumber];
-			
-			}
+	function getRandDaily(){
+				var fruits=[1, 5]
+				var fruitweight=[6, 3] // 60, 30
+				var totalweight=eval(fruitweight.join("+"))
+				var weighedfruits=new Array()
+				var currentfruit=0
+						
+				while (currentfruit<fruits.length){ 
+					for (i=0; i<fruitweight[currentfruit]; i++)
+						weighedfruits[weighedfruits.length]=fruits[currentfruit]
+						currentfruit++
+					}
+				var randomnumber=Math.floor(Math.random()*totalweight);
+					
+				return weighedfruits[randomnumber];
+	
+	}
 			
 			
 	$(function() {
@@ -65,7 +65,7 @@
 						  dataType: 'json',
 						  data: params,
 						  success: function (result) {
-							
+							console.log(result);
 							if (result.success == 1){
 								$('.message').addClass('success').html(result.message);	
 							}else {
