@@ -174,7 +174,7 @@ io.sockets.on('connection', function (socket){
 												}
 												
 												var query3 = connection.query(sql3, function(err, result) {
-														message = "You won: The winning Box is Box number :  " + winnerBox;
+														message = "You won, the winning Box is Box number" + winnerBox;
 														if (result.affectedRows == 1){
 															io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
 														
@@ -183,7 +183,7 @@ io.sockets.on('connection', function (socket){
 										});
 										
 							   }else {
-								   message = "You Loss: The winning Box is Box number : " + winnerBox;	
+								   message = "You loss, the winning Box is Box number" + winnerBox;	
 								   io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
 			
 							   }
