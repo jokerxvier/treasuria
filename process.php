@@ -17,43 +17,58 @@ switch ($action) {
 	$hash = hash('sha256', $pass);
 	$salt = createSalt();
 	$hash = hash('sha256', $salt . $hash);
+	$reg_key = md5(uniqid(rand()));
+	
 	if (checkUserEmail('users', $email) == 0) {
-		$stmt = $mysqli->prepare("INSERT INTO users (email, firstname, lastname, password, gender, salt) VALUES (?,?,?,?,?, ?)");
-		$stmt->bind_param('ssssss', escape($email), escape($fname), escape($lname), $hash, escape($gender), $salt);
+		$stmt = $mysqli->prepare("INSERT INTO users (email, firstname, lastname, password, gender, salt, key_email, created_at) VALUES (?,?,?,?,?, ?, ?, NOW())");
+		$stmt->bind_param('sssssss', escape($email), escape($fname), escape($lname), $hash, escape($gender), $salt, $reg_key);
 		$stmt->execute();
+		echo "1";
 		
 		if ($mysqli->affected_rows == 1) {
-			$display_query = $mysqli->prepare("SELECT user_id FROM users WHERE email = ?");
-			$display_query->bind_param('s', escape($email));
-			$display_query->execute();
-			$display_query->store_result();
+			$random = md5(uniqid(rand()));
+			$verification_link = get_base_url() ."/keyvalidate.php?email=".$email."&key=".$reg_key."&".$random;
 			
-			if ($display_query->num_rows > 0) {
-				$display_query->bind_result($user_id);
-				$display_query->fetch();
-				$count = 0;
-				for ($i = 1; $i <= 2;  $i++){
-					$value = ($i == 1) ? 5 : 1;
-					$key_query = $mysqli->prepare("INSERT INTO user_credits (user_id, created_at, item_qty, item_id) VALUES (?, NOW(), ?, ?)");	
-					$key_query->bind_param('iii', escape($user_id), $value,$i);
-					$key_query->execute();
-					if ($key_query->affected_rows == 1){
-						$count++;
+			$from = "desiree.alviento@gmail.com";
+			$replyTo= "desiree.alviento@gmail.com";
+			$subject = "Treasuria Verification Email";
+			$userFirstName = $fname;
+			//$userEmail = $email;
+			$userEmail = "desiree.alviento@gmail.com";
+			
+			$body = "Hi ".$userFirstName."<br><br>";
+			$body = "Verification Code: ".$verification_link;
+			$body = eregi_replace("[\]",'',$body);
+			
+			if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body))
+			{
+				$display_query = $mysqli->prepare("SELECT user_id FROM users WHERE email = ?");
+				$display_query->bind_param('s', escape($email));
+				$display_query->execute();
+				$display_query->store_result();
+				
+				if ($display_query->num_rows > 0) {
+					echo "3";
+					$display_query->bind_result($user_id);
+					$display_query->fetch();
+					$count = 0;
+					for ($i = 1; $i <= 2;  $i++){
+						$value = ($i == 1) ? 5 : 1;
+						$key_query = $mysqli->prepare("INSERT INTO user_credits (user_id, created_at, item_qty, item_id) VALUES (?, NOW(), ?, ?)");	
+						$key_query->bind_param('iii', escape($user_id), $value,$i);
+						$key_query->execute();
+						if ($key_query->affected_rows == 1){
+							$count++;
+						}
+					}
+					
+					if ($count == 2){
+						$res['success'] = 1;
+						$res['message'] = 'You Have Successfully Register an Account';	
 					}
 				}
 				
-				if ($count == 2){
-					$res['success'] = 1;
-					$res['message'] = 'You Have Successfully Register an Account';	
-				}
-				
-					$res['success'] = $user_id;
-					$res['message'] = 'You Have Successfully Register an Account';	
-				
 			}
-			
-			
-			
 		}
 	}else {
 		$res['success'] = 0;
@@ -79,6 +94,7 @@ switch ($action) {
 			$hash = hash('sha256', $salt . hash('sha256', $pass) );
 			if ($hash != $password){
 				header('Location: login.php');
+				$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';	
 			}else {
 				session_regenerate_id (); //this is a security measure
     			$_SESSION['valid'] = 1;

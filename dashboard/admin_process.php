@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
 include 'db_connect.php';
-$datetime = date('Y-m-d H:i:s');
+//$datetime = date('Y-m-d H:i:s');
 
 switch($_SERVER['QUERY_STRING'])
 {
@@ -33,8 +33,10 @@ switch($_SERVER['QUERY_STRING'])
 								$_SESSION["user_id"] = $user_id;
 								$_SESSION["a_username"] = $admin_email;
 								
-								$query_insert_login = mysql_query("INSERT INTO login_logout (user_id, login_date) VALUES ('$_SESSION[user_id]', '$datetime')");
-								
+								$query_insert_login = $mysqli->prepare("INSERT INTO login_logout (user_id, login_date) VALUES (?, NOW())");
+								$query_insert_login->bind_param('i', $user_id);
+								$query_insert_login->execute();
+		
 								if($query_insert_login)
 								{
 									header('Location: index.php');
@@ -63,7 +65,9 @@ switch($_SERVER['QUERY_STRING'])
 	case 'adminlogout':
 		if($_SESSION["a_username"])
 		{	
-			$query_insert_logout = mysql_query("UPDATE login_logout SET logout_date='$datetime' WHERE login_date!='0000-00-00 00:00:00' and logout_date='0000-00-00 00:00:00' and user_id='$_SESSION[user_id]'");
+			$query_insert_logout = $mysqli->prepare("UPDATE login_logout SET logout_date=NOW() WHERE login_date!='0000-00-00 00:00:00' and logout_date='0000-00-00 00:00:00' and user_id='$_SESSION[user_id]'");
+			$query_insert_logout->bind_param('i', $user_id);
+			$query_insert_logout->execute();
 			
 			if($query_insert_logout)
 			{
