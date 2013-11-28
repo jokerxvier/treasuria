@@ -1,6 +1,7 @@
 include('assets/js/bootstrap.min.js');
 include('assets/js/joyride-2.1.js');
 include('assets/js/jquery.cookie.js');
+include('assets/js/modernizr.mq.js');
 include('assets/js/buzz.js');
 
 function include(url){ 
@@ -20,12 +21,6 @@ function include(url){
         expose: true
         });
       });
-
-/* KEY TOGGLE */
-//$('.game-keys span').click(function () {
-   // $('.game-keys span').not($(this)).css({'border':'none'});
-   // $(this).css({'border':'1px solid blue'});
-
 
 /* KEY TOGGLE */
 $('.game-keys li').click(function() {
@@ -49,16 +44,24 @@ $('.game-keys li').click(function() {
     else if (hournow >= 0)  // if it is after midnight
         $('.game-time').addClass('night');
 
-/* SFX */
-
-    //openchestSound = new buzz.sound( "assets/sounds/treasuria_openchest_01", {formats: [ "ogg", "mp3", "aac" ]});
-    //bgSound = new buzz.sound( "assets/sounds/treasuria_music_temp", {formats: [ "ogg", "mp3", "aac" ]});
-
-//bgSound.play()
-
-
+/* BG MUSIC TOGGLE */
 $( '.bg-sound' ).click( function() {
-         // bgSound.togglePlay(); 
-});
+         bgSound.togglePlay();
+         $(this).toggleClass('mute');; 
+        })      
 
+/* SFX */
+var keysSound = new buzz.sound( "assets/sounds/treasuria_pickkey_01", {formats: [ "ogg", "mp3", "aac" ]});
+    openchestSound = new buzz.sound( "assets/sounds/treasuria_openchest_01", {formats: [ "ogg", "mp3", "aac" ]});
 
+$( '.game-keys li' ).click( function() {
+  $('#game-msg').on('show.bs.modal', function () {
+      keysSound.play(); 
+      })
+    });
+
+/* TABS */
+$('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  });

@@ -42,10 +42,10 @@ if(isset($_SESSION['username']))
       </ul>
     </div>
 
-    <!--<span class="glyphicon glyphicon-volume-down pull-right bg-sound"></span>-->
-
-<article class="game-time img-responsive">
-
+    <article class="game-time img-responsive">
+      <div class="col-md-12 clearfix">
+        <div class="bg-sound pull-right"></div>
+      </div>
       <div class="col-md-12">
           <div class="timer">
             <div class="ticker"></div>
@@ -90,49 +90,19 @@ if(isset($_SESSION['username']))
             </ul>
           </div>
       </div><!--end of ROW GAME-->
-
     </article>
-    
-
-
-  <!--<div class="col-md-4">
-    <div class="avatar"></div>
-  </div>
-  <div class="col-md-4">
-    <div class="female"></div>
-  </div>
-  <div class="col-md-4">
-    <div class="merchant"></div>
-  </div>-->
-
-  <!-- <div class="row bets">
-      <div class="col-md-4 col-md-offset-2">
-        <h3>Treasure Chest 01</h3>
-          <ul>
-            <li>Player Name 01</li>
-            <li>Player Name 02</li>
-            <li>Player Name 03</li>
-            <li>Player Name 04</li>
-            <li>Player Name 05</li>
-          </ul>
-      </div>
-      <div class="col-md-4 col-md-offset-1">
-        <h3>Treasure Chest 02</h3>
-          <ul>
-            <li>Player Name 01</li>
-            <li>Player Name 02</li>
-            <li>Player Name 03</li>
-          </ul>
-      </div>
-    </div>end of ROW BETS-->
-
-    <!--GAME TRIGGER BUTTONS-->
-    <!--<button type="button" data-toggle="modal" data-target="#myWin">WIN POP UP BOX</button>
-    <button type="button" data-toggle="modal" data-target="#myLose">LOSE POP UP BOX</button>-->
-    <!--end of GAME TRIGGER BUTTONS-->
-  
   </section>
 </div><!--end of WRAP-->
+
+<script>
+var bgSound = new buzz.sound( "assets/sounds/treasuria_ingame", {
+    formats: [ "ogg", "mp3", "aac" ],
+    preload: true,
+    autoplay: true,
+    loop: true
+  });
+</script>
+
 <?php
 }
 else

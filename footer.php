@@ -5,7 +5,7 @@
   </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-     <script src="http://192.168.1.82:8080/socket.io/socket.io.js"></script>
+     <script src="http://192.168.1.74:8080/socket.io/socket.io.js"></script>
      <script src="assets/js/script.js"></script>
 	 <script src="assets/js/jquery.md5.js"></script>
     <script src="assets/js/validation.js" type="text/javascript"></script>
@@ -37,7 +37,7 @@
 			
 	$(function() {
 				
-				var socket = io.connect('http://192.168.1.82:8080');
+				var socket = io.connect('http://192.168.1.74:8080');
 				var user_id = '<?php echo (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : false  ?>';
 				var username = '<?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : false ?>';
 				

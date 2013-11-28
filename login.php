@@ -5,13 +5,13 @@
   <div class="story img-responsive clearfix">
 	<!--GAME STORY-->
 		<!--Adobe Edge Runtime-->
-		<!--<script type="text/javascript" charset="utf-8" src="Opening_edgePreload.js"></script>
+		<script type="text/javascript" charset="utf-8" src="Opening_edgePreload.js"></script>
 		<style>
 			.edgeLoad-EDGE-3625037 { visibility:hidden; }
 		</style>
 		<!--Adobe Edge Runtime End-->
-		<!--<div id="Stage" class="EDGE-3625037">
-		</div-->
+		<div id="Stage" class="EDGE-3625037">
+		</div>
 	<!--end of GAME STORY-->
   </div>
   
