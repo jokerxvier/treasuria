@@ -200,64 +200,14 @@ io.sockets.on('connection', function (socket){
 	 });
 	 
 	 
-
-	 socket.on('result', function (result){
-		 	
-				if (clients.hasOwnProperty(result.data)) {
-					var itemid  = clients[result.data].itemid;
-					var userid  = clients[result.data].userid;
-					var box  = clients[result.data].box;
-					var keyPrice = clients[result.data].key_price;
-					var userSocket = clients[result.data].socket_id;
-					var message; 
-					
-					
-					
-					var insertQuery = connection.query('INSERT INTO round_history (item_id, user_id, created_at, box_id, winner_box) VALUES (?,?, ? , ?, ?)', [itemid, userid, currTimer(), box, winnerBox]);
-					var query = connection.query('UPDATE user_credits SET item_qty  = (item_qty - 1)  WHERE user_id = ? AND  item_id = ?', [userid, itemid], function(err, finalResult) {
-					if (finalResult.affectedRows == 1){
-							  if (box == winnerBox) {
-						
-										var query2 = connection.query('Select count(user_id) as userCount From user_points WHERE user_id = ? ', [userid],  function(err, rows) {
-												var sql3;
-												if (rows[0].userCount > 0){
-													sql3 = "Update user_points SET points = (points + " + keyPrice  + ") WHERE user_id = " + userid;
-												}else {
-													
-													sql3 = "Insert INTO  user_points SET points = " + keyPrice + ",  user_id = " + userid;  
-												}
-												
-												var query3 = connection.query(sql3, function(err, result) {
-														message = "You won, the winning Box is Box number" + winnerBox;
-														if (result.affectedRows == 1){
-															io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
-														
-														}
-												});
-										});
-										
-							   }else {
-								   message = "You loss, the winning Box is Box number" + winnerBox;	
-								   io.sockets.socket(userSocket).emit('user result', {message : message, winnerbox : winnerBox, box : box ,points : keyPrice, itemid : itemid});
-			
-							   }
-			
-							}
-					});
-					
-				}
-			
-			
-			socket.emit('winner', {winner : winnerBox});
-	 });
-
 	/* socket.on('result', function (result){
 				
 				
 				
 				
 	 });*/
-
+	 
+	 
 	 
 
 	socket.on('disconnect users', function (data) {
@@ -273,6 +223,5 @@ io.sockets.on('connection', function (socket){
 	 
 	
 });
-
 
 
