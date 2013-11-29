@@ -112,7 +112,76 @@ if(isset($_SESSION['username']))
           <h3 class="panel-title">History of Rounds</h3>
         </div>
         <div class="panel-body">
-
+           <div class="table-responsive">
+             <table class="table profile">
+              <tr>
+                <th></th>
+                <th>Keys</th>
+                <th>Results</th>
+                <th>Time</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td><img src="assets/img/profile_yellow_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Win</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><img src="assets/img/profile_purple_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><img src="assets/img/profile_green_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><img src="assets/img/profile_blue_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><img src="assets/img/profile_orange_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td><img src="assets/img/profile_yellow_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Win</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><img src="assets/img/profile_purple_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><img src="assets/img/profile_green_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Win</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><img src="assets/img/profile_blue_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Lose</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><img src="assets/img/profile_orange_key.png" class="img-responsive" alt="Used Key"/></td>
+                <td>Win</td>
+                <td>11/29/13 8:00 am</td>
+              </tr>
+             </table>
+          </div><!--end of TABLE-RESPONSIVE-->
         </div><!--end of PANEL BODY-->
      </div><!--end of PANEL-->
   </article>

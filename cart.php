@@ -17,7 +17,7 @@ include 'header.php';
           <thead>
           <tr>
             <th>Item</th>
-            <th>Description</th>
+            <th class="hidden-xs">Description</th>
             <th>Quantity</th>
             <th>Price $</th>
           </tr>
@@ -36,7 +36,7 @@ include 'header.php';
 				  ?>
 				  <tr>
 					<td><img src="assets/img/<?php echo $item[1] ?>" class="img-responsive" alt="Cart Key" width="80" /></td>
-					<td valign="middle" height="92" style="vertical-align: middle;"><?php echo $item[3] .' - '. $item[2]   ?></td>
+					<td class="hidden-xs" valign="middle" height="92" style="vertical-align: middle;"><?php echo $item[3] .' - '. $item[2]   ?></td>
 					<td style="vertical-align: middle;"><?php echo $qty ?></td>
 					<td style="vertical-align: middle;"><?php echo ' $'.number_format($price, 2) ?></td>
 				  </tr>
@@ -56,7 +56,7 @@ include 'header.php';
           
            <tr>
           	<td></td>
-          	<td></td>
+          	<td class="hidden-xs"></td>
           	<td></td>
           	<td>Total : <?php echo '$'. number_format($total, 2) ?></td>
           </tr>
