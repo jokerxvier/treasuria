@@ -185,7 +185,7 @@ padding-bottom: 14px;
 
 /*** MAGICAL KEYS ***/
 .game-keys{width: 245px; margin: 0 auto; padding: 0 0 0 20px}
-.game-keys li{background: url(../../images/game-keys.png) no-repeat center top; height: 70px; width: 40px; cursor: pointer}
+.game-keys li{background: url(../img/game-keys.png) no-repeat center top; height: 70px; width: 40px; cursor: pointer}
 .game-keys li.gold-key{background-position: 0 0}
 .game-keys li.amethyst-key{background-position: 0 -140px}
 .game-keys li.emerald-key{background-position: 0 -280px}
