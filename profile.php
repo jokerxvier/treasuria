@@ -23,78 +23,80 @@ if(isset($_SESSION['username']))
     <article class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Treasure Hunter</h3>
+          <h3 class="panel-title">EDIT PROFILE</h3>
         </div>
+		<?php if(isset($_GET["s"]) and $_GET["s"]=="success") { ?> <div class="alert alert-success"> SUCCESS! </div> <?php } ?>
+		
         <div class="panel-body">
-        <form action="process.php" method="post" id="treasuria_login" name="treasuria_login">
-    <input type="hidden" name="action" value="edit" />
-    
+         <form action="process.php" method="post" id="profileedit" name="profileedit">
+		<input type="hidden" name="action" value="edit" />
+		
         <div class="form-horizontal clearfix">
         <div class="message"></div>
         <div class="form-group">
           <label for="fname" class="col-lg-4 control-label">First Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $firstname; ?>" disabled/>
+            <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $firstname; ?>"/>
           </div>
         </div><!--end of FIRST NAME-->
 
         <div class="form-group">
           <label for="lname" class="col-lg-4 control-label">Last Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="lname" name="lname" value="<?php echo $lastname; ?>" disabled/>
+            <input type="text" class="form-control" id="lname" name="lname" value="<?php echo $lastname; ?>" />
           </div>
         </div><!--end of LAST NAME-->
 
         <div class="form-group">
           <label for="email" class="col-lg-4 control-label">Email Address</label>
           <div class="col-lg-8">
-            <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>"  />
+            <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" disabled/>
           </div>
         </div><!--end of USERNAME / EMAIL-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Address</label>
+          <label for="address" class="col-lg-4 control-label">Address</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Address" />
+            <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" placeholder="Address" />
           </div>
         </div><!--end of ADDRESS-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">City</label>
+          <label for="city" class="col-lg-4 control-label">City</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="City" />
+            <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" placeholder="City" />
           </div>
         </div><!--end of CITY-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Country</label>
+          <label for="country" class="col-lg-4 control-label">Country</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Country" />
+            <input type="text" class="form-control" id="country" name="country" value="<?php echo $country; ?>" placeholder="Country" />
           </div>
         </div><!--end of COUNTRY-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Phone</label>
+          <label for="phone" class="col-lg-4 control-label">Phone</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Phone" />
+            <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone; ?>" placeholder="Phone" />
           </div>
-        </div><!--end of COUNTRY-->
+        </div><!--end of PHONE-->
   
         <div class="form-group">
           <label for="u_gender" class="col-lg-4 control-label">Gender</label> 
           <div class="col-lg-3">
             <label for="gender_male" class="control-label">Male</label>
-      <input type="radio" id="gender_male" value="M" name="gender" <?php if($gender=='M'){ echo "checked";}?>/>
+			<input type="radio" id="gender_male" value="M" name="gender" <?php if($gender=='M'){ echo "checked";}?>/>
           </div>
           <div class="col-lg-3">
             <label for="gender_female" class="control-label">Female</label>
             <input  type="radio" id="gender_female" value="F" name="gender" <?php if($gender=='F'){ echo "checked";}?>/>
           </div>
         </div><!--end of GENDER-->
-    
-    <hr class="brown">
-    <h4><span class="brown">Change Password</span></h4>
-    <div class="form-group">
+		
+		<hr>
+		Change Password
+		<div class="form-group">
           <label for="pass" class="col-lg-4 control-label">Password</label>
           <div class="col-lg-8">
             <input type="password" class="form-control" id="pass" name="pass" value="" placeholder="New Password" />
@@ -107,7 +109,7 @@ if(isset($_SESSION['username']))
             <input type="password" class="form-control" id="u_c_password" value="" placeholder="Confirm New Password" />
           </div>
         </div><!--end of CONFIRM PASSWORD-->
-    
+		
       </div><!--end of FORM-HORIZONTAL-->
       
       <div class="login-actions">          
