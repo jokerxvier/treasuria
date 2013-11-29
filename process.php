@@ -11,6 +11,15 @@ $email= (isset($_POST['email'])) ? test_input($_POST['email']) : '';
 $gender = (isset($_POST['gender'])) ? test_input($_POST['gender']) : '';
 $res = array();
 $userid  = (isset($_SESSION['user_id'])) ?  $_SESSION['user_id'] : '';
+
+//for profile edit
+$address = (isset($_POST['address'])) ? test_input($_POST['address']) : '';
+$city = (isset($_POST['city'])) ? test_input($_POST['city']) : '';
+$country = (isset($_POST['country'])) ? test_input($_POST['country']) : '';
+$phone = (isset($_POST['phone'])) ? test_input($_POST['phone']) : '';
+$newpass = (isset($_POST['newpass'])) ? test_input($_POST['newpass']) : '';
+$confirmnewpass = (isset($_POST['confirmnewpass'])) ? test_input($_POST['confirmnewpass']) : '';
+
 switch ($action) {
 		
 	case "register" :
@@ -82,10 +91,10 @@ switch ($action) {
 	
 	case "login" :
 
-		$stmt = $mysqli->prepare("SELECT password, salt, email, user_id, key_email FROM users WHERE email = ?");
+		$stmt = $mysqli->prepare("SELECT firstname, password, salt, email, user_id, key_email FROM users WHERE email = ?");
 		$stmt->bind_param('s', escape($email));
 		$stmt->execute();
-		$stmt->bind_result($password, $salt, $email, $user_id, $key_email);
+		$stmt->bind_result($firstname, $password, $salt, $email, $user_id, $key_email);
 		$stmt->store_result();
 		
 		if($stmt->num_rows > 0){
@@ -97,57 +106,51 @@ switch ($action) {
 			}else {
 				if($key_email!=NULL)
 				{
-					header('Location: login.php');
-					$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+					header('Location: login.php?error=unverified');
+					
 				}
 				else
 				{
 					session_regenerate_id (); //this is a security measure
 					$_SESSION['valid'] = 1;
 					$_SESSION['username'] = $email;
+					$_SESSION['firstname'] = $firstname;
 					$_SESSION['user_id'] = $user_id;
 					header('Location: index.php');
 				}
 			}
 		}else {
-			header('Location: login.php');
-			$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+			header('Location: login.php?error=key_error');
+
 		}
 	break;
 	
 	case "edit" :
 	//edit profile
+		$ses_username = $_SESSION['username'];
 		$stmt = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE email = ?");
-		$stmt->bind_param('s', escape($email));
+		$stmt->bind_param('s', escape($ses_username));
 		$stmt->execute();
-		$stmt->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $username, $key_email, $phone, $gender, $user_type, $deleted);
 		$stmt->store_result();
 		
 		if($stmt->num_rows > 0){
 			$stmt->fetch();
-			$hash = hash('sha256', $salt . hash('sha256', $pass) );
-			if ($hash != $password){
-				header('Location: login.php');
-				$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';	
-			}else {
-				if($key_email!=NULL)
-				{
-					header('Location: login.php');
-					$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
-				}
-				else
-				{
-					session_regenerate_id (); //this is a security measure
-					$_SESSION['valid'] = 1;
-					$_SESSION['username'] = $email;
-					$_SESSION['user_id'] = $user_id;
-					header('Location: index.php');
-				}
+			
+			$updateprofile = $mysqli->prepare("UPDATE users SET firstname=?, lastname=?, address=?, city=?, country=?, phone=?, gender=?, updated_at=NOW() WHERE email='$ses_username'");
+			$updateprofile->bind_param('sssssis', $fname, $lname, $address, $city, $country, $phone, $gender);
+			$updateprofile->execute();
+			$updateprofile->store_result();
+			
+			if($updateprofile)
+			{
+				header('Location: profile.php?s=success');
 			}
-		}else {
-			header('Location: login.php');
-			$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
 		}
+		else
+		{
+		echo "failed";
+		}
+			
 	break;
 	
 	case 'add':
@@ -318,9 +321,3 @@ switch ($action) {
 		header('Location: login.php');
 	break;
 }
-
-
-
-
-
-?>

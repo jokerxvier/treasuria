@@ -2,7 +2,8 @@ include('assets/js/bootstrap.min.js');
 include('assets/js/joyride-2.1.js');
 include('assets/js/jquery.cookie.js');
 include('assets/js/modernizr.mq.js');
-include('assets/js/buzz.js');
+include('assets/js/bootstrap-datepicker.js');
+
 
 function include(url){ 
   document.write('<script src="'+ url + '" type="text/javascript"></script>'); 
@@ -65,3 +66,8 @@ $('#myTabs a').click(function (e) {
     e.preventDefault()
     $(this).tab('show')
   });
+
+/* DATEPICKER */
+    $('.input-append.date').datepicker({
+    todayHighlight: true
+    });

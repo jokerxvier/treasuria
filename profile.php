@@ -23,10 +23,12 @@ if(isset($_SESSION['username']))
     <article class="col-md-5">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Treasure Hunter</h3>
+          <h3 class="panel-title">EDIT PROFILE</h3>
         </div>
+    <?php if(isset($_GET["s"]) and $_GET["s"]=="success") { ?> <div class="alert alert-success"> SUCCESS! </div> <?php } ?>
+    
         <div class="panel-body">
-        <form action="process.php" method="post" id="treasuria_login" name="treasuria_login">
+         <form action="process.php" method="post" id="profileedit" name="profileedit">
     <input type="hidden" name="action" value="edit" />
     
         <div class="form-horizontal clearfix">
@@ -34,51 +36,51 @@ if(isset($_SESSION['username']))
         <div class="form-group">
           <label for="fname" class="col-lg-4 control-label">First Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $firstname; ?>" disabled/>
+            <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $firstname; ?>"/>
           </div>
         </div><!--end of FIRST NAME-->
 
         <div class="form-group">
           <label for="lname" class="col-lg-4 control-label">Last Name</label>
           <div class="col-lg-8">
-            <input type="text" class="form-control" id="lname" name="lname" value="<?php echo $lastname; ?>" disabled/>
+            <input type="text" class="form-control" id="lname" name="lname" value="<?php echo $lastname; ?>" />
           </div>
         </div><!--end of LAST NAME-->
 
         <div class="form-group">
           <label for="email" class="col-lg-4 control-label">Email Address</label>
           <div class="col-lg-8">
-            <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>"  />
+            <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" disabled/>
           </div>
         </div><!--end of USERNAME / EMAIL-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Address</label>
+          <label for="address" class="col-lg-4 control-label">Address</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Address" />
+            <input type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>" placeholder="Address" />
           </div>
         </div><!--end of ADDRESS-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">City</label>
+          <label for="city" class="col-lg-4 control-label">City</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="City" />
+            <input type="text" class="form-control" id="city" name="city" value="<?php echo $city; ?>" placeholder="City" />
           </div>
         </div><!--end of CITY-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Country</label>
+          <label for="country" class="col-lg-4 control-label">Country</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Country" />
+            <input type="text" class="form-control" id="country" name="country" value="<?php echo $country; ?>" placeholder="Country" />
           </div>
         </div><!--end of COUNTRY-->
 
         <div class="form-group">
-          <label for="" class="col-lg-4 control-label">Phone</label>
+          <label for="phone" class="col-lg-4 control-label">Phone</label>
           <div class="col-lg-8">
-            <input type="" class="form-control" id="" name="" value="" placeholder="Phone" />
+            <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone; ?>" placeholder="Phone" />
           </div>
-        </div><!--end of COUNTRY-->
+        </div><!--end of PHONE-->
   
         <div class="form-group">
           <label for="u_gender" class="col-lg-4 control-label">Gender</label> 
@@ -94,6 +96,7 @@ if(isset($_SESSION['username']))
     
     <hr class="brown">
     <h4><span class="brown">Change Password</span></h4>
+
     <div class="form-group">
           <label for="pass" class="col-lg-4 control-label">Password</label>
           <div class="col-lg-8">
@@ -125,16 +128,20 @@ if(isset($_SESSION['username']))
         </div>
         <div class="panel-body">
 
-          <form class="form-horizontal">
+          <!--<form class="form-horizontal">
             <fieldset>
-              <div class="form-group">
-                <label class="col-md-4 control-label" for="date01">Date input</label>
-                <div class="col-md-8">
-                  <input type="text" class="form-control datepicker" id="date01" value="12/01/13">
-                </div>
-              </div>
+              <div class="form-group row"> 
+                <div class="col-xs-8 input-append date"> 
+                  <label class="control-label">Search Date</label> 
+                  <div class="input-group date" id="dp3" data-date="12-02-2012" data-date-format="mm-dd-yyyy"> 
+                    <input class="form-control" type="text" readonly="" value="12-02-2012"> <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span> 
+                </div> 
+              </div> 
+            </div>
             </fieldset>
-          </form>
+          </form>-->
 
            <div class="table-responsive">
              <table class="table profile">
