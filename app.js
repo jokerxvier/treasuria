@@ -117,7 +117,7 @@ io.sockets.on('connection', function (socket){
 		  socket.username = data.username;
 		  var message;
 
-		  if (clients.hasOwnProperty(data.username)){
+		  if (clients.hasOwnProperty(socket.id)){
 			  if (clients[socket.id].username == data.username && clients[socket.id].itemid ==  data.itemid && clients[socket.id].box == data.box) {
 				  	delete clients[socket.id];
 			  }else {
