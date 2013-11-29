@@ -12,6 +12,7 @@ if(isset($_SESSION['username']))
       <div class="female"></div>
     </article>
 
+
     <article class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -112,6 +113,18 @@ if(isset($_SESSION['username']))
           <h3 class="panel-title">History of Rounds</h3>
         </div>
         <div class="panel-body">
+
+          <form class="form-horizontal">
+            <fieldset>
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="date01">Date input</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control datepicker" id="date01" value="12/01/13">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+
            <div class="table-responsive">
              <table class="table profile">
               <tr>
@@ -151,37 +164,44 @@ if(isset($_SESSION['username']))
                 <td>11/29/13 8:00 am</td>
               </tr>
               <tr>
-                <td>1</td>
+                <td>6</td>
                 <td><img src="assets/img/profile_yellow_key.png" class="img-responsive" alt="Used Key"/></td>
                 <td>Win</td>
                 <td>11/29/13 8:00 am</td>
               </tr>
               <tr>
-                <td>2</td>
+                <td>7</td>
                 <td><img src="assets/img/profile_purple_key.png" class="img-responsive" alt="Used Key"/></td>
                 <td>Lose</td>
                 <td>11/29/13 8:00 am</td>
               </tr>
               <tr>
-                <td>3</td>
+                <td>8</td>
                 <td><img src="assets/img/profile_green_key.png" class="img-responsive" alt="Used Key"/></td>
                 <td>Win</td>
                 <td>11/29/13 8:00 am</td>
               </tr>
               <tr>
-                <td>4</td>
+                <td>9</td>
                 <td><img src="assets/img/profile_blue_key.png" class="img-responsive" alt="Used Key"/></td>
                 <td>Lose</td>
                 <td>11/29/13 8:00 am</td>
               </tr>
               <tr>
-                <td>5</td>
+                <td>10</td>
                 <td><img src="assets/img/profile_orange_key.png" class="img-responsive" alt="Used Key"/></td>
                 <td>Win</td>
                 <td>11/29/13 8:00 am</td>
               </tr>
              </table>
           </div><!--end of TABLE-RESPONSIVE-->
+          <ul class="pagination pull-right">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">&raquo;</a></li>
+          </ul>
         </div><!--end of PANEL BODY-->
      </div><!--end of PANEL-->
   </article>
