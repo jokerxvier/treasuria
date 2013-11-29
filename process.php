@@ -91,10 +91,10 @@ switch ($action) {
 	
 	case "login" :
 
-		$stmt = $mysqli->prepare("SELECT password, salt, email, user_id, key_email FROM users WHERE email = ?");
+		$stmt = $mysqli->prepare("SELECT firstname, password, salt, email, user_id, key_email FROM users WHERE email = ?");
 		$stmt->bind_param('s', escape($email));
 		$stmt->execute();
-		$stmt->bind_result($password, $salt, $email, $user_id, $key_email);
+		$stmt->bind_result($firstname, $password, $salt, $email, $user_id, $key_email);
 		$stmt->store_result();
 		
 		if($stmt->num_rows > 0){
@@ -114,6 +114,7 @@ switch ($action) {
 					session_regenerate_id (); //this is a security measure
 					$_SESSION['valid'] = 1;
 					$_SESSION['username'] = $email;
+					$_SESSION['$firstname'] = $firstname;
 					$_SESSION['user_id'] = $user_id;
 					header('Location: index.php');
 				}

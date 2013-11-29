@@ -19,7 +19,7 @@ $userid = $_SESSION['user_id'];
 	<div class="container">
 		<div class="clearfix">
 			<ul class="list-inline user-login pull-right">
-			  <li><?php echo "Hi ".$_SESSION['username']."!"; ?></li><span class="hidem">|</span>
+			  <li><?php echo "Hi ".$_SESSION['$firstname']."!"; ?></li><span class="hidem">|</span>
 			  <li><a href="process.php?action=logout" name="logout" class="logout" id="logout" title="logout"> Log out </a></li>
 			</ul>
 		</div>
