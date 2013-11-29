@@ -25,6 +25,7 @@ h2, h3, h4{font-family: 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
 a:hover{color: #5D4F35; text-decoration: none}
 input:focus{outline: none}
+hr{border: 1px solid #645039}
 .htext{font-size: 0; line-height: 0; color: transparent}
 .hidem{color: #9B8263; padding: 0 10px}
 .gold{color: #F0E436}
@@ -291,6 +292,9 @@ table.table thead{padding: 10px 0}
 ===================== */
 .table tbody > tr > th{border-top: none}
 .table tbody > tr > td{border-top: 1px solid #785A37; background: #A58A67}
+.pagination{margin: 0 auto}
+.pagination > li > a, .pagination > li > span{background: #3D3521; border: 1px solid #3D3521}
+.pagination a:hover{background: #A58A67}
 
 /*** ====================================
              MEDIA QUERIES
@@ -309,18 +313,37 @@ table.table thead{padding: 10px 0}
     height: 320px;
     background: url(../img/male_avatar_sprite_1.png);
     
-    -webkit-animation: play 1s steps(12) infinite;
-       -moz-animation: play 1s steps(12) infinite;
-        -ms-animation: play 1s steps(12) infinite;
-         -o-animation: play 1s steps(12) infinite;
-            animation: play 1s steps(12) infinite;
+    -webkit-animation: pose 1s steps(5) infinite;
+       -moz-animation: pose 1s steps(5) infinite;
+        -ms-animation: pose 1s steps(5) infinite;
+         -o-animation: pose 1s steps(5) infinite;
+            animation: pose 1s steps(5) infinite;
 }
 
-@keyframes play {
+@-moz-keyframes play {
    0% { background-position:    0px; }
-   100% { background-position: -3480px; }
+   100% { background-position: -1450px; }
 }
 
+@-moz-keyframes play {
+   0% { background-position:    0px; }
+   100% { background-position: -1450px; }
+}
+
+@-ms-keyframes play {
+   0% { background-position:    0px; }
+   100% { background-position: -1450px; }
+}
+
+@-o-keyframes play {
+   0% { background-position:    0px; }
+   100% { background-position: -1450px; }
+}
+
+@keyframes pose {
+   0% { background-position:    0px; }
+   100% { background-position: -1450px; }
+}
 
 .female {
     width: 290px;
@@ -334,7 +357,7 @@ table.table thead{padding: 10px 0}
             animation: play 1s steps(5) infinite;
 }
 
-@-webkit-keyframes play {
+@-moz-keyframes play {
   0% { background-position:    0px; }
   100% { background-position: -1450px; }
 }
