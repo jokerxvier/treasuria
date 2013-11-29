@@ -97,8 +97,8 @@ switch ($action) {
 			}else {
 				if($key_email!=NULL)
 				{
-					header('Location: login.php');
-					$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+					header('Location: login.php?error=unverified');
+					
 				}
 				else
 				{
@@ -110,8 +110,8 @@ switch ($action) {
 				}
 			}
 		}else {
-			header('Location: login.php');
-			$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+			header('Location: login.php?error=key_error');
+
 		}
 	break;
 	

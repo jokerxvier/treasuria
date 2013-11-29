@@ -22,7 +22,8 @@ function get_base_url()
 
 
 
-function getError(){
+function getError($data){
+	$arr = array();
 	$arr['key_error'] = "ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect";
 	$arr['verified'] = "SUCCESS: Email Address successfully verified, you gain free credits. You may now login.";
 	$arr['sent_verification'] = "SUCCESS: A verification Code was sent to your Email Address, please confirm to continue your login.";
@@ -30,7 +31,7 @@ function getError(){
 	$arr['unverified'] = "ERROR: Email Address not verified."; 
 	$arr['unactivated'] = "ERROR: Oops! Your account could not be activated. Please recheck the link or contact the system administrator"; 
 	
-	return $arr;	
+	return $arr[$data];	
 	
 }
 
