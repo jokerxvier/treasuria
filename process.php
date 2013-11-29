@@ -115,6 +115,40 @@ switch ($action) {
 		}
 	break;
 	
+	case "edit" :
+	//edit profile
+		$stmt = $mysqli->prepare("SELECT user_id, password, firstname, lastname, address, city, country, created_at, updated_at, email, key_email, phone, gender, user_type, deleted FROM users WHERE email = ?");
+		$stmt->bind_param('s', escape($email));
+		$stmt->execute();
+		$stmt->bind_result($user_id, $password, $firstname, $lastname, $address, $city, $country, $created_at, $updated_at, $username, $key_email, $phone, $gender, $user_type, $deleted);
+		$stmt->store_result();
+		
+		if($stmt->num_rows > 0){
+			$stmt->fetch();
+			$hash = hash('sha256', $salt . hash('sha256', $pass) );
+			if ($hash != $password){
+				header('Location: login.php');
+				$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';	
+			}else {
+				if($key_email!=NULL)
+				{
+					header('Location: login.php');
+					$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+				}
+				else
+				{
+					session_regenerate_id (); //this is a security measure
+					$_SESSION['valid'] = 1;
+					$_SESSION['username'] = $email;
+					$_SESSION['user_id'] = $user_id;
+					header('Location: index.php');
+				}
+			}
+		}else {
+			header('Location: login.php');
+			$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+		}
+	break;
 	
 	case 'add':
 		

@@ -25,6 +25,7 @@ h2, h3, h4{font-family: 'Asul', sans-serif; color: #b5956d}
 a{color: #9B8263; text-decoration: none}
 a:hover{color: #5D4F35; text-decoration: none}
 input:focus{outline: none}
+hr{border: 1px solid #645039}
 .htext{font-size: 0; line-height: 0; color: transparent}
 .hidem{color: #9B8263; padding: 0 10px}
 .gold{color: #F0E436}
