@@ -61,13 +61,11 @@ switch ($action) {
 							$count++;
 						}
 					}
-					
 					if ($count == 2){
 						$res['success'] = 1;
-						$res['message'] = 'You Have Successfully Register an Account';	
+						$res['message'] = 'You Have Successfully Register an Account, Please check your Email to Verify.';	
 					}
 				}
-				
 			}
 		}
 	}else {
@@ -83,10 +81,10 @@ switch ($action) {
 	
 	case "login" :
 
-		$stmt = $mysqli->prepare("SELECT password, salt, email, user_id FROM users WHERE email = ?");
+		$stmt = $mysqli->prepare("SELECT password, salt, email, user_id, key_email FROM users WHERE email = ?");
 		$stmt->bind_param('s', escape($email));
 		$stmt->execute();
-		$stmt->bind_result($password, $salt, $email, $user_id);
+		$stmt->bind_result($password, $salt, $email, $user_id, $key_email);
 		$stmt->store_result();
 		
 		if($stmt->num_rows > 0){
@@ -96,17 +94,23 @@ switch ($action) {
 				header('Location: login.php');
 				$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';	
 			}else {
-				session_regenerate_id (); //this is a security measure
-    			$_SESSION['valid'] = 1;
-				$_SESSION['username'] = $email;
-				$_SESSION['user_id'] = $user_id;
-				header('Location: index.php');
-				
+				if($key_email!=NULL)
+				{
+					header('Location: login.php');
+					$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
+				}
+				else
+				{
+					session_regenerate_id (); //this is a security measure
+					$_SESSION['valid'] = 1;
+					$_SESSION['username'] = $email;
+					$_SESSION['user_id'] = $user_id;
+					header('Location: index.php');
+				}
 			}
-			
-			
 		}else {
-			header('Location: login.php');	
+			header('Location: login.php');
+			$res['message'] = 'ERROR: Either Your Account is inactive, not registered or Email Address and Password is Incorrect';
 		}
 	break;
 	

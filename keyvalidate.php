@@ -9,26 +9,28 @@ if (isset($_GET['key']) and (strlen($_GET['key']) == 32))  //The Activation key 
 {
 	$key = $_GET['key'];
 }
-
-	$result = mysql_query("SELECT * FROM users");
-	while ($row = mysql_fetch_array($result))
-	{
-		$db_userid = $row['user_id'];
-		$db_email = $row['email'];
-		$db_key = $row['key_email'];
-		
-		if($email==$db_email and $key==$db_key)
-		{
-			$query_verified = mysql_query("UPDATE users SET key_email=NULL WHERE email='$db_email' and key_email='$db_key'");
-			$query_free_credits = mysql_query("INSERT INTO user_credits (user_id,credits,created_at,updated_at) VALUES ('$db_userid','50','$datetime','$datetime')");
-			$query_zero_points = mysql_query("INSERT INTO user_points (user_id,points,created_at,updated_at) VALUES ('$db_userid','0','$datetime','$datetime')");
-			header('Location: login.php?verify=success');
+	$result = $mysqli->prepare("SELECT user_id, email, key_email FROM users WHERE email='$email' and key_email='$key'");
+	$result->execute();
+	$result->bind_result($db_userid, $db_email, $db_key);
+	$result->store_result();
+	$ctr_admin = 0;
+	if($result->num_rows > 0){
+		while($result->fetch()){
+			if($email==$db_email and $key==$db_key)
+			{
+				$query_verified = $mysqli->prepare("UPDATE users SET key_email=NULL, updated_at=NOW() WHERE email='$db_email' and key_email='$db_key'");
+				$query_verified->execute();
+				$query_verified->store_result();
+				
+				if($query_verified)
+				{
+					header('Location: login.php?verify=success');
+				}
+			}
 		}
-		else
-		{
-			header('Location: login.php?error=error_activation');
-		}
-		
 	}
-	
+	else
+	{
+		header('Location: login.php?error=error_activation');
+	}
 ?>

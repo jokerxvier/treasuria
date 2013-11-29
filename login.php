@@ -1,4 +1,12 @@
 <?php include 'head.php' ?>
+<?php
+if(isset($_SESSION['username']))
+{
+header('Location: index.php');
+}
+else
+{
+?>
 <div id="wrap">
 <section class="container">
 
@@ -28,8 +36,7 @@
         <?php if(isset($_GET["verify"]) and $_GET["verify"]=="success") { ?> <div class="success"> <?php echo $verified; ?> </div> <?php } ?>
         <?php if(isset($_GET["error"]) and $_GET["error"]=="error_activation") { ?> <div class="error"> <?php echo $error_activation; ?> </div> <?php } ?><?php */?>
         
-		
-        <p>Please provide your details</p>
+		<p>Please provide your details</p>
 
         <div class="form-group">
           <label for="admin_username" class="col-md-4 control-label">Email Address</label>
@@ -66,5 +73,8 @@
 </div><!--end of WRAP-->
 
 <?php include 'footer.php'; ?>
+<?php
 
 
+}
+?>

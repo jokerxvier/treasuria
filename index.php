@@ -102,7 +102,7 @@ var bgSound = new buzz.sound( "assets/sounds/treasuria_ingame", {
     loop: true
   });
 </script>
-
+<?php include 'footer.php'; ?>
 <?php
 }
 else
@@ -111,4 +111,4 @@ header('Location: login.php');
 }
 ?>
 
-<?php include 'footer.php'; ?>
+

@@ -1,4 +1,13 @@
 <?php include 'head.php' ?>
+<?php
+if(isset($_SESSION['username']))
+{
+header('Location: index.php');
+}
+else
+{
+?>
+
 <div id="wrap">
 <section class="container">
   <div class="register-container register">
@@ -85,4 +94,4 @@
 </section><!--end of CONTAINER-->
 </div><!--end of WRAP-->
 <?php include 'footer.php'; ?>
-
+<?php } ?>
