@@ -32,9 +32,11 @@ else
       
       <div class="form-horizontal clearfix">
 		<?php /*?><?php if(isset($_GET["error"]) and $_GET["error"]=="failed_login") { ?> <div class="error"> <?php echo $key_error; ?> </div> <?php } ?>
-        <?php if(isset($_GET["error"]) and $_GET["error"]=="not_verified") { ?> <div class="error"> <?php echo $not_verified; ?> </div> <?php } ?>
+       if(isset($_GET["error"]) and $_GET["error"]=="not_verified") { ?> <div class="error"> <?php echo $not_verified; ?> </div> <?php } 
         <?php if(isset($_GET["verify"]) and $_GET["verify"]=="success") { ?> <div class="success"> <?php echo $verified; ?> </div> <?php } ?>
         <?php if(isset($_GET["error"]) and $_GET["error"]=="error_activation") { ?> <div class="error"> <?php echo $error_activation; ?> </div> <?php } ?><?php */?>
+        
+          <?php echo (isset($_GET["error"])) ? '<div class="error">'. getError($_GET["error"]) .'</div>' : ''; ?>
         
 		<p>Please provide your details</p>
 

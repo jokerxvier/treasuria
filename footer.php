@@ -164,6 +164,42 @@
 					
 				});
 				
+				$('#profileedit').validate({
+					rules: {
+							fname: "required",
+							lname: "required",
+							email: {
+									required: true,
+									email: true
+								},
+							phone: {
+								required: true,
+								number: true,
+								minlength: 7
+							},
+							city: "required",
+							country: "required",
+							address: "required"
+						},
+					messages: {
+						fname: "Please enter your First Name",
+						lname: "Please enter your Last Name",
+						email: {
+								required: "Please provide your Email Address",
+								email: "Please enter a valid email address",
+							},
+						phone: {
+							required: "Please provide your Phone Number",
+							number: "Please provide a Valid Phone Number",
+							minlength: "Your phone must be at least 7 numbers"
+						},
+						city: "Please provide your City",
+						country: "Please provide your Country",
+						address: "Please provide your Address"
+					},
+					
+				});
+				
 				
 				$('.key').click(function (){
 					

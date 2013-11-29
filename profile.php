@@ -25,12 +25,21 @@ if(isset($_SESSION['username']))
         <div class="panel-heading">
           <h3 class="panel-title">EDIT PROFILE</h3>
         </div>
+<<<<<<< HEAD
     <?php if(isset($_GET["s"]) and $_GET["s"]=="success") { ?> <div class="alert alert-success"> SUCCESS! </div> <?php } ?>
     
         <div class="panel-body">
          <form action="process.php" method="post" id="profileedit" name="profileedit">
     <input type="hidden" name="action" value="edit" />
     
+=======
+		<?php if(isset($_GET["s"]) and $_GET["s"]=="success") { ?> <div class="alert alert-success"> SUCCESS! </div> <?php } ?>
+		
+        <div class="panel-body">
+         <form action="process.php" method="post" id="profileedit" name="profileedit">
+		<input type="hidden" name="action" value="edit" />
+		
+>>>>>>> 8dc59c0b3cfc0251940270d2c4834e71b23d6629
         <div class="form-horizontal clearfix">
         <div class="message"></div>
         <div class="form-group">
@@ -86,18 +95,25 @@ if(isset($_SESSION['username']))
           <label for="u_gender" class="col-lg-4 control-label">Gender</label> 
           <div class="col-lg-3">
             <label for="gender_male" class="control-label">Male</label>
-      <input type="radio" id="gender_male" value="M" name="gender" <?php if($gender=='M'){ echo "checked";}?>/>
+			<input type="radio" id="gender_male" value="M" name="gender" <?php if($gender=='M'){ echo "checked";}?>/>
           </div>
           <div class="col-lg-3">
             <label for="gender_female" class="control-label">Female</label>
             <input  type="radio" id="gender_female" value="F" name="gender" <?php if($gender=='F'){ echo "checked";}?>/>
           </div>
         </div><!--end of GENDER-->
+<<<<<<< HEAD
     
     <hr class="brown">
     <h4><span class="brown">Change Password</span></h4>
 
     <div class="form-group">
+=======
+		
+		<hr>
+		Change Password
+		<div class="form-group">
+>>>>>>> 8dc59c0b3cfc0251940270d2c4834e71b23d6629
           <label for="pass" class="col-lg-4 control-label">Password</label>
           <div class="col-lg-8">
             <input type="password" class="form-control" id="pass" name="pass" value="" placeholder="New Password" />
@@ -110,7 +126,7 @@ if(isset($_SESSION['username']))
             <input type="password" class="form-control" id="u_c_password" value="" placeholder="Confirm New Password" />
           </div>
         </div><!--end of CONFIRM PASSWORD-->
-    
+		
       </div><!--end of FORM-HORIZONTAL-->
       
       <div class="login-actions">          
