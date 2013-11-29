@@ -312,11 +312,6 @@ function getGalleryPoints($id){
 }
 
 function sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body){
-
-	error_reporting(E_STRICT);
-
-	date_default_timezone_set('America/Toronto');
-
 	require_once('assets/phpmailer/class.phpmailer.php');
 	//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
 
@@ -326,9 +321,6 @@ function sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)
 	
 	
 	$mail->IsSMTP(); // telling the class to use SMTP
-	$mail->Host       = "mail.yourdomain.com"; // SMTP server
-	$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
-											   // 1 = errors and messages
 											   // 2 = messages only
 	$mail->SMTPAuth   = true;                  // enable SMTP authentication
 	$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
@@ -355,7 +347,7 @@ function sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)
 	//$mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
 
 	if(!$mail->Send()) {
-	  echo "Mailer Error: " . $mail->ErrorInfo;
+	  return false;
 	} else {
 	  return true;
 	}	

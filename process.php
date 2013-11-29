@@ -23,7 +23,7 @@ switch ($action) {
 		$stmt = $mysqli->prepare("INSERT INTO users (email, firstname, lastname, password, gender, salt, key_email, created_at) VALUES (?,?,?,?,?, ?, ?, NOW())");
 		$stmt->bind_param('sssssss', escape($email), escape($fname), escape($lname), $hash, escape($gender), $salt, $reg_key);
 		$stmt->execute();
-		echo "1";
+
 		
 		if ($mysqli->affected_rows == 1) {
 			$random = md5(uniqid(rand()));
@@ -40,15 +40,13 @@ switch ($action) {
 			$body = "Verification Code: ".$verification_link;
 			$body = eregi_replace("[\]",'',$body);
 			
-			if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body))
-			{
+			
 				$display_query = $mysqli->prepare("SELECT user_id FROM users WHERE email = ?");
 				$display_query->bind_param('s', escape($email));
 				$display_query->execute();
 				$display_query->store_result();
 				
 				if ($display_query->num_rows > 0) {
-					echo "3";
 					$display_query->bind_result($user_id);
 					$display_query->fetch();
 					$count = 0;
@@ -62,11 +60,14 @@ switch ($action) {
 						}
 					}
 					if ($count == 2){
-						$res['success'] = 1;
-						$res['message'] = 'You Have Successfully Register an Account, Please check your Email to Verify.';	
+						if (sentEmail($from, $replyTo, $subject, $userEmail, $userFirstName, $body)){
+							$res['success'] = 1;
+							$res['message'] = 'You Have Successfully Register an Account, Please check your Email to Verify.';	
+						}
+						
 					}
 				}
-			}
+			
 		}
 	}else {
 		$res['success'] = 0;
