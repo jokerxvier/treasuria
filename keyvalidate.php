@@ -1,9 +1,5 @@
 <?php
-include("db_connect.php");
-
-$datetime = date('Y-m-d H:i:s');
-$databaseconnect = NEW databaseconnect();
-$databaseconnect->dbconnect();
+include 'config.php';
 
 if(isset($_GET['email']))if (isset($_GET['email']) and preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', $_GET['email']))
 {

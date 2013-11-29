@@ -40,7 +40,7 @@
 				  <a href="process.php?action=remove&keyid=<?php echo $val[0] ?>" name="key_id"><span class="glyphicon glyphicon-minus"></span> Remove</a>
 
 			    </div>
-			    <a class="btn btn-sm modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value=""> </a>
+			   <!-- <a class="btn btn-sm modal-btn" type="button">QR CODE OPTION <input type="hidden" class="item_id"  value=""> </a>-->
 			          
 			</article>	
             
